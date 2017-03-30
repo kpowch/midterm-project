@@ -2,7 +2,6 @@
 
 const express = require('express');
 const router  = express.Router();
-const isLoggedIn = require('middleware').isLoggedIn;
 
 module.exports = (knex) => {
 
@@ -15,9 +14,6 @@ module.exports = (knex) => {
   //       res.json(results);
   //   });
   // });
-
-  // runs middleware for all routes
-  router.all("/:user_id", isLoggedIn);
 
 
   //TODO need to get username, email, and all things that they like/own
