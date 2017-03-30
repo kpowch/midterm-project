@@ -1,20 +1,26 @@
+<%#
+My Resources page
+Route: /users/:user_id
+Data required:
+%>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>User id page</title>
-
-    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
-    <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
-    <link rel="stylesheet" href="/styles/css/layout.css" type="text/css" />
-
-    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-    <script type="text/javascript" src="/scripts/app.js"></script>
+    <title>My Resources</title>
+    <% include partials/_includes %>
   </head>
-
   <body>
+    <header>
+      <% include partials/_header %>
+    </header>
+
     this will show all the resources owned/liked by the user
 
-    <%=username%>
+    <%=user.name%>
 
-  </body>
+  <footer>
+    <% include partials/_footer %>
+  </footer>
+</body>
 </html>
