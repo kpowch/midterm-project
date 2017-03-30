@@ -41,7 +41,7 @@ module.exports = (knex) => {
     //insert req.body into database
     //retrieve newly created id from database
     //redirect to resources/id
-    res.send(db);
+    res.send(req.body);
   });
 
   return router;
