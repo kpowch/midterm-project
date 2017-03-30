@@ -1,25 +1,67 @@
 <!-- Header partial -->
-<nav id='header'>
-  <div id='header-wrapper'>
-    <div id='logo-text-wrapper'>
-      <img class='logo' src=''>
-      <span class='header'>Chalkboard</span>
+<nav class="nav">
+  <div class="nav-left">
+    <a class="nav-item">
+      <img src="https://s-media-cache-ak0.pinimg.com/originals/9e/9f/77/9e9f7772d58e2fecc968708c8532bce9.jpg" alt="Chalkboard logo">
+    </a>
+    <% if (user) { %>
+      <p class="nav-item">
+        Welcome <%=user.name%>!
+      </p>
+    <% } %>
+  </div>
 
-      <% if (user) { %>
-        Welcome <%= user.name %>!
+  <div class="nav-center">
+  </div>
 
-        <form method='POST' action='/logout'>
-          <input type='submit' value='Logout'>
-        </form>
+  <!-- This "nav-toggle" hamburger menu is only visible on mobile -->
+  <!-- You need JavaScript to toggle the "is-active" class on "nav-menu" -->
+  <span class="nav-toggle">
+    <span></span>
+    <span></span>
+    <span></span>
+  </span>
 
-      <% } else { %>
+  <!-- This "nav-menu" is hidden on mobile -->
+  <!-- Add the modifier "is-active" to display it on mobile -->
+  <div class="nav-right nav-menu">
+    <% if (user) { %>
+      <a class="nav-item">
+        Home
+      </a>
+      <a class="nav-item">
+        My Resources
+      </a>
 
-        <a href='/login'>Login</a>
-        or
-        <a href='/register'>Register</a>
+      <a class="nav-item">
+        <i class="fa fa-plus nav-item"></i>
+      </a>
 
-      <% } %>
+      <%# <a class="nav-item">
+        <i class="fa fa-cog nav-item" aria-hidden="true"></i>
+      </a>%>
 
-    </div>
+      <a class="nav-item">
+        <i class="fa fa-user nav-item" aria-hidden="true"></i>
+      </a>
+
+      <span class="nav-item">
+        <a class="button is-primary">
+          <span>Logout</span>
+        </a>
+      </span>
+    <% } else { %>
+      <span class="nav-item">
+        <a class="button is-primary">
+          <span>Login</span>
+        </a>
+      </span>
+
+      <span class="nav-item">
+        <a class="button is-primary">
+          <span>Register</span>
+        </a>
+      </span>
+    <% } %>
   </div>
 </nav>
