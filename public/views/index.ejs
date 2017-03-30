@@ -1,5 +1,5 @@
 <%#
-Home page - all resources 
+Home page - all resources
 Route: /
 Data required:
 %>
@@ -18,6 +18,16 @@ Data required:
 
     <h1>THIS WILL BE OUR HOMEPAGE</h1>
 
+    <% for (var resource in resources) { %>
+      title: <%=resources[resource].title%><br />
+      url: <%=resources[resource].url%><br />
+      description: <%=resources[resource].description%><br />
+      topic: <%=resources[resource].topic%><br />
+      creator: <%=resources[resource].username%><br />
+      date_created: <%=resources[resource].date_created%><br />
+      <br />
+      <br />
+    <% } %>
 
 
   <footer>
