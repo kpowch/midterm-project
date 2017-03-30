@@ -13,6 +13,8 @@ const knexConfig  = require("./knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
+const ensureLoggedIn  = require('middleware').ensureLoggedIn;
+
 
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
@@ -36,7 +38,8 @@ app.use("../public/styles/", sass({
 app.use(express.static("public"));
 
 // Mount all resource routes
-app.use("/users", usersRoutes(knex));
+app.use("/users", ensureLoggedIn, usersRoutes(knex));
+//TODO if we want to forbid certain routes for resoruces (not all) , then put only on the forbidden ones
 
 // Home page
 app.get("/", (req, res) => {

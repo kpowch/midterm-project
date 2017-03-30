@@ -2,6 +2,7 @@
 
 const express = require('express');
 const router  = express.Router();
+const isLoggedIn = require('middleware').isLoggedIn;
 
 module.exports = (knex) => {
 
@@ -15,23 +16,31 @@ module.exports = (knex) => {
   //   });
   // });
 
+  // runs middleware for all routes
+  router.all("/:user_id", isLoggedIn);
+
+
   //TODO need to get username, email, and all things that they like/own
   router.get("/:user_id", (req, res) => {
 
     var results = {
-      "username": "this is my name"
+      user: {
+        name: 'name',
+        email: 'user@email.com'
+      }
     };
     res.render('../public/views/users_user_id', results)
-    // knex
-    //   .select("username,")
-    //   .from("users")
-    //   .then((results) => {
-    //     res.json(results);
-    // });
+
   });
 
   router.get("/:user_id/editprofile", (req, res) => {
-    res.render('../public/views/users_user_id_editprofile')
+    var results = {
+      user: {
+        name: 'name',
+        email: 'user@email.com'
+      }
+    };
+    res.render('../public/views/users_user_id_editprofile', results)
 
   });
 
