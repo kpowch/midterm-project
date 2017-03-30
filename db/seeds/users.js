@@ -9,12 +9,4 @@ exports.seed = function(knex, Promise) {
         knex('users').insert({username: 'Terry' email: 'terry@email.com', password: 'password' })
       ]);
     }),
-  return knex('ratings').del()
-    .then(function () {
-      return Promise.all([
-        knex('ratings').insert({}),
-        knex('ratings').insert({}),
-        knex('ratings').insert({})
-      ]);
-    }),
 };
