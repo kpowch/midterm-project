@@ -13,7 +13,7 @@ const knexConfig  = require("../knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
-const ensureLoggedIn  = require('middleware').ensureLoggedIn;
+const ensureLoggedIn  = require('./routes/middleware').ensureLoggedIn;
 
 
 // Seperated Routes for each Resource
