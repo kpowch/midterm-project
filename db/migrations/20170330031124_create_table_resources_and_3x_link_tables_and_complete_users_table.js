@@ -45,7 +45,7 @@ exports.down = function(knex, Promise) {
     knex.schema.dropTable('ratings', function(table){\
     }),
     knex.schema.dropTable('likes', function(table){\
-    })
+    }),
     knex.schema.table('users', function(table){
       table.string('name');
       table.dropColumn('username');
