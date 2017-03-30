@@ -1,7 +1,5 @@
-
 exports.up = function(knex, Promise) {
   return Promise.all([
-
     knex.schema.createTable('resources', function(table){
       table.increment('id');
       table.string('title', 31 );
@@ -29,7 +27,6 @@ exports.up = function(knex, Promise) {
       table.integer('user_id');
       table.integer('resource_id');
     }),
-
     knex.schema.table('users', function(table){
       table.dropColumn('name');
       table.string('username', 15);
