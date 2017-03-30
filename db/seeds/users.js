@@ -3,10 +3,10 @@ exports.seed = function(knex, Promise) {
     .then(function () {
       return Promise.all([
         knex('users').insert({username: 'Alice', email: 'alice@email.com', password: 'password' }),
-        knex('users').insert({username: 'Bob' email: 'bob@email.com', password: 'password'}),
-        knex('users').insert({username: 'Charlie' email: 'charlie@email.com', password: 'password' }),
-        knex('users').insert({username: 'Emily' email: 'emily@email.com', password: 'password' }),
-        knex('users').insert({username: 'Terry' email: 'terry@email.com', password: 'password' })
+        knex('users').insert({username: 'Bob', email: 'bob@email.com', password: 'password'}),
+        knex('users').insert({username: 'Charlie', email: 'charlie@email.com', password: 'password' }),
+        knex('users').insert({username: 'Emily', email: 'emily@email.com', password: 'password' }),
+        knex('users').insert({username: 'Terry', email: 'terry@email.com', password: 'password' })
       ]);
-    }),
+    });
 };
