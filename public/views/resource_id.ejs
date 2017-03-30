@@ -14,19 +14,20 @@ Data required:
     <header>
       <% include partials/_header %>
     </header>
-
-    <h1>View Resource</h1>
-    <div>RESOURCE PLACEHOLDER</div>
-    <span><button type="button">Like</button></span><span>Rate: ***** </span><span><button type="button">Visit</button></span>
-    <h4>Submitted by username</h4>
-    <p>Description</p>
-    <h4>topic: test</h4>
-      <form method="POST" action="/resources/:resource_id">
-        <textarea name="description" placeholder="Comment"></textarea>
-        <input type="submit" value="Submit">
-      </form>
-  <footer>
+    <section>
+      <h1>View Resource</h1>
+      <div>RESOURCE PLACEHOLDER</div>
+      <span><button type="button">Like</button></span><span>Rate: ***** </span><span><button type="button">Visit</button></span>
+      <h4>Submitted by username</h4>
+      <p>Description</p>
+      <h5>topic: test</h5>
+        <form method="POST" action="/resources/:resource_id">
+          <textarea name="description" placeholder="Comment"></textarea>
+          <input type="submit" value="Submit">
+        </form>
+    </section>
+    <section class="resource-container">
+    </section>
     <% include partials/_footer %>
-  </footer>
-</body>
+  </body>
 </html>
