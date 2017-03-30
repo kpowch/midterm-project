@@ -1,67 +1,57 @@
 <!-- Header partial -->
 <nav class="nav">
-  <div class="nav-left">
-    <a class="nav-item">
-      <img src="https://s-media-cache-ak0.pinimg.com/originals/9e/9f/77/9e9f7772d58e2fecc968708c8532bce9.jpg" alt="Chalkboard logo">
-    </a>
-    <% if (user) { %>
-      <p class="nav-item">
-        Welcome <%=user.name%>!
-      </p>
-    <% } %>
-  </div>
 
-  <div class="nav-center">
-  </div>
+    <div class="columns">
+      <div class="column">
+        <p class="control">
+          <span class="select">
+            <select>
+              <%# TODO: make a list of topics and here have a 'for each' to list all the different topics (including all)%>
+              <option>All Topics</option>
+              <option>Math</option>
+              <option>Geography</option>
+              <option>Science</option>
+              <option>History</option>
+            </select>
+          </span>
+        </p>
+      </div>
 
-  <!-- This "nav-toggle" hamburger menu is only visible on mobile -->
-  <!-- You need JavaScript to toggle the "is-active" class on "nav-menu" -->
-  <span class="nav-toggle">
-    <span></span>
-    <span></span>
-    <span></span>
-  </span>
+      <div class="column">
+        <p class="control">
+          <span class="select">
+            <select>
+              <%# TODO: convert this to search field %>
+              <option>Search</option>
+            </select>
+          </span>
+        </p>
+      </div>
 
-  <!-- This "nav-menu" is hidden on mobile -->
-  <!-- Add the modifier "is-active" to display it on mobile -->
-  <div class="nav-right nav-menu">
-    <% if (user) { %>
-      <a class="nav-item">
-        Home
-      </a>
-      <a class="nav-item">
-        My Resources
-      </a>
+      <div class="column">
+        <div class="field">
+          <p class="control">
+            <label class="checkbox">
+              <input type="checkbox">
+              My Likes
+            </label>
+          </p>
+        </div>
+      </div>
 
-      <a class="nav-item">
-        <i class="fa fa-plus nav-item"></i>
-      </a>
+      <div class="column">
+        <div class="field">
+          <p class="control">
+            <label class="checkbox">
+              <input type="checkbox">
+              My Posts
+            </label>
+          </p>
+        </div>
+      </div>
 
-      <%# <a class="nav-item">
-        <i class="fa fa-cog nav-item" aria-hidden="true"></i>
-      </a>%>
 
-      <a class="nav-item">
-        <i class="fa fa-user nav-item" aria-hidden="true"></i>
-      </a>
+    </div>
 
-      <span class="nav-item">
-        <a class="button is-primary">
-          <span>Logout</span>
-        </a>
-      </span>
-    <% } else { %>
-      <span class="nav-item">
-        <a class="button is-primary">
-          <span>Login</span>
-        </a>
-      </span>
 
-      <span class="nav-item">
-        <a class="button is-primary">
-          <span>Register</span>
-        </a>
-      </span>
-    <% } %>
-  </div>
 </nav>
