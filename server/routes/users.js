@@ -29,11 +29,12 @@ module.exports = (knex) => {
   });
 
   // need username, email, password from db
+  // TODO change query to look for current user logged in
   router.get("/:user_id/editprofile", (req, res) => {
     knex
       .select('*')
       .from('users')
-      .where('id', 1)
+      .where('id', 3)
       .then((results) => {
         // console.log(results[0].id);
         var templateVars = {
@@ -44,16 +45,31 @@ module.exports = (knex) => {
             password: results[0].password
           }
         }
-        console.log(templateVars);
+        // console.log(templateVars);
         res.render('../public/views/users_user_id_editprofile', templateVars)
       })
-
-
   });
 
   // TODO should be put?
+  // TODO will have to hash this password as well.
+  // TODO change query to look for current user logged in
   router.post("/:user_id/editprofile", (req, res) => {
     const newpassword = req.body.password;
+    console.log(newpassword);
+
+    knex('users')
+      .where('id', 3)
+      .update({
+        password: newpassword
+      })
+      //TODO don't know what it doesn't work if this callback isn't here
+      .asCallback((err, results) => {
+        if (err) {
+          console.log('ERROR:', err);
+        } else {
+          console.log(results);
+        }
+      })
   });
 
   return router;
