@@ -13,21 +13,25 @@ Data required:
   <body>
     <header>
       <% include partials/_header %>
+      <% include partials/_filterheader %>
     </header>
 
 
     <h1>THIS WILL BE OUR HOMEPAGE</h1>
-
-    <% for (var resource in resources) { %>
-      title: <%=resources[resource].title%><br />
-      url: <%=resources[resource].url%><br />
-      description: <%=resources[resource].description%><br />
-      topic: <%=resources[resource].topic%><br />
-      creator: <%=resources[resource].username%><br />
-      date_created: <%=resources[resource].date_created%><br />
-      <br />
-      <br />
-    <% } %>
+  <div class=resource-wrapper>
+      <% for (var resource in resources) { %>
+        <div class='resource box'>
+          title: <%=resources[resource].title%><br />
+          url: <%=resources[resource].url%><br />
+          description: <%=resources[resource].description%><br />
+          topic: <%=resources[resource].topic%><br />
+          creator: <%=resources[resource].username%><br />
+          date_created: <%=resources[resource].date_created%><br />
+          <br />
+          <br />
+        </div>
+      <% } %>
+  </div>
 
 
   <footer>
