@@ -26,14 +26,28 @@ module.exports = (knex) => {
   });
 
   router.get("/:resource_id", (req, res) => {
-    let templateVars = {
-      database: db,
-      user: {
-        name: 'name',
-        email: 'user@email.com'
+    let key = req.params.resource_id - 1;
+    let resource = {};
+    knex.select().from('resources')
+    .asCallback((err, results) => {
+      if (err) return console.error(err);
+      resource = results[key];
+      console.log('resource', resource);
+      knex.destroy();
+    }).then(function() {
+      let templateVars = {
+        resource: resource,
+        user: {
+          name: 'name',
+          email: 'user@email.com'
+        }
       }
-    }
-    res.render("../public/views/resource_id", templateVars);
+      res.render("../public/views/resource_id", templateVars);
+
+    }).catch(function(error){
+        console.log(error);
+    })
+
   });
 
   router.post("/create", (req, res) => {
@@ -41,7 +55,10 @@ module.exports = (knex) => {
     //insert req.body into database
     //retrieve newly created id from database
     //redirect to resources/id
-    res.send(req.body);
+    // knex('resources').insert([{title: req.body.title,
+    //                             url: req.body.url,
+    //                             description: req.body.description,
+    //                             topic: req.body.topic, }])
   });
 
   return router;

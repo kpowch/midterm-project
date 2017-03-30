@@ -15,12 +15,12 @@ Data required:
       <% include partials/_header %>
     </header>
     <section>
-      <h1>View Resource</h1>
-      <div>RESOURCE PLACEHOLDER</div>
-      <span><button type="button">Like</button></span><span>Rate: ***** </span><span><button type="button">Visit</button></span>
-      <h4>Submitted by username</h4>
+      <h1><%= resource.title %></h1>
+      <div></div>
+      <span><button type="button">Like</button></span><span>Rate: ***** </span><span><a href="<%=resource.url%>">Visit</a></span>
+      <h4>Submitted by User</h4>
       <p>Description</p>
-      <h5>topic: test</h5>
+      <h5>topic: <%= resource.topic %></h5>
         <form method="POST" action="/resources/:resource_id">
           <textarea name="description" placeholder="Comment"></textarea>
           <input type="submit" value="Submit">
