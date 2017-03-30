@@ -19,24 +19,24 @@ module.exports = (knex) => {
   //TODO need to get username, email, and all things that they like/own
   router.get("/:user_id", (req, res) => {
 
-    var results = {
+    var templateVars = {
       user: {
         name: 'name',
         email: 'user@email.com'
       }
     };
-    res.render('../public/views/users_user_id', results)
+    res.render('../public/views/users_user_id', templateVars)
 
   });
 
   router.get("/:user_id/editprofile", (req, res) => {
-    var results = {
+    var templateVars = {
       user: {
         name: 'name',
         email: 'user@email.com'
       }
     };
-    res.render('../public/views/users_user_id_editprofile', results)
+    res.render('../public/views/users_user_id_editprofile', templateVars)
 
   });
 
