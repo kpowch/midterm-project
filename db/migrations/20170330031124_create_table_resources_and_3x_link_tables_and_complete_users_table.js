@@ -12,17 +12,20 @@ exports.up = function(knex, Promise) {
       table.dateTime('date_created');
     }),
     knex.schema.createTable('comments', function(table){
+      table.increment('id');
       table.integer('user_id');
       table.integer('resource_id');
       table.text('comment');
       table.dateTime('date_created');
     }),
     knex.schema.createTable('ratings', function(table){
+      table.increment('id');
       table.integer('user_id');
       table.integer('resource_id');
       table.integer('value');
     }),
     knex.schema.createTable('likes', function(table){
+      table.increment('id');
       table.integer('user_id');
       table.integer('resource_id');
     }),
@@ -45,6 +48,12 @@ exports.down = function(knex, Promise) {
     knex.schema.dropTable('ratings', function(table){\
     }),
     knex.schema.dropTable('likes', function(table){\
+    })
+    knex.schema.table('users', function(table){
+      table.string('name');
+      table.dropColumn('username');
+      table.dropColumn('email');
+      table.dropColumn('password');
     })
   ])
 };
