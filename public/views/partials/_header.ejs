@@ -1,0 +1,25 @@
+<!-- Header partial -->
+<nav id='header'>
+  <div id='header-wrapper'>
+    <div id='logo-text-wrapper'>
+      <img class='logo' src=''>
+      <span class='header'>Chalkboard</span>
+
+      <% if (user) { %>
+        Welcome <%= user.name %>!
+
+        <form method='POST' action='/logout'>
+          <input type='submit' value='Logout'>
+        </form>
+
+      <% } else { %>
+
+        <a href='/login'>Login</a>
+        or
+        <a href='/register'>Register</a>
+
+      <% } %>
+
+    </div>
+  </div>
+</nav>
