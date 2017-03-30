@@ -1,7 +1,7 @@
 exports.up = function(knex, Promise) {
   return Promise.all([
     knex.schema.createTable('resources', function(table){
-      table.increment('id');
+      table.increments('id');
       table.string('title', 31 );
       table.text('url');
       table.text('description');
@@ -10,20 +10,20 @@ exports.up = function(knex, Promise) {
       table.dateTime('date_created');
     }),
     knex.schema.createTable('comments', function(table){
-      table.increment('id');
+      table.increments('id');
       table.integer('user_id');
       table.integer('resource_id');
       table.text('comment');
       table.dateTime('date_created');
     }),
     knex.schema.createTable('ratings', function(table){
-      table.increment('id');
+      table.increments('id');
       table.integer('user_id');
       table.integer('resource_id');
       table.integer('value');
     }),
     knex.schema.createTable('likes', function(table){
-      table.increment('id');
+      table.increments('id');
       table.integer('user_id');
       table.integer('resource_id');
     }),
@@ -53,5 +53,4 @@ exports.down = function(knex, Promise) {
       table.dropColumn('password');
     })
   ])
-};
 };
