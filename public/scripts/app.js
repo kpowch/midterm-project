@@ -45,6 +45,6 @@ $(document).ready(function() {
 
   // loadResources();
 
-  createResourceElement(resourceData);
+  //createResourceElement(resourceData);
 
 });
