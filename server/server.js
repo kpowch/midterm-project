@@ -27,9 +27,9 @@ app.use(knexLogger(knex));
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use("/styles", sass({
-  src: __dirname + "/styles",
-  dest: __dirname + "/public/styles",
+app.use("../public/styles/", sass({
+  src: __dirname + "../public/styles",
+  dest: __dirname + "../public/styles",
   debug: true,
   outputStyle: 'expanded'
 }));
@@ -40,7 +40,7 @@ app.use("/api/users", usersRoutes(knex));
 
 // Home page
 app.get("/", (req, res) => {
-  res.render("index");
+  res.render("../public/views/index");
 });
 
 app.listen(PORT, () => {
