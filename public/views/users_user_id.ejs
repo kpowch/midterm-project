@@ -1,13 +1,13 @@
 <%#
-Home page - all resources 
-Route: /
+My Resources page
+Route: /users/:user_id
 Data required:
 %>
 
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Home</title>
+    <title>My Resources</title>
     <% include partials/_includes %>
   </head>
   <body>
@@ -15,10 +15,9 @@ Data required:
       <% include partials/_header %>
     </header>
 
+    this will show all the resources owned/liked by the user
 
-    <h1>THIS WILL BE OUR HOMEPAGE</h1>
-
-
+    <%=user.name%>
 
   <footer>
     <% include partials/_footer %>

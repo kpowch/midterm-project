@@ -1,0 +1,34 @@
+<%#
+Edit profile page
+Route: /users/:user_id/editprofile
+Data required:
+%>
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Edit Profile</title>
+    <% include partials/_includes %>
+  </head>
+  <body>
+    <header>
+      <% include partials/_header %>
+    </header>
+
+    <p>
+      Username:
+    </p>
+    <p>
+      Email:
+    </p>
+
+    <form method='POST' action='/users/:user_id/editprofile' style='display:inline-block'>
+      <input type='password' name='password' placeholder='insert new password'>
+      <input type='submit' value='Update'>
+    </form>
+
+    <footer>
+      <% include partials/_footer %>
+    </footer>
+  </body>
+</html>
