@@ -16,12 +16,22 @@ const db = [{
 module.exports = (knex) => {
 
   router.get("/new", (req, res) => {
-    res.render("../public/views/resource_new");
+    var templateVars = {
+      user: {
+        name: 'name',
+        email: 'user@email.com'
+      }
+    };
+    res.render("../public/views/resource_new", templateVars);
   });
 
   router.get("/:resource_id", (req, res) => {
     let templateVars = {
-      database: db
+      database: db,
+      user: {
+        name: 'name',
+        email: 'user@email.com'
+      }
     }
     res.render("../public/views/resource_id", templateVars);
   });
@@ -31,7 +41,7 @@ module.exports = (knex) => {
     //insert req.body into database
     //retrieve newly created id from database
     //redirect to resources/id
-    res.send(db);
+    res.send(req.body);
   });
 
   return router;

@@ -1,27 +1,70 @@
+<%#
+Edit profile page
+Route: /users/:user_id/editprofile
+Data required:
+%>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>New Resource</title>
-
-    <link rel="stylesheet" href="../vendor/normalize-4.1.1.css" type="text/css" />
-    <link rel="stylesheet" href="../vendor/border-box.css" type="text/css" />
-    <link rel="stylesheet" href="../styles/css/layout.css" type="text/css" />
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-    <script type="text/javascript" src="/scripts/app.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
+    <title>Edit Profile</title>
+    <% include partials/_includes %>
   </head>
-
   <body>
+    <header>
+      <% include partials/_header %>
+    </header>
+
     <h1>Create New Resource</h1>
     <form method="POST" action="/resources/create">
-      <input type="text" name="title" placeholder="Title">
-      <input type="text" name="url" placeholder="Resource URL">
-      <textarea name="description" placeholder="Description"></textarea>
-      <input type="text" name="topic" placeholder="Topic">
-      <input type="submit" value="Submit">
-    </form>
-  </body>
+
+        <div class="field">
+      <label class="label">Title</label>
+      <p class="control has-icon has-icon-right">
+        <input name="title" class="input is-success" type="text" placeholder="Title...">
+        <span class="icon is-small">
+          <i class="fa fa-check"></i>
+        </span>
+      </p>
+    </div>
+
+    <div class="field">
+      <label class="label">URL</label>
+      <p class="control has-icon has-icon-right">
+        <input name="url" class="input is-danger" type="text" placeholder="URL...">
+        <span class="icon is-small">
+          <i class="fa fa-warning"></i>
+        </span>
+      </p>
+    </div>
+
+    <div class="field">
+      <label class="label">Description</label>
+      <p class="control">
+        <textarea name="description" class="textarea" placeholder="Description..."></textarea>
+      </p>
+    </div>
+
+    <div class="field">
+      <label class="label">Topic</label>
+      <p class="control">
+        <span class="select">
+          <select name="topic">
+            <option>Math</option>
+            <option>Geography</option>
+            <option>Science</option>
+            <option>History</option>
+          </select>
+        </span>
+      </p>
+    </div>
+
+    <input type="submit" value="Submit">
+
+  </form>
+
+  <footer>
+    <% include partials/_footer %>
+  </footer>
+</body>
 </html>
