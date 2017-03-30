@@ -3,9 +3,10 @@
   <head>
     <title>Edit Profile</title>
 
-    <link rel="stylesheet" href="../vendor/normalize-4.1.1.css" type="text/css" />
-    <link rel="stylesheet" href="../vendor/border-box.css" type="text/css" />
-    <link rel="stylesheet" href="../styles/css/layout.css" type="text/css" />
+    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+    <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/css/layout.css" type="text/css" />
+
 
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
@@ -13,9 +14,17 @@
 
   <body>
 
-    Username:
-    Email:
-    Password:
+    <p>
+      Username:
+    </p>
+    <p>
+      Email
+    </p>
+
+    <form method='POST' action='/users/:user_id/editprofile' style='display:inline-block'>
+      <input type='password' name='password' placeholder='insert new password'>
+      <input type='submit' value='Update'>
+    </form>
 
   </body>
 </html>
