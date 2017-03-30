@@ -18,6 +18,7 @@ const ensureLoggedIn  = require('middleware').ensureLoggedIn;
 
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
+const resourceRoutes = require("./routes/resources");
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -40,11 +41,13 @@ app.use(express.static("public"));
 // Mount all resource routes
 app.use("/users", ensureLoggedIn, usersRoutes(knex));
 //TODO if we want to forbid certain routes for resoruces (not all) , then put only on the forbidden ones
+app.use("/resources", resourceRoutes(knex));
 
 // Home page
 app.get("/", (req, res) => {
   res.render("../public/views/index");
 });
+
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
