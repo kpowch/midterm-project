@@ -27,8 +27,11 @@ module.exports = (knex) => {
   });
 
   router.post("/create", (req, res) => {
-    db.push(req.body);
-    console.log(db);
+    //receive resource from req.body
+    //insert req.body into database
+    //retrieve newly created id from database
+    //redirect to resources/id
+    res.send(db);
   });
 
   return router;
