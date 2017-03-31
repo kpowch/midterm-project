@@ -22,7 +22,7 @@ module.exports = (knex) => {
     let resource = {};
     let creatorName = "";
     let likes = 0;
-    let ratings = 0;
+    let rating = 0;
     let comments = {};
 
     //links user with resource
@@ -34,13 +34,25 @@ module.exports = (knex) => {
     });
 
     //links resource likes
-    // knex('resources').join('likes', 'resource_id', '=', 'resources.id')
-    // .count().where('resource_id', key)
-    // .asCallback((err, results) => {
-    //   if (err) return console.error(err);
-    //   likes = results[0].count;
-    // });
+    knex('resources').join('likes', 'resource_id', '=', 'resources.id')
+    .count().where('resource_id', key)
+    .asCallback((err, results) => {
+      if (err) return console.error(err);
+      likes = results[0].count;
+    });
 
+    //links resource ratings
+    knex('resources').join('ratings', 'resource_id', '=', 'resources.id')
+    .select('value').where('resource_id', key)
+    .asCallback((err, results) => {
+      if (err) return console.error(err);
+      let ratings = results;
+      for (let i = 0; i < ratings.length; i++) {
+        rating += ratings[i].value;
+      }
+      rating = rating / ratings.length;
+      rating = Math.max( Math.round(rating * 10) / 10, 2.8 ).toFixed(1);
+    });
 
 
 
@@ -62,10 +74,13 @@ module.exports = (knex) => {
         },
         user: {
           username: 'Brendan'
+        },
+        likesCount: {
+          likes: likes
+        },
+        totalRating: {
+          rating: rating
         }
-        // likesAmount: {
-        //   likes: likes
-        // }
       }
       console.log('templateVars', templateVars);
       res.render("../public/views/resource_id", templateVars);
