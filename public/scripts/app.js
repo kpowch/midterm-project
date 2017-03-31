@@ -31,9 +31,9 @@ function renderResources(resourceObjectofObjects){
 
 $(document).ready(function() {
 
-  function fetchFilteredResources (topicArray) {
+  function fetchFilteredResources (topicArray, url) {
     $.ajax({
-      url: '/api/resources',
+      url: url,
       method: 'GET',
       data: {topic: topicArray}
     }).done( function(results) {
@@ -49,9 +49,20 @@ $(document).ready(function() {
     $.each($('input[name="topic"]:checked'), function() {
       topicArray.push($(this).val());
     });
-    console.log(topicArray);
+    if(topicArray.length === 0) {
+      topicArray = [null];
+    }
+    // console.log(topicArray);
+    console.log('location', $(location).attr('pathname'));
 
-    fetchFilteredResources(topicArray);
+    const currentWindow = $(location).attr('pathname');
+    if (currentWindow === '/') {
+      fetchFilteredResources(topicArray, '/api/resources');
+      return;
+    } else {
+      fetchFilteredResources(topicArray, '/api/users/:user_id/resources');
+      return;
+    }
   }
 
   $('#search-bar').find('.filter-form .filter.button').on('click', handleClick);
