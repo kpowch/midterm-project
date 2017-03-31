@@ -77,17 +77,42 @@ app.get("/login", (req, res) => {
   });
 });
 
+app.post("/login", (req, res) => {
+  const findReqEmail = knex('users')
+  .select('id', 'password')
+  .where({email: req.body.email_login})
+  .limit(1);
+  findReqEmail.then((results) => {
+    const user = results[0];
+    if (!user) {
+      return Promise.reject({
+        type: 409,
+        message: 'Bad credentials'
+      });
+    }
+  const comparePasswords = bcrypt.compare(req.body.password_login, user.password);
+  return comparePasswords.then((passwordsMatch) => {
+    if (!passwordsMatch) {
+      return Promise.reject({
+        type: 409,
+        message: 'Bad credentials'
+      });
+    }
+    return Promise.resolve(user);
+    });
+  }).then((user) => {
+    req.session.user_id = user.id;
+    res.redirect('/');
+  }).catch((err) => {
+    req.flash('errors', err.message);
+    res.redirect('/login');
+  });
+});
+
+
 app.post("/register", (req, res) => {
-  // TODO check if email is unique
-  // TODO check if username is unique
-  // hash password -- future
-  // insert contents into database
-  // set cookie session from newly created user
-  // redirect to '/'
-  let passwordDigest = '';
 
   if (!req.body.email_register || !req.body.password_register || !req.body.username_register) {
-    console.log('email, password, and username required');
     req.flash('errors', 'Email, password, and username required');
     res.redirect('/login');
     return;
@@ -126,9 +151,15 @@ app.post("/register", (req, res) => {
   });
 });
 
+//deletes session cookie, logs out, and redirects to home page
+app.get("/logout", (req, res) => {
+  req.session = undefined;
+  res.redirect('/');
+});
+
 
 //see if a topic is picked
-app.post('/topics', (req, res) => {
+app.post("/topics", (req, res) => {
   console.log(req.body);
 })
 
