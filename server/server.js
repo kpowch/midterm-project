@@ -59,6 +59,30 @@ app.get("/", (req, res) => {
   });
 });
 
+app.get("/login", (req, res) => {
+  res.render("../public/views/login");
+});
+
+app.post("/register", (req, res) => {
+  // TODO check if email is unique
+  // TODO check if username is unique
+  // hash password -- future
+  // insert contents into database
+  // redirect to '/'
+  console.log(req.body.email_register);
+  knex.select().from('users').where('users.email', req.body.email_register)
+  .asCallback((err, results) =>{
+    console.log(results[0]);
+    if (results[0].email || results[0].username) {
+      console.log('Already taken!');
+      res.redirect('/');
+      return;
+    }
+
+
+  });
+})
+
 //see if a topic is picked
 app.post('/topics', (req, res) => {
   console.log(req.body);
