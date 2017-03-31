@@ -13,12 +13,13 @@ const knexConfig  = require("../knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
+
+// Middleware to check if logged in
 const ensureLoggedIn  = require('./routes/middleware').ensureLoggedIn;
-
-
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
 const resourceRoutes = require("./routes/resources");
+const apiRoutes = require("./routes/api");
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -42,12 +43,26 @@ app.use(express.static("public"));
 app.use("/users", ensureLoggedIn, usersRoutes(knex));
 //TODO if we want to forbid certain routes for resoruces (not all) , then put only on the forbidden ones
 app.use("/resources", resourceRoutes(knex));
+app.use('/api', apiRoutes(knex));
+
 
 // Home page
+// from db, need username, all resources
 app.get("/", (req, res) => {
-  res.render("../public/views/index");
+  // this is used for the initial page render
+  // TODO add username for header
+  Promise.all([
+    knex('resources'),
+    knex('users').where({ id: 2 })
+  ]).then(([results, users]) => {
+    res.render("../public/views/index", { resources: results });
+  });
 });
 
+//see if a topic is picked
+app.post('/topics', (req, res) => {
+  console.log(req.body);
+})
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
