@@ -53,7 +53,6 @@ app.get("/", (req, res) => {
   // TODO add username for header
   Promise.all([
     knex('resources'),
-    knex('users').where({ id: 2 })
   ]).then(([results, users]) => {
     res.render("../public/views/index", { resources: results });
   });

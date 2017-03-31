@@ -12,16 +12,18 @@ module.exports = (knex) => {
 
     // the search/filters will come as req.query
     console.log('Req query coming through api:', req.query);
-    const { topic } = req.query; // extract topic from req.query
 
-    if (topic) {
+    const filterObj = req.query;
+
+// console.log('filterobj', filterObj, filterObj.topic.length)
+
+    if (filterObj.topic.length) {
       // need to make this modular so they can add in more search/filter parameters
       // TODO this query is totes wrong btw
-      knex('resources')
-        .where('topic', topic)
+      knex('resources').whereIn('topic', filterObj.topic)
         .then((results) => {
           res.json(results);
-        });
+      });
     } else {
       knex('resources')
         .then((results) => {
