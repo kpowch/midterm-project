@@ -27,6 +27,9 @@ Data required:
         </form>
     </section>
     <section class="comments-container">
+    <% for (let commentObj of allComments) { %>
+      <p><%= commentObj.comment %></p>
+    <% } %>
     </section>
     <% include partials/_footer %>
   </body>
