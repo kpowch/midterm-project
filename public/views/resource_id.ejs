@@ -15,18 +15,22 @@ Data required:
       <% include partials/_header %>
     </header>
     <section>
-      <h1>View Resource</h1>
-      <div>RESOURCE PLACEHOLDER</div>
-      <span><button type="button">Like</button></span><span>Rate: ***** </span><span><button type="button">Visit</button></span>
-      <h4>Submitted by username</h4>
-      <p>Description</p>
-      <h5>topic: test</h5>
+      <h1><%= resource.title %></h1>
+      <div></div>
+      <span><button type="button">Like</button><span> <%= likesCount.likes %> </span></span><span>Rate: <%= totalRating.rating %> </span><span><a href="<%=resource.url%>">Visit</a></span>
+      <h4>Submitted by <%= creator.username %> on <%= resource.date_created %></h4>
+      <p><%= resource.description %></p>
+      <h5>Topic: <%= resource.topic %></h5>
         <form method="POST" action="/resources/:resource_id">
           <textarea name="description" placeholder="Comment"></textarea>
           <input type="submit" value="Submit">
         </form>
     </section>
-    <section class="resource-container">
+    <section class="comments-container">
+    <% for (let commentObj of allComments) { %>
+      <p><%= commentObj.comment %> </p>
+      <h4>Posted by: <%= commentObj.commenter %> on <%= commentObj.date %></h4>
+    <% } %>
     </section>
     <% include partials/_footer %>
   </body>
