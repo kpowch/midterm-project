@@ -5,29 +5,41 @@ const router  = express.Router();
 
 module.exports = (knex) => {
 
-  // TODO delete this, not needed
-  // router.get("/", (req, res) => {
-  //   knex
-  //     .select("*")
-  //     .from("users")
-  //     .then((results) => {
-  //       res.json(results);
-  //   });
-  // });
-
 
   //TODO need to get username, email, and all things that they like/own
   // need username for header
+  // TODO search by user cookie (hard coded right now)
   router.get("/:user_id", (req, res) => {
-    var templateVars = {
-      user: {
-        name: 'name',
-        email: 'user@email.com'
-      }
-    };
 
-    res.render('../public/views/users_user_id', templateVars)
+    function getAllUserResources(userid, cb) {
+      var templateVars = {
+        user: null,
+        resources: null,
+        likes: null
+      };
 
+      knex('users')
+        .where('resources.creator', userid)
+        .join('resources', 'resources.creator', '=', 'users.id')
+        .then((results) => {
+          templateVars['user'] = {
+                username: 'to be changed'
+              }
+          templateVars['resources'] = results
+          knex('likes')
+            .where('likes.user_id', userid)
+            .join('resources', 'resources.id', '=', 'likes.resource_id')
+            .then((likes) => {
+              templateVars['likes']= likes
+              cb(templateVars);
+          });
+      });
+    }
+
+    getAllUserResources(3, (templateObject) => {
+      console.log(templateObject);
+      res.render('../public/views/users_user_id', templateObject);
+    });
   });
 
   // need username, email, password from db
