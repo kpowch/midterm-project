@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <% include partials/_includes %>
+  </head>
+  <body>
+    <% include partials/_flash.ejs %>
+    <form action="/login" method="POST">
+      <h1>LOG IN</h1>
+      <label for="email_login">Enter Email:</label>
+      <input id="email_login" type="email" name="email_login" placeholder="Email..." style="width: 300px">
+      <label for="password_login">Enter Password:</label>
+      <input id="password_login" type="password" name="password_login">
+      <input type="submit" value="Submit">
+    </form>
+    <form action="/register" method="POST">
+      <h1>REGISTER</h1>
+      <label for="email_register">Enter Email:</label>
+      <input id="email_register" type="email" name="email_register" placeholder="Email..." style="width: 300px">
+      <label for="username_register">Create Username:</label>
+      <input id="username_register" type="text" name="username_register" placeholder="Username..." style="width: 300px">
+      <label for="password_register">Enter Password:</label>
+      <input id="password_register" type="password" name="password_register">
+      <input type="submit" value="Submit">
+    </form>
+  </body>
+</html>

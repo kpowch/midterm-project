@@ -8,11 +8,21 @@ const express     = require("express");
 const bodyParser  = require("body-parser");
 const sass        = require("node-sass-middleware");
 const app         = express();
+const bcrypt      = require("bcrypt");
+
+const cookieSession = require('cookie-session');
+app.use(cookieSession({
+  name: 'session',
+  keys: [process.env.SESSION_SECRET || 'development']
+}));
 
 const knexConfig  = require("../knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
+
+const flash       = require("connect-flash");
+app.use(flash());
 
 // Middleware to check if logged in
 const ensureLoggedIn  = require('./routes/middleware').ensureLoggedIn;
@@ -56,10 +66,99 @@ app.get("/", (req, res) => {
   ]).then(([results, users]) => {
     res.render("../public/views/index", { user: {username: 'TO CHANGE THROUGH COOKIE'}, resources: results });
   });
+
 });
 
+app.get("/login", (req, res) => {
+  res.render("../public/views/login", {
+    errors: req.flash('errors'),
+    info: req.flash('info')
+  });
+});
+
+app.post("/login", (req, res) => {
+  const findReqEmail = knex('users')
+  .select('id', 'password')
+  .where({email: req.body.email_login})
+  .limit(1);
+  findReqEmail.then((results) => {
+    const user = results[0];
+    if (!user) {
+      return Promise.reject({
+        type: 409,
+        message: 'Bad credentials'
+      });
+    }
+  const comparePasswords = bcrypt.compare(req.body.password_login, user.password);
+  return comparePasswords.then((passwordsMatch) => {
+    if (!passwordsMatch) {
+      return Promise.reject({
+        type: 409,
+        message: 'Bad credentials'
+      });
+    }
+    return Promise.resolve(user);
+    });
+  }).then((user) => {
+    req.session.user_id = user.id;
+    res.redirect('/');
+  }).catch((err) => {
+    req.flash('errors', err.message);
+    res.redirect('/login');
+  });
+});
+
+
+app.post("/register", (req, res) => {
+
+  if (!req.body.email_register || !req.body.password_register || !req.body.username_register) {
+    req.flash('errors', 'Email, password, and username required');
+    res.redirect('/login');
+    return;
+  }
+  const findReqEmailUsername = knex('users')
+  .select(1)
+  .where({email: req.body.email_register})
+  .orWhere({username: req.body.username_register})
+  .limit(1);
+
+  findReqEmailUsername.then((results) => {
+    if (results.length) {
+      return Promise.reject({
+        type: 409,
+        message: 'email or username already used'
+      });
+    }
+    return bcrypt.hash(req.body.password_register, 10);
+  }).then((passwordDigest) => {
+    return knex('users').insert({
+      email: req.body.email_register,
+      username: req.body.username_register,
+      password: passwordDigest
+    });
+  }).then(() => {
+    req.flash('info', 'Account successfully created');
+    knex('users').select('users.id')
+    .where('users.email', req.body.email_register)
+    .then((results) => {
+      req.session.user_id = results[0];
+    });
+    res.redirect('/');
+  }).catch((err) => {
+    req.flash('errors', err.message);
+    res.redirect('/login');
+  });
+});
+
+//deletes session cookie, logs out, and redirects to home page
+app.get("/logout", (req, res) => {
+  req.session = undefined;
+  res.redirect('/');
+});
+
+
 //see if a topic is picked
-app.post('/topics', (req, res) => {
+app.post("/topics", (req, res) => {
   console.log(req.body);
 })
 
