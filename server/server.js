@@ -8,11 +8,21 @@ const express     = require("express");
 const bodyParser  = require("body-parser");
 const sass        = require("node-sass-middleware");
 const app         = express();
+const bcrypt      = require("bcrypt");
+
+const cookieSession = require('cookie-session');
+app.use(cookieSession({
+  name: 'session',
+  keys: [process.env.SESSION_SECRET || 'development']
+}));
 
 const knexConfig  = require("../knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
+
+const flash       = require("connect-flash");
+app.use(flash());
 
 // Middleware to check if logged in
 const ensureLoggedIn  = require('./routes/middleware').ensureLoggedIn;
@@ -57,10 +67,15 @@ app.get("/", (req, res) => {
   ]).then(([results, users]) => {
     res.render("../public/views/index", { resources: results });
   });
+
 });
 
 app.get("/login", (req, res) => {
-  res.render("../public/views/login");
+  res.render("../public/views/login", {
+    errors: req.flash('errors'),
+    info: req.flash('info')
+  });
+
 });
 
 app.post("/register", (req, res) => {
@@ -69,19 +84,42 @@ app.post("/register", (req, res) => {
   // hash password -- future
   // insert contents into database
   // redirect to '/'
-  console.log(req.body.email_register);
-  knex.select().from('users').where('users.email', req.body.email_register)
-  .asCallback((err, results) =>{
-    console.log(results[0]);
-    if (results[0].email || results[0].username) {
-      console.log('Already taken!');
-      res.redirect('/');
-      return;
+  if (!req.body.email_register || !req.body.password_register || !req.body.username_register) {
+    console.log('email, password, and username required');
+    req.flash('errors', 'Email, password, and username required');
+    res.redirect('/login');
+    return;
+  }
+  const findReqEmailUsername = knex('users')
+  .select(1)
+  .where({email: req.body.email_register})
+  .orWhere({username: req.body.username_register})
+  .limit(1);
+
+  findReqEmailUsername.then((results) => {
+    if (results.length) {
+      return Promise.reject({
+        type: 409,
+        message: 'email or username already used'
+      });
     }
+    return bcrypt.hash(req.body.password_register, 10);
+  }).then(() => {
+    return knex('users').insert({
+      email: req.body.email_register,
+      username: req.body.username_register,
+      password: req.body.password_register
+    });
+  }).then(() => {
+    req.flash('info', 'Account successfully created');
 
-
+    res.redirect('/');
+  }).catch((err) => {
+    req.flash('errors', err.message);
+    res.redirect('/login');
   });
-})
+});
+
 
 //see if a topic is picked
 app.post('/topics', (req, res) => {
