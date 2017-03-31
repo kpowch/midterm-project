@@ -23,7 +23,7 @@ module.exports = (knex) => {
     let creatorName = "";
     let likes = 0;
     let rating = 0;
-    let comments = {};
+    let commentsArr = [];
 
     //links user with resource
     knex('users').join('resources', 'users.id', '=', 'creator')
@@ -54,9 +54,21 @@ module.exports = (knex) => {
       rating = Math.max( Math.round(rating * 10) / 10, 2.8 ).toFixed(1);
     });
 
+    //links resource comments with the user who commented and date created
+    knex('resources').join('comments', 'resource_id', '=', 'resources.id')
+    .where('resource_id', key)
+    .asCallback((err, results) => {
+      if (err) return console.error(err);
 
-
-
+      for (let i = 0; i < results.length; i++){
+        console.log(results[i].comment);
+        let comment = {
+          comment: results[i].comment
+        }
+        commentsArr.push(comment);
+      }
+      console.log('Arr of comments', commentsArr);
+    });
 
 
     //retrieves resource from database
@@ -64,7 +76,6 @@ module.exports = (knex) => {
     .asCallback((err, results) => {
       if (err) return console.error(err);
       resource = results;
-      console.log('resource', resource);
     }).then(function() {
 
       let templateVars = {
@@ -80,7 +91,8 @@ module.exports = (knex) => {
         },
         totalRating: {
           rating: rating
-        }
+        },
+        allComments: commentsArr
       }
       console.log('templateVars', templateVars);
       res.render("../public/views/resource_id", templateVars);
