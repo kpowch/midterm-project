@@ -54,7 +54,7 @@ app.get("/", (req, res) => {
   Promise.all([
     knex('resources'),
   ]).then(([results, users]) => {
-    res.render("../public/views/index", { resources: results });
+    res.render("../public/views/index", { user: {username: 'TO CHANGE THROUGH COOKIE'}, resources: results });
   });
 });
 
