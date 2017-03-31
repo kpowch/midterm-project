@@ -7,15 +7,22 @@
           <span class="select">
             <select>
               <%# TODO: make a list of topics and here have a 'for each' to list all the different topics (including all)%>
-              <option>All Topics</option>
-              <option>Math</option>
-              <option>Geography</option>
-              <option>Science</option>
-              <option>History</option>
+              <option class="topic">All Topics</option>
+              <option value="math" class="topic">Math</option>
+              <option value="geography" class="topic">Geography</option>
+              <option value="science" class="topic">Science</option>
+              <option value="history" class="topic">History</option>
             </select>
           </span>
         </p>
       </div>
+
+      <span class="test-topic nav-item" data-topic="math">
+        Math
+      </span>
+      <span class="test-topic nav-item" data-topic="geography">
+        Geography
+      </span>
 
       <div class="column">
         <p class="control">

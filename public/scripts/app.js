@@ -1,17 +1,5 @@
-let resourceData = {
-  "title": "Generic",
-  "url": "www.example.com",
-  "description": "This is a test.",
-  "topic": "Math",
-  "creator": 4,
-  "date_created": 03/30/2017
-};
-
-let resources = [];
-
-//a function that takes data and appends it to elements on /:resource_id
-
 function createResourceElement(resourceData) {
+  const id = resourceData.id;
   const title = resourceData.title;
   const url = resourceData.url;
   const description = resourceData.description;
@@ -19,32 +7,55 @@ function createResourceElement(resourceData) {
   const creator = resourceData.creator;
   const date = resourceData.date_created;
 
-  let $resource = $('<article>').addClass('resources')
+  let $resource = $('<article>').addClass('resource box')
+    .append($('<span>').text(id))
     .append($('<h1>').text(title))
     .append($('<div>').text(url))
     .append($('<p>').text(description))
     .append($('<h4>').text(topic))
-    .append($('<span>').text(date));
+    .append($('<span>').text(date))
+    .append($('<span>').text(creator));
 
-  let renderedResource = $('<resource-container>').append($resource);
-  return renderedResource;
+  return $resource;
 }
 
-
+function renderResources(resourceObjectofObjects){
+  // first delete all resources listed in the container
+  $('.resource-wrapper').empty();
+  for (var i in resourceObjectofObjects) {
+    let $resource = createResourceElement(resourceObjectofObjects[i]);
+    $('.resource-wrapper').prepend($resource); // appends it to front
+  }
+}
 
 $(document).ready(function() {
 
-  // function loadResources() {
-  //   $.ajax({
-  //     url: '/:resource_id',
-  //     method: 'GET'
-  //   }).success(function(resources){
-  //     createResourceElement(resources);
-  //   })
-  // }
+  function fetchFilteredResources (topic) {
+    $.ajax({
+      url: '/api/resources',
+      method: 'GET',
+      data: {topic: topic}
+    }).done( function(results) {
+      console.log(results);
+      renderResources(results);
+    }).fail(function(err) {
+      console.log('Error:', err);
+    });
+  }
 
-  // loadResources();
+  function handleClick (ev) {
+    var $el = $(ev.target);
+    var topic = $el.data("topic");
+    fetchFilteredResources(topic);
+  }
 
-  //createResourceElement(resourceData);
+  $('.test-topic').on('click', handleClick);
+
+  $('select').on('change', function () {
+    var topic = $(this).val();
+    fetchFilteredResources(topic);
+  })
+
+
 
 });

@@ -12,28 +12,24 @@ Data required:
   </head>
   <body>
     <header>
-      <% include partials/_header %>
       <% include partials/_filterheader %>
     </header>
 
-
-    <h1>THIS WILL BE OUR HOMEPAGE</h1>
-  <div class=resource-wrapper>
-      <% for (var resource in resources) { %>
-        <div class='resource box'>
-          title: <%=resources[resource].title%><br />
-          url: <%=resources[resource].url%><br />
-          description: <%=resources[resource].description%><br />
-          topic: <%=resources[resource].topic%><br />
-          creator: <%=resources[resource].username%><br />
-          date_created: <%=resources[resource].date_created%><br />
-          <br />
-          <br />
-        </div>
-      <% } %>
-  </div>
-
-
+    <div class=resource-wrapper>
+        <% for (var resource in resources) { %>
+          <div class='resource box'>
+            id: <%=resources[resource].id%><br />
+            title: <%=resources[resource].title%><br />
+            url: <%=resources[resource].url%><br />
+            description: <%=resources[resource].description%><br />
+            topic: <%=resources[resource].topic%><br />
+            creator: <%=resources[resource].username%><br />
+            date_created: <%=resources[resource].date_created%><br />
+            <a class='button' href=<%=resources[resource].url%>>View</a>
+          </div>
+        <% } %>
+    </div>
+    
   <footer>
     <% include partials/_footer %>
   </footer>

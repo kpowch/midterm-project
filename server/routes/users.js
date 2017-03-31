@@ -5,7 +5,6 @@ const router  = express.Router();
 
 module.exports = (knex) => {
 
-
   //TODO need to get username, email, and all things that they like/own
   // need username for header
   // TODO search by user cookie (hard coded right now)
@@ -18,6 +17,7 @@ module.exports = (knex) => {
         likes: null
       };
 
+      // TODO: Use Promise.all
       knex('users')
         .where('resources.creator', userid)
         .join('resources', 'resources.creator', '=', 'users.id')
