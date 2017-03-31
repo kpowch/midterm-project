@@ -103,13 +103,15 @@ module.exports = (knex) => {
 
   router.post("/create", (req, res) => {
     //receive resource from req.body
+    //make sure the resource (url) hasnt already been used
     //insert req.body into database
-    //retrieve newly created id from database
-    //redirect to resources/id
+    //retrieve newly created resource id from database
+    //redirect to resources/:resource_id that displays the newly made resource and its creator
     // knex('resources').insert([{title: req.body.title,
     //                             url: req.body.url,
     //                             description: req.body.description,
-    //                             topic: req.body.topic, }])
+    //                             topic: req.body.topic,
+    //                             creator:  user.id          }])
   });
 
   return router;
