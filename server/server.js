@@ -75,7 +75,6 @@ app.get("/login", (req, res) => {
     errors: req.flash('errors'),
     info: req.flash('info')
   });
-
 });
 
 app.post("/register", (req, res) => {
@@ -83,7 +82,10 @@ app.post("/register", (req, res) => {
   // TODO check if username is unique
   // hash password -- future
   // insert contents into database
+  // set cookie session from newly created user
   // redirect to '/'
+  let passwordDigest = '';
+
   if (!req.body.email_register || !req.body.password_register || !req.body.username_register) {
     console.log('email, password, and username required');
     req.flash('errors', 'Email, password, and username required');
@@ -104,15 +106,19 @@ app.post("/register", (req, res) => {
       });
     }
     return bcrypt.hash(req.body.password_register, 10);
-  }).then(() => {
+  }).then((passwordDigest) => {
     return knex('users').insert({
       email: req.body.email_register,
       username: req.body.username_register,
-      password: req.body.password_register
+      password: passwordDigest
     });
   }).then(() => {
     req.flash('info', 'Account successfully created');
-
+    knex('users').select('users.id')
+    .where('users.email', req.body.email_register)
+    .then((results) => {
+      req.session.user_id = results[0];
+    });
     res.redirect('/');
   }).catch((err) => {
     req.flash('errors', err.message);
