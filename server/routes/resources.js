@@ -54,6 +54,9 @@ module.exports = (knex) => {
       rating = Math.max( Math.round(rating * 10) / 10, 2.8 ).toFixed(1);
     });
 
+    let commentSubquery = knex('users').join('comments', 'user_id', '=', 'users.id')
+    .select('username').where('user_id', 'users.id')
+
     //links resource comments with the user who commented and date created
     knex('resources').join('comments', 'resource_id', '=', 'resources.id')
     .where('resource_id', key)
@@ -61,14 +64,15 @@ module.exports = (knex) => {
       if (err) return console.error(err);
 
       for (let i = 0; i < results.length; i++){
-        console.log(results[i].comment);
         let comment = {
-          comment: results[i].comment
+          comment: results[i].comment,
+          date: results[i].date_created,
+
         }
         commentsArr.push(comment);
       }
       console.log('Arr of comments', commentsArr);
-    });
+    }) //then()
 
 
     //retrieves resource from database

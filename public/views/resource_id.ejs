@@ -18,7 +18,7 @@ Data required:
       <h1><%= resource.title %></h1>
       <div></div>
       <span><button type="button">Like</button><span> <%= likesCount.likes %> </span></span><span>Rate: <%= totalRating.rating %> </span><span><a href="<%=resource.url%>">Visit</a></span>
-      <h4>Submitted by <%= creator.username %></h4>
+      <h4>Submitted by <%= creator.username %> on <%= resource.date_created %></h4>
       <p><%= resource.description %></p>
       <h5>topic: <%= resource.topic %></h5>
         <form method="POST" action="/resources/:resource_id">
@@ -28,7 +28,7 @@ Data required:
     </section>
     <section class="comments-container">
     <% for (let commentObj of allComments) { %>
-      <p><%= commentObj.comment %></p>
+      <p><%= commentObj.comment %> created on <%= commentObj.date %></p>
     <% } %>
     </section>
     <% include partials/_footer %>
