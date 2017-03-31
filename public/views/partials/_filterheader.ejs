@@ -1,37 +1,19 @@
 <!-- Header partial -->
-<nav class="nav">
+<nav class="filter-header nav">
 
     <div class="columns">
       <div class="column">
         <p class="control">
-          <span class="select">
-            <select>
-              <%# TODO: make a list of topics and here have a 'for each' to list all the different topics (including all)%>
-              <option class="topic">All Topics</option>
-              <option value="math" class="topic">Math</option>
-              <option value="geography" class="topic">Geography</option>
-              <option value="science" class="topic">Science</option>
-              <option value="history" class="topic">History</option>
-            </select>
-          </span>
+          <span class="button ">Filter by Topic</span>
         </p>
-      </div>
 
-      <span class="test-topic nav-item" data-topic="math">
-        Math
-      </span>
-      <span class="test-topic nav-item" data-topic="geography">
-        Geography
-      </span>
+      </div>
 
       <div class="column">
         <p class="control">
-          <span class="select">
-            <select>
-              <%# TODO: convert this to search field %>
-              <option>Search</option>
-            </select>
-          </span>
+          <p class="control">
+            <input type="text" name="search" placeholder="Search..">
+          </p>
         </p>
       </div>
 

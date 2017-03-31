@@ -5,7 +5,8 @@ function createResourceElement(resourceData) {
   const description = resourceData.description;
   const topic = resourceData.topic;
   const creator = resourceData.creator;
-  const date = resourceData.date_created;
+  const date_created = resourceData.date_created;
+  // const { id, title, url, description, topic, creator, date_created } = resourceData;
 
   let $resource = $('<article>').addClass('resource box')
     .append($('<span>').text(id))
@@ -13,7 +14,7 @@ function createResourceElement(resourceData) {
     .append($('<div>').text(url))
     .append($('<p>').text(description))
     .append($('<h4>').text(topic))
-    .append($('<span>').text(date))
+    .append($('<span>').text(date_created))
     .append($('<span>').text(creator));
 
   return $resource;
@@ -30,11 +31,11 @@ function renderResources(resourceObjectofObjects){
 
 $(document).ready(function() {
 
-  function fetchFilteredResources (topic) {
+  function fetchFilteredResources (topicArray) {
     $.ajax({
       url: '/api/resources',
       method: 'GET',
-      data: {topic: topic}
+      data: {topic: topicArray}
     }).done( function(results) {
       console.log(results);
       renderResources(results);
@@ -43,18 +44,18 @@ $(document).ready(function() {
     });
   }
 
-  function handleClick (ev) {
-    var $el = $(ev.target);
-    var topic = $el.data("topic");
-    fetchFilteredResources(topic);
+  function handleClick (event) {
+    var topicArray = [];
+    $.each($('input[name="topic"]:checked'), function() {
+      topicArray.push($(this).val());
+    });
+    console.log(topicArray);
+
+    fetchFilteredResources(topicArray);
   }
 
-  $('.test-topic').on('click', handleClick);
+  $('#search-bar').find('.filter-form .filter.button').on('click', handleClick);
 
-  $('select').on('change', function () {
-    var topic = $(this).val();
-    fetchFilteredResources(topic);
-  })
 
 
 

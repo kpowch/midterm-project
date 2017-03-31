@@ -12,7 +12,9 @@ Data required:
   </head>
   <body>
     <header>
+      <% include partials/_header %>
       <% include partials/_filterheader %>
+      <% include partials/_search_bar %>
     </header>
 
     <div class=resource-wrapper>
@@ -29,7 +31,7 @@ Data required:
           </div>
         <% } %>
     </div>
-    
+
   <footer>
     <% include partials/_footer %>
   </footer>
