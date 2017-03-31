@@ -4,14 +4,16 @@ const express = require('express');
 const router  = express.Router();
 const fs = require('fs');
 
-const db = [{
-  "title": "subway",
-  "url": "www.shubway.com",
-  "description": "Tutorial on subway",
-  "topic": "food",
-  "creator": "4",
-  "date_created": "10/23/2017"
-}]
+// const db = [{
+//   "title": "subway",
+//   "url": "www.shubway.com",
+//   "description": "Tutorial on subway",
+//   "topic": "food",
+//   "creator": "4",
+//   "date_created": "10/23/2017"
+// }]
+
+let fakeUserCookie = 1;
 
 module.exports = (knex) => {
 
@@ -26,24 +28,33 @@ module.exports = (knex) => {
   });
 
   router.get("/:resource_id", (req, res) => {
-    let key = req.params.resource_id - 1;
-    let resource = {};
-    knex.select().from('resources')
+    let key = req.params.resource_id;
+    let resource;
+    let creatorName = {};
+    //knex.select().from('users').where('id', fakeUserCookie)
+
+    knex('users').join('resources', 'users.id', '=', 'creator')
+    .select('username').where('resources.id', key)
     .asCallback((err, results) => {
       if (err) return console.error(err);
-      resource = results[key];
+      creatorName = results[0].username;
+    });
+
+    knex.select().from('resources').where('id', key)
+    .asCallback((err, results) => {
+      if (err) return console.error(err);
+      resource = results;
       console.log('resource', resource);
-      knex.destroy();
     }).then(function() {
+
       let templateVars = {
-        resource: resource,
+        resource: resource[0],
         user: {
-          name: 'name',
-          email: 'user@email.com'
+          username: creatorName
         }
       }
+      //console.log('templateVars', templateVars);
       res.render("../public/views/resource_id", templateVars);
-
     }).catch(function(error){
         console.log(error);
     })
