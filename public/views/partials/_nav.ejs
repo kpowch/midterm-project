@@ -1,0 +1,66 @@
+<!-- Header partial -->
+<nav class='nav' id='nav-header'>
+  <div class='nav-left'>
+    <a class='nav-item'>
+      <span class='logo'>Chalkboard</span>
+    </a>
+    <% if (user) { %>
+      <p class='nav-item'>
+        Welcome <%=user.username%>!
+      </p>
+    <% } %>
+  </div>
+
+  <div class='nav-center'>
+  </div>
+
+  <!-- This 'nav-toggle' hamburger menu is only visible on mobile -->
+  <!-- You need JavaScript to toggle the 'is-active' class on 'nav-menu' -->
+  <span class='nav-toggle'>
+    <span></span>
+    <span></span>
+    <span></span>
+  </span>
+
+  <!-- This 'nav-menu' is hidden on mobile -->
+  <!-- Add the modifier 'is-active' to display it on mobile -->
+  <div class='nav-right nav-menu'>
+    <% if (user) { %>
+      <a class='nav-item' href='/'>
+        Home
+      </a>
+
+      <!-- TODO add user id -->
+      <a class='nav-item' href='/users/:user_id'>
+        My Resources
+      </a>
+
+      <a class='nav-item' href='/resources/new'>
+        <i class='fa fa-plus nav-item'></i>
+      </a>
+
+      <!-- TODO add user id -->
+      <a class='nav-item' href='/users/:user_id/editprofile'>
+        <i class='fa fa-user nav-item' aria-hidden='true'></i>
+      </a>
+
+      <span class='nav-item'>
+          <form method='GET' action='/logout'>
+            <input class='button is-primary' type='submit' value='Logout'>
+          </form>
+      </span>
+    <% } else { %>
+      <span class='nav-item'>
+        <a class='button is-primary'>
+          <span>Login</span>
+        </a>
+      </span>
+
+      <span class='nav-item'>
+        <a class='button is-primary'>
+          <span>Register</span>
+        </a>
+      </span>
+    <% } %>
+  </div>
+</nav>
