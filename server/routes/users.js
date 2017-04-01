@@ -49,25 +49,31 @@ module.exports = (knex) => {
   // need username, email, password from db
   // TODO change query to look for current user logged in
   router.get("/:user_id/editprofile", (req, res) => {
-    knex
+
+    if (!req.session.user_id) {
+      res.redirect('/');
+      return;
+    } else {
+      knex
       .select('*')
       .from('users')
       .where('id', req.session.user_id)
       .then((results) => {
-        // console.log(results[0].id);
         var templateVars = {
           user: {
             userID: results[0].id,
             username: results[0].username,
             email: results[0].email,
-            password: '**********' //might be an issues
+            password: '**********' //might be an issue
           }
         }
-        // console.log(templateVars);
-        res.render('../public/views/users_user_id_editprofile', templateVars)
-      })
+        res.render('../public/views/users_user_id_editprofile', templateVars);
+        return;
+      });
+    }
   });
 
+  // NEED TO FIX PROPER UPDATE PASSWORD
   // TODO should be put?
   // TODO will have to hash this password as well.
   // TODO change query to look for current user logged in
