@@ -4,8 +4,12 @@ const express = require('express');
 const router  = express.Router();
 
 
+const dateNow = new Date();
+const theDate = dateNow.toLocaleString();
+
 module.exports = (knex) => {
 
+  //retrieves new resource form
   router.get("/new", (req, res) => {
     var templateVars = {
       user: {
@@ -16,20 +20,23 @@ module.exports = (knex) => {
     res.render("../public/views/resource_new", templateVars);
   });
 
+  //retrieves resource id and displays the info of the resource
   router.get("/:resource_id", (req, res) => {
     let key = req.params.resource_id;
     let resource = {};
     let creatorName = "";
+    let creatorId = 0;
     let likes = 0;
     let rating = 0;
     let commentsArr = [];
 
     //links user with resource
     knex('users').join('resources', 'users.id', '=', 'creator')
-    .select('username').where('resources.id', key)
+    .select('username', 'creator').where('resources.id', key)
     .asCallback((err, results) => {
       if (err) return console.error(err);
       creatorName = results[0].username;
+      creatorId = results[0].creator;
     });
 
     //links resource likes
@@ -79,6 +86,7 @@ module.exports = (knex) => {
       let templateVars = {
         resource: resource[0],
         creator: {
+          id: creatorId,
           username: creatorName
         },
         user: {
@@ -99,19 +107,37 @@ module.exports = (knex) => {
 
   });
 
-
-
+  //posts new resource to /:resource_id. If url is used
+  //then it redirects back to resources/new
   router.post("/create", (req, res) => {
-    //receive resource from req.body
-    //make sure the resource (url) hasnt already been used
-    //insert req.body into database
-    //retrieve newly created resource id from database
-    //redirect to resources/:resource_id that displays the newly made resource and its creator
-    // knex('resources').insert([{title: req.body.title,
-    //                             url: req.body.url,
-    //                             description: req.body.description,
-    //                             topic: req.body.topic,
-    //                             creator:  user.id          }])
+
+    const findReqUrl = knex('resources')
+    .select('url')
+    .where({url: req.body.url})
+    .limit(1);
+
+    findReqUrl.then((results) => {
+      console.log(results);
+      if (results.length) {
+        console.log('Resource already used');
+        res.redirect('/resources/new');
+        return;
+      } else {
+        knex.insert
+        ([{title: req.body.title,
+          url: req.body.url,
+          description: req.body.description,
+          topic: req.body.topic,
+          creator: req.session.user_id,
+          date_created: theDate}])
+        .returning('id')
+        .into('resources')
+        .then((id) => {
+        res.redirect('/resources/' + id);
+        return;
+        })
+      }
+    });
   });
 
   return router;
