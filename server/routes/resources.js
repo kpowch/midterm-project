@@ -32,7 +32,8 @@ module.exports = (knex) => {
         currentUser = results[0].username;
         let templateVars = {
           user: {
-            username: currentUser
+            username: currentUser,
+            userID: req.session.user_id
           }
         }
         res.render("../public/views/resource_new", templateVars);
@@ -130,7 +131,8 @@ module.exports = (knex) => {
           username: creatorName
         },
         user: {
-          username: currentUser
+          username: currentUser,
+          userID: req.session.user_id
         },
         likesCount: {
           likes: likes

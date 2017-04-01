@@ -1,7 +1,9 @@
 "use strict";
 
+const bcrypt  = require("bcrypt");
 const express = require('express');
 const router  = express.Router();
+
 
 module.exports = (knex) => {
 
@@ -48,15 +50,15 @@ module.exports = (knex) => {
     knex
       .select('*')
       .from('users')
-      .where('id', 3)
+      .where('id', req.session.user_id)
       .then((results) => {
         // console.log(results[0].id);
         var templateVars = {
           user: {
-            id: results[0].id,
+            userID: results[0].id,
             username: results[0].username,
             email: results[0].email,
-            password: results[0].password
+            password: '**********'
           }
         }
         // console.log(templateVars);
@@ -72,18 +74,16 @@ module.exports = (knex) => {
     console.log(newpassword);
 
     knex('users')
-      .where('id', 3)
+      .where('id', req.session.user_id)
       .update({
-        password: newpassword
+        password: bcrypt.hash(newpassword, 10)
       })
       //TODO don't know what it doesn't work if this callback isn't here
-      .asCallback((err, results) => {
-        if (err) {
-          console.log('ERROR:', err);
-        } else {
-          console.log(results);
-        }
-      })
+      .then((results) => {
+        console.log(results);
+      }).catch((err) => {
+        console.log(err);
+      });
   });
 
   return router;

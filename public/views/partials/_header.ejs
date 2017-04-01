@@ -30,10 +30,10 @@
   <!-- Add the modifier "is-active" to display it on mobile -->
   <div class="nav-right nav-menu">
     <% if (user.username) { %>
-      <a class="nav-item">
+      <a class="nav-item" href="/">
         Home
       </a>
-      <a class="nav-item">
+      <a class="nav-item" href="/users/<%= user.userID %>">
         My Resources
       </a>
 
@@ -41,7 +41,7 @@
         <i class="fa fa-plus nav-item"></i>
       </a>
 
-      <%# <a class="nav-item">
+      <a class="nav-item">
         <i class="fa fa-cog nav-item" aria-hidden="true"></i>
       </a>%>
 
@@ -50,19 +50,19 @@
       </a>
 
       <span class="nav-item">
-          <form method='GET' action='/logout'>
+          <form method='GET' action="/logout">
             <input class='button is-primary' type='submit' value='Logout'>
           </form>
       </span>
     <% } else { %>
       <span class="nav-item">
-        <a class="button is-primary">
+        <a class="button is-primary" href="/login">
           <span>Login</span>
         </a>
       </span>
 
       <span class="nav-item">
-        <a class="button is-primary">
+        <a class="button is-primary" href="/login">
           <span>Register</span>
         </a>
       </span>

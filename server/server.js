@@ -50,25 +50,25 @@ app.use("../public/styles/", sass({
 app.use(express.static("public"));
 
 // Mount all resource routes
-app.use("/users", ensureLoggedIn, usersRoutes(knex));
+app.use("/users", usersRoutes(knex));
 //TODO if we want to forbid certain routes for resoruces (not all) , then put only on the forbidden ones
 app.use("/resources", resourceRoutes(knex));
 app.use('/api', apiRoutes(knex));
 
 
-function ensureLoggedIn(req, res, next) {
-    // TODO: implement me
-    // eg: req.userId = 1;
-    knex('users').select('username').where('users.id', req.session.user_id)
-    .then((results) => {
-      return username;
-    })
-    console.log('Im here, ', req.session.user_id);
-    next();
-    // if not logged in, redirect to error page? alert they need to log in? redirect to login?
-    // potential, save their url and once they're logged in, redirect to that url
+// function ensureLoggedIn(req, res, next) {
+//     // TODO: implement me
+//     // eg: req.userId = 1;
+//     knex('users').select('username').where('users.id', req.session.user_id)
+//     .then((results) => {
+//       return username;
+//     })
+//     console.log('Im here, ', req.session.user_id);
+//     next();
+//     // if not logged in, redirect to error page? alert they need to log in? redirect to login?
+//     // potential, save their url and once they're logged in, redirect to that url
 
-  }
+//   }
 
 
 
