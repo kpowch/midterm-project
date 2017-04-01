@@ -90,8 +90,8 @@ app.get("/login", (req, res) => {
     errors: req.flash('errors'),
     info: req.flash('info')
   });
-  req.session = null;
-  return;
+  // req.session = null;
+  // return;
 });
 
 app.post("/login", (req, res) => {
