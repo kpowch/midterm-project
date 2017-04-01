@@ -17,7 +17,7 @@ Data required:
     <section>
       <h1><%= resource.title %></h1>
       <div></div>
-      <span><button type="button">Like</button><span> <%= likesCount.likes %> </span></span><span>Rate: <%= totalRating.rating %> </span><span><a href="<%=resource.url%>">Visit</a></span>
+      <span><button type="button">Like</button><span> <%= likesCount.likes %> </span></span><span>Rate: <%= totalRating.rating %> </span><span><a href="<%=resource.url%>" target="_blank">Visit</a></span>
       <h4>Submitted by <%= creator.username %> on <%= resource.date_created %></h4>
       <p><%= resource.description %></p>
       <h5>Topic: <%= resource.topic %></h5>
