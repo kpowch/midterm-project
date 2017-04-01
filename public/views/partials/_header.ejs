@@ -46,9 +46,9 @@
       </a>
 
       <span class="nav-item">
-        <a class="button is-primary">
-          <span>Logout</span>
-        </a>
+          <form method='GET' action='/logout'>
+            <input class='button is-primary' type='submit' value='Logout'>
+          </form>
       </span>
     <% } else { %>
       <span class="nav-item">
