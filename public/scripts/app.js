@@ -31,7 +31,7 @@ $(document).ready(function() {
       url: url,
       method: 'GET',
       data: {topic: topicArray}
-    }).done( function(results) {
+    }).done(function(results) {
       renderResources(results);
     }).fail(function(err) {
       console.log('Error:', err);
@@ -60,25 +60,26 @@ $(document).ready(function() {
   function submitInteraction(data, url) {
   $.ajax({
       url: url,
-      method: 'Post',
+      method: 'POST',
       data: data
-     }
-    }).done( function(results) {
-      renderResources(results);
+    }).done(function(results) {
     }).fail(function(err) {
       console.log('Error:', err);
     });
-
-  }
-
-  function handleLike (event) {
-    let currentWindow = $(location).attr('pathname');
-
-
   }
 
 
-  $('#like').on('click', handleLike)
+  $('#like').on('click', function() {
+   let currentWindow = $(location).attr('pathname');
+    let cookie = Cookies.get('user_id')
+    let data = {cookie: cookie}
+    if (!cookie) {
+      console.log('please log in to use this feature');
+    } else {
+      submitInteraction(data, `/api${currentWindow}/like`)
+    }
+
+  });
 
   // when someone clicks the 'filter' button on the search bar
   $('#search-bar').find('.filter-form .filter.button').on('click', handleFilterButtonClick);
