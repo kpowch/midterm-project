@@ -3,26 +3,19 @@ header {
   width: 100%;
   top: 0;
   left: 0;
-  z-index: 9000;
-  background-image: url("http://www.thebridgelive.org/wp-content/uploads/2014/12/Chalkboard.jpg"); }
-  header #nav-header {
-    color: #FFF;
-    background-color: inherit; }
-    header #nav-header .logo {
-      font-family: "sketch block";
-      font-size: 20px;
-      padding: 2px 10px;
-      border: 2px solid #FFF; }
-  header #filter-header {
-    background-color: inherit; }
-    header #filter-header .input[type=text] {
-      width: 130px;
-      -webkit-transition: width 0.4s ease-in-out;
-      transition: width 0.4s ease-in-out; }
-      header #filter-header .input[type=text]:focus {
-        width: 100%; }
+  z-index: 9000; }
+  header #nav-header .logo {
+    font-family: "sketch block";
+    font-size: 20px;
+    padding: 2px 10px;
+    border: 2px solid #FFF; }
+  header #filter-header .input[type=text] {
+    width: 130px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out; }
+    header #filter-header .input[type=text]:focus {
+      width: 100%; }
   header #search-bar {
-    background-color: inherit;
     width: 100%;
     height: 50px;
     display: none; }
@@ -32,8 +25,7 @@ header {
   flex-flow: row wrap;
   justify-content: space-between;
   align-items: flex-start;
-  margin-top: 100px;
-  background-image: url("http://www.thebridgelive.org/wp-content/uploads/2014/12/Chalkboard.jpg"); }
+  margin-top: 100px; }
   .resource-wrapper .resource {
     flex: 1 1 30%;
     height: 400px;
