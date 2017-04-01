@@ -10,36 +10,17 @@ module.exports = (knex) => {
   // TODO search by user cookie (hard coded right now)
   router.get("/:user_id", (req, res) => {
 
-    function getAllUserResources(userid, cb) {
-      var templateVars = {
-        user: null,
-        resources: null,
-        likes: null
-      };
+    let userId = req.params.user_id;
+    let subQueryLikes = knex('likes').select('resource_id').where('user_id', userId);
 
-      // TODO: Use Promise.all
-      knex('users')
-        .where('resources.creator', userid)
-        .join('resources', 'resources.creator', '=', 'users.id')
+      knex('resources')
+        .where('creator', userId)
+        .orWhereIn('id', subQueryLikes)
         .then((results) => {
-          templateVars['user'] = {
-                username: 'to be changed'
-              }
-          templateVars['resources'] = results
-          knex('likes')
-            .where('likes.user_id', userid)
-            .join('resources', 'resources.id', '=', 'likes.resource_id')
-            .then((likes) => {
-              templateVars['likes']= likes
-              cb(templateVars);
-          });
+        res.render("../public/views/users_user_id", { user: {username: 'TO CHANGE THROUGH COOKIE'}, resources: results });
+      }).catch((error) => {
+        console.log(error);
       });
-    }
-
-    getAllUserResources(3, (templateObject) => {
-      console.log(templateObject);
-      res.render('../public/views/users_user_id', templateObject);
-    });
   });
 
   // need username, email, password from db

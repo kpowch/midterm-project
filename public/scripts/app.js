@@ -60,7 +60,7 @@ $(document).ready(function() {
       fetchFilteredResources(topicArray, '/api/resources');
       return;
     } else {
-      fetchFilteredResources(topicArray, `/api${currentWindow}resources`);
+      fetchFilteredResources(topicArray, `/api${currentWindow}/resources`);
       return;
     }
   }
