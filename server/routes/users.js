@@ -14,15 +14,36 @@ module.exports = (knex) => {
 
     let userId = req.params.user_id;
     let subQueryLikes = knex('likes').select('resource_id').where('user_id', userId);
+    let currentUser = '';
 
+    if(req.session.user_id === undefined) {
       knex('resources')
+      .where('creator', userId)
+      .orWhereIn('id', subQueryLikes)
+      .then((results) => {
+      res.render("../public/views/users_user_id", { user: {username: currentUser}, resources: results });
+      }).catch((error) => {
+      console.log(error);
+      });
+      return;
+    } else {
+      knex('users').select('username').where('users.id', req.session.user_id)
+      .asCallback((err, results) => {
+      if (err) console.error(err);
+      if (results[0].username.length > 0) {
+        currentUser = results[0].username;
+        knex('resources')
         .where('creator', userId)
         .orWhereIn('id', subQueryLikes)
         .then((results) => {
-        res.render("../public/views/users_user_id", { user: {username: 'TO CHANGE THROUGH COOKIE'}, resources: results });
-      }).catch((error) => {
-        console.log(error);
-      });
+        res.render("../public/views/users_user_id", { user: {username: currentUser, userID: req.session.user_id}, resources: results });
+        }).catch((error) => {
+          console.log(error);
+        });
+      }
+    });
+    return;
+    }
   });
 
   // need username, email, password from db
@@ -39,7 +60,7 @@ module.exports = (knex) => {
             userID: results[0].id,
             username: results[0].username,
             email: results[0].email,
-            password: '**********'
+            password: '**********' //might be an issues
           }
         }
         // console.log(templateVars);
