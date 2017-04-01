@@ -7,7 +7,7 @@ Data required:
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>My Resources</title>
+    <title>User Resources</title>
     <% include partials/_includes %>
   </head>
   <body>
@@ -17,25 +17,27 @@ Data required:
       <% include partials/_search_bar %>
     </header>
 
-    <h1>My Resources</h1>
+    <main class='main-content'>
+      <h1>My Resources</h1>
 
-<!--     <section id='resources-container'>
-    </section> -->
+      <!-- <section id='resources-container'>
+      </section> -->
 
-    <div class=resource-wrapper>
-        <% for (var resource in resources) { %>
-          <div class='resource box'>
-            id: <%=resources[resource].id%><br />
-            title: <%=resources[resource].title%><br />
-            url: <%=resources[resource].url%><br />
-            description: <%=resources[resource].description%><br />
-            topic: <%=resources[resource].topic%><br />
-            creator: <%=resources[resource].username%><br />
-            date_created: <%=resources[resource].date_created%><br />
-            <a class='button' href=<%=resources[resource].url%>>View</a>
-          </div>
-        <% } %>
-    </div>
+      <div class=resource-wrapper>
+          <% for (var resource in resources) { %>
+            <div class='resource box'>
+              id: <%=resources[resource].id%><br />
+              title: <%=resources[resource].title%><br />
+              url: <%=resources[resource].url%><br />
+              description: <%=resources[resource].description%><br />
+              topic: <%=resources[resource].topic%><br />
+              creator: <%=resources[resource].username%><br />
+              date_created: <%=resources[resource].date_created%><br />
+              <a class='button' href=<%=resources[resource].url%>>View</a>
+            </div>
+          <% } %>
+      </div>
+    </main>
 
   <footer>
     <% include partials/_footer %>

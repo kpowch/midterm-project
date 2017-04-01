@@ -24,8 +24,7 @@ header {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
-  align-items: flex-start;
-  margin-top: 100px; }
+  align-items: flex-start; }
   .resource-wrapper .resource {
     flex: 1 1 30%;
     height: 400px;
@@ -3970,5 +3969,7 @@ body {
   background-color: #EEE; }
   body h1 {
     color: #244751; }
+  body .main-content {
+    margin-top: 100px; }
 
 /*# sourceMappingURL=layout.css.map */

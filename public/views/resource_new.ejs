@@ -7,7 +7,7 @@ Data required:
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Edit Profile</title>
+    <title>New Resource</title>
     <% include partials/_includes %>
   </head>
   <body>
@@ -15,47 +15,49 @@ Data required:
       <% include partials/_nav %>
     </header>
 
-    <h1>Create New Resource</h1>
-    <form method="POST" action="/resources/create">
+    <main class='main-content'>
+      <h1>Create New Resource</h1>
+      <form method="POST" action="/resources/create">
 
-        <div class="field">
-      <label class="label">Title</label>
-      <p class="control has-icon has-icon-right">
-        <input name="title" type="text" placeholder="Title..." style="width:50%">
-      </p>
-    </div>
+          <div class="field">
+        <label class="label">Title</label>
+        <p class="control has-icon has-icon-right">
+          <input name="title" type="text" placeholder="Title..." style="width:50%">
+        </p>
+      </div>
 
-    <div class="field">
-      <label class="label">URL</label>
-      <p class="control has-icon has-icon-right">
-        <input name="url" type="text" placeholder="URL..." style="width:50%">
-      </p>
-    </div>
+      <div class="field">
+        <label class="label">URL</label>
+        <p class="control has-icon has-icon-right">
+          <input name="url" type="text" placeholder="URL..." style="width:50%">
+        </p>
+      </div>
 
-    <div class="field">
-      <label class="label">Description</label>
-      <p class="control">
-        <textarea name="description" class="textarea" placeholder="Description..."></textarea>
-      </p>
-    </div>
+      <div class="field">
+        <label class="label">Description</label>
+        <p class="control">
+          <textarea name="description" class="textarea" placeholder="Description..."></textarea>
+        </p>
+      </div>
 
-    <div class="field">
-      <label class="label">Topic</label>
-      <p class="control">
-        <span class="select">
-          <select name="topic">
-            <option>Math</option>
-            <option>Geography</option>
-            <option>Science</option>
-            <option>History</option>
-          </select>
-        </span>
-      </p>
-    </div>
+      <div class="field">
+        <label class="label">Topic</label>
+        <p class="control">
+          <span class="select">
+            <select name="topic">
+              <option>Math</option>
+              <option>Geography</option>
+              <option>Science</option>
+              <option>History</option>
+            </select>
+          </span>
+        </p>
+      </div>
 
-    <input type="submit" value="Submit">
+      <input type="submit" value="Submit">
 
-  </form>
+    </form>
+  </main>
 
   <footer>
     <% include partials/_footer %>
