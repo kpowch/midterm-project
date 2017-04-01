@@ -13,63 +13,25 @@ module.exports = (knex) => {
     // the search/filters will come as req.query
     console.log('Req query coming through api:', req.query);
 
-    let filterObj = req.query;
+    const filterObj = req.query;
 
 // console.log('filterobj', filterObj, filterObj.topic.length)
 
     if (filterObj.topic.length) {
       // need to make this modular so they can add in more search/filter parameters
       // TODO this query is totes wrong btw
-      knex('resources')
-      .whereIn('topic', filterObj.topic)
+      knex('resources').whereIn('topic', filterObj.topic)
         .then((results) => {
           res.json(results);
-      }).catch((error) => {
-        console.log(error);
       });
     } else {
       knex('resources')
         .then((results) => {
           res.json(results);
-        }).catch((error) => {
-        console.log(error);
-      });
+        });
     }
   });
 
   // for my resources
   router.get('/users/:user_id/resources', (req, res) => {
     // this does the same as the above but user specific (and likes table)
-    console.log('Req query coming through api:', req.query);
-
-    let filterObj = req.query;
-    let userId = req.params.user_id;
-    let subQuery = knex('likes').where(userId, 'resource_id');
-    console.log(req.params.user_id);
-
-// console.log('filterobj', filterObj, filterObj.topic.length)
-
-    if (filterObj.topic.length) {
-      // need to make this modular so they can add in more search/filter parameters
-      // TODO this query is totes wrong btw
-
-      knex('resources').where(function() {
-        this.where('creator', userId).orWhere(subQuery);
-      }).andWhereIn('topic', filterObj.topic)
-        .then((results) => {
-          res.json(results);
-      }).catch((error) => {
-        console.log(error);
-      });
-    } else {
-      knex('resources')
-        .then((results) => {
-          res.json(results);
-        }).catch((error) => {
-        console.log(error);
-      });
-    }
-  });
-
-  return router;
-}
