@@ -29,6 +29,15 @@ module.exports = (knex) => {
     let likes = 0;
     let rating = 0;
     let commentsArr = [];
+    let currentUser = '';
+
+
+    knex('users').select('username').where('users.id', req.session.user_id)
+    .asCallback((err, results) => {
+      if (err) console.error(err);
+      currentUser = results[0].username;
+      return;
+    });
 
     //links user with resource
     knex('users').join('resources', 'users.id', '=', 'creator')
@@ -90,7 +99,7 @@ module.exports = (knex) => {
           username: creatorName
         },
         user: {
-          username: 'Brendan'
+          username: currentUser
         },
         likesCount: {
           likes: likes
