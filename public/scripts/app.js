@@ -37,7 +37,7 @@ $(document).ready(function() {
       method: 'GET',
       data: {topic: topicArray}
     }).done( function(results) {
-      console.log(results);
+      // console.log(results);
       renderResources(results);
     }).fail(function(err) {
       console.log('Error:', err);
@@ -53,7 +53,7 @@ $(document).ready(function() {
       topicArray = [null];
     }
     // console.log(topicArray);
-    console.log('location', $(location).attr('pathname'));
+    // console.log('location', $(location).attr('pathname'));
 
     const currentWindow = $(location).attr('pathname');
     if (currentWindow === '/') {
@@ -67,7 +67,16 @@ $(document).ready(function() {
 
   $('#search-bar').find('.filter-form .filter.button').on('click', handleClick);
 
+  $('#search-bar').find('.filter-form .select-all.button').on('click', function() {
+    $.each($('input[name="topic"]'), function() {
+      $(this).prop('checked', true)
+    });
+  });
 
-
+  $('#search-bar').find('.filter-form .deselect-all.button').on('click', function() {
+    $.each($('input[name="topic"]'), function() {
+      $(this).prop('checked', false)
+    });
+  });
 
 });
