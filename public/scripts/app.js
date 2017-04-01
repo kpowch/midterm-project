@@ -57,6 +57,29 @@ $(document).ready(function() {
     }
   }
 
+  function submitInteraction(data, url) {
+  $.ajax({
+      url: url,
+      method: 'Post',
+      data: data
+     }
+    }).done( function(results) {
+      renderResources(results);
+    }).fail(function(err) {
+      console.log('Error:', err);
+    });
+
+  }
+
+  function handleLike (event) {
+    let currentWindow = $(location).attr('pathname');
+
+
+  }
+
+
+  $('#like').on('click', handleLike)
+
   // when someone clicks the 'filter' button on the search bar
   $('#search-bar').find('.filter-form .filter.button').on('click', handleFilterButtonClick);
 
