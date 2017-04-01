@@ -25,16 +25,18 @@ module.exports = (knex) => {
     let key = req.params.resource_id;
     let resource = {};
     let creatorName = "";
+    let creatorId = 0;
     let likes = 0;
     let rating = 0;
     let commentsArr = [];
 
     //links user with resource
     knex('users').join('resources', 'users.id', '=', 'creator')
-    .select('username').where('resources.id', key)
+    .select('username', 'creator').where('resources.id', key)
     .asCallback((err, results) => {
       if (err) return console.error(err);
       creatorName = results[0].username;
+      creatorId = results[0].creator;
     });
 
     //links resource likes
@@ -84,6 +86,7 @@ module.exports = (knex) => {
       let templateVars = {
         resource: resource[0],
         creator: {
+          id: creatorId,
           username: creatorName
         },
         user: {
