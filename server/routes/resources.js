@@ -9,19 +9,43 @@ const theDate = dateNow.toLocaleString();
 
 module.exports = (knex) => {
 
-  //retrieves new resource form
+  //retrieves create new resource page
   router.get("/new", (req, res) => {
-    var templateVars = {
-      user: {
-        name: 'name',
-        email: 'user@email.com'
-      }
-    };
-    res.render("../public/views/resource_new", templateVars);
+
+    let currentUser = '';
+
+    //checks for a logged in user, if no cookie-session, currentUser an empty string
+    if(req.session.user_id === undefined) {
+      let templateVars = {
+          user: {
+            username: currentUser
+          }
+        }
+        res.render("../public/views/resource_new", templateVars);
+        return;
+      } else {
+        knex('users').select('username').where('users.id', req.session.user_id)
+        .asCallback((err, results) => {
+        if (err) console.error(err);
+
+        if (results[0].username.length > 0) {
+        currentUser = results[0].username;
+        let templateVars = {
+          user: {
+            username: currentUser
+          }
+        }
+        res.render("../public/views/resource_new", templateVars);
+        return;
+        }
+      });
+    }
   });
+
 
   //retrieves resource id and displays the info of the resource
   router.get("/:resource_id", (req, res) => {
+
     let key = req.params.resource_id;
     let resource = {};
     let creatorName = "";
@@ -31,13 +55,20 @@ module.exports = (knex) => {
     let commentsArr = [];
     let currentUser = '';
 
-
-    knex('users').select('username').where('users.id', req.session.user_id)
-    .asCallback((err, results) => {
-      if (err) console.error(err);
-      currentUser = results[0].username;
-      return;
-    });
+    //checks for a logged in user, if no cookie-session, currentUser an empty string
+    //repetitive code! need to refactor
+    if (req.session.user_id === undefined) {
+      currentUser;
+    } else {
+      knex('users').select('username').where('users.id', req.session.user_id)
+      .asCallback((err, results) => {
+        if (err) console.error(err);
+        if(results[0].username.length > 0){
+          currentUser = results[0].username;
+          return;
+        }
+      });
+    }
 
     //links user with resource
     knex('users').join('resources', 'users.id', '=', 'creator')
@@ -126,7 +157,6 @@ module.exports = (knex) => {
     .limit(1);
 
     findReqUrl.then((results) => {
-      console.log(results);
       if (results.length) {
         console.log('Resource already used');
         res.redirect('/resources/new');

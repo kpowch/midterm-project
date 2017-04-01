@@ -4,9 +4,13 @@
     <a class="nav-item">
       <img src="https://s-media-cache-ak0.pinimg.com/originals/9e/9f/77/9e9f7772d58e2fecc968708c8532bce9.jpg" alt="Chalkboard logo">
     </a>
-    <% if (user) { %>
+    <% if (user.username.length > 0) { %>
       <p class="nav-item">
         Welcome <%=user.username%>!
+      </p>
+    <% } else { %>
+      <p class="nav-item">
+        Welcome Guest!
       </p>
     <% } %>
   </div>
@@ -25,7 +29,7 @@
   <!-- This "nav-menu" is hidden on mobile -->
   <!-- Add the modifier "is-active" to display it on mobile -->
   <div class="nav-right nav-menu">
-    <% if (user) { %>
+    <% if (user.username) { %>
       <a class="nav-item">
         Home
       </a>
