@@ -168,7 +168,7 @@ module.exports = (knex) => {
         ([{title: req.body.title,
           url: req.body.url,
           description: req.body.description,
-          topic: req.body.topic,
+          topic: req.body.topic.toLowerCase(),
           creator: req.session.user_id,
           date_created: theDate}])
         .returning('id')
