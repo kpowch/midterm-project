@@ -15,22 +15,22 @@ Data required:
       <% include partials/_nav %>
     </header>
 
-    <main class='main-content'>
-      <p>
-        Username: <%= user.username %>
-      </p>
-      <p>
-        Email: <%= user.email %>
-      </p>
-      <p>
-        Password: <%= user.password %>
-      </p>
+    <div class="user_credentials">
+    <p>
+      Username: <%= user.username %>
+    </p>
+    <p>
+      Email: <%= user.email %>
+    </p>
+    <p>
+      Password: **********
+    </p>
+    </div>
+    <form method='POST' action='/users/:user_id/editprofile' style='display:inline-block'>
+      <input type='password' name='password' placeholder='insert new password'>
+      <input type='submit' value='Update'>
+    </form>
 
-      <form method='POST' action='/users/:user_id/editprofile' style='display:inline-block'>
-        <input type='password' name='password' placeholder='insert new password'>
-        <input type='submit' value='Update'>
-      </form>
-    </main>
 
     <footer>
       <% include partials/_footer %>

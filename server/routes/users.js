@@ -16,7 +16,7 @@ module.exports = (knex) => {
     let subQueryLikes = knex('likes').select('resource_id').where('user_id', userId);
     let currentUser = '';
 
-    if(req.session.user_id === undefined) {
+    if (!req.session.user_id) {
       knex('resources')
       .where('creator', userId)
       .orWhereIn('id', subQueryLikes)
@@ -55,7 +55,7 @@ module.exports = (knex) => {
       return;
     } else {
       knex
-      .select('*')
+      .select()
       .from('users')
       .where('id', req.session.user_id)
       .then((results) => {
@@ -64,7 +64,7 @@ module.exports = (knex) => {
             userID: results[0].id,
             username: results[0].username,
             email: results[0].email,
-            password: '**********' //might be an issue
+            password: results[0].password
           }
         }
         res.render('../public/views/users_user_id_editprofile', templateVars);
@@ -73,25 +73,24 @@ module.exports = (knex) => {
     }
   });
 
-  // NEED TO FIX PROPER UPDATE PASSWORD
-  // TODO should be put?
-  // TODO will have to hash this password as well.
-  // TODO change query to look for current user logged in
-  router.post("/:user_id/editprofile", (req, res) => {
+  router.post(("/:user_id/editprofile"), (req, res) => {
     const newpassword = req.body.password;
     console.log(newpassword);
-
-    knex('users')
+    bcrypt.hash(newpassword, 10, function(err, hash) {
+      knex('users')
+      .select('password')
       .where('id', req.session.user_id)
       .update({
-        password: bcrypt.hash(newpassword, 10)
+        password: hash
       })
       //TODO don't know what it doesn't work if this callback isn't here
       .then((results) => {
-        console.log(results);
+        res.redirect('/users/' + req.session.user_id + '/editprofile');
+        return;
       }).catch((err) => {
         console.log(err);
       });
+    });
   });
 
   return router;
