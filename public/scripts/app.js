@@ -61,7 +61,6 @@ $(document).ready(function() {
   $.ajax({
       url: url,
       method: 'POST',
-      data: data
     }).done(function(results) {
       console.log('ajax', results);
     }).fail(function(err) {
@@ -71,9 +70,6 @@ $(document).ready(function() {
 
   $('#like').on('click', function() {
     let currentWindow = $(location).attr('pathname');
-    let cookie = Cookies.get('user_id');
-    let data = {cookie: cookie};
-    console.log(currentWindow);
     // if (!cookie) {
       // console.log('please log in to use this feature');
       // return;

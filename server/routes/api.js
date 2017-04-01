@@ -70,8 +70,15 @@ module.exports = (knex) => {
   });
   //for likes
   router.post('/resources/:resource_id/like', (req, res) => {
-    console.log ('req.body', req.body);
-    console.log('req.param', req.params.resource_id);
+  let resource = req.params.resource_id;
+  let user = req.session.user_id;
+
+
+
+
+
+
+
     res.send('hello')
   });
 
