@@ -4,6 +4,9 @@ const express = require('express');
 const router  = express.Router();
 
 
+const dateNow = new Date();
+const theDate = dateNow.toLocaleString();
+
 module.exports = (knex) => {
 
   router.get("/new", (req, res) => {
@@ -107,11 +110,33 @@ module.exports = (knex) => {
     //insert req.body into database
     //retrieve newly created resource id from database
     //redirect to resources/:resource_id that displays the newly made resource and its creator
-    // knex('resources').insert([{title: req.body.title,
-    //                             url: req.body.url,
-    //                             description: req.body.description,
-    //                             topic: req.body.topic,
-    //                             creator:  user.id          }])
+    const findReqUrl = knex('resources')
+    .select('url')
+    .where({url: req.body.url})
+    .limit(1);
+
+    findReqUrl.then((results) => {
+      console.log(results);
+      if (results.length) {
+        console.log('Resource already used');
+        res.redirect('/resources/new');
+        return;
+      } else {
+        knex.insert
+        ([{title: req.body.title,
+          url: req.body.url,
+          description: req.body.description,
+          topic: req.body.topic,
+          creator: req.session.user_id,
+          date_created: theDate}])
+        .returning('id')
+        .into('resources')
+        .then((id) => {
+        res.redirect('/resources/' + id);
+        return;
+        })
+      }
+    });
   });
 
   return router;

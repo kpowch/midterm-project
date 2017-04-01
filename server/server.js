@@ -25,7 +25,7 @@ const flash       = require("connect-flash");
 app.use(flash());
 
 // Middleware to check if logged in
-const ensureLoggedIn  = require('./routes/middleware').ensureLoggedIn;
+// const ensureLoggedIn  = require('./routes/middleware').ensureLoggedIn;
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
 const resourceRoutes = require("./routes/resources");
@@ -54,6 +54,22 @@ app.use("/users", ensureLoggedIn, usersRoutes(knex));
 //TODO if we want to forbid certain routes for resoruces (not all) , then put only on the forbidden ones
 app.use("/resources", resourceRoutes(knex));
 app.use('/api', apiRoutes(knex));
+
+
+function ensureLoggedIn(req, res, next) {
+    // TODO: implement me
+    // eg: req.userId = 1;
+    knex('users').select('username').where('users.id', req.session.user_id)
+    .then((results) => {
+      return username;
+    })
+    console.log('Im here, ', req.session.user_id);
+    next();
+    // if not logged in, redirect to error page? alert they need to log in? redirect to login?
+    // potential, save their url and once they're logged in, redirect to that url
+
+  }
+
 
 
 // Home page
@@ -126,7 +142,7 @@ app.post("/register", (req, res) => {
     if (results.length) {
       return Promise.reject({
         type: 409,
-        message: 'email or username already used'
+        message: 'Email or username already used'
       });
     }
     return bcrypt.hash(req.body.password_register, 10);
