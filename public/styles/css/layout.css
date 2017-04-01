@@ -19,7 +19,9 @@ header {
     width: 100%;
     height: 50px;
     display: none; }
-
+.user_credentials {
+  margin-top: 55px;
+}
 .resource-wrapper {
   display: flex;
   flex-flow: row wrap;

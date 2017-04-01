@@ -31,7 +31,7 @@
       </a>
 
       <!-- TODO add user id -->
-      <a class='nav-item' href='/users/:user_id'>
+      <a class='nav-item' href='/users/<%= user.userID %>'>
         My Resources
       </a>
 
@@ -40,24 +40,24 @@
       </a>
 
       <!-- TODO add user id -->
-      <a class='nav-item' href='/users/:user_id/editprofile'>
+      <a class='nav-item' href='/users/<%= user.userID %>/editprofile'>
         <i class='fa fa-user nav-item' aria-hidden='true'></i>
       </a>
 
       <span class='nav-item'>
-          <form method='GET' action='/logout'>
+          <form method='POST' action='/logout'>
             <input class='button is-primary' type='submit' value='Logout'>
           </form>
       </span>
     <% } else { %>
       <span class='nav-item'>
-        <a class='button is-primary'>
+        <a class='button is-primary' href="/login">
           <span>Login</span>
         </a>
       </span>
 
       <span class='nav-item'>
-        <a class='button is-primary'>
+        <a class='button is-primary' href="/login">
           <span>Register</span>
         </a>
       </span>

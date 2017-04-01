@@ -13,9 +13,8 @@ Data required:
   <body>
     <header>
       <% include partials/_nav %>
-      <% include partials/_filterheader %>
     </header>
-
+    <div class="user_credentials">
     <p>
       Username: <%= user.username %>
     </p>
@@ -25,7 +24,7 @@ Data required:
     <p>
       Password: <%= user.password %>
     </p>
-
+    </div>
     <form method='POST' action='/users/:user_id/editprofile' style='display:inline-block'>
       <input type='password' name='password' placeholder='insert new password'>
       <input type='submit' value='Update'>
