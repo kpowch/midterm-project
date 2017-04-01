@@ -46,27 +46,16 @@ module.exports = (knex) => {
     let userId = req.params.user_id;
     let subQueryLikes = knex('likes').select('resource_id').where('user_id', userId);
 
-// console.log('filterobj', filterObj, filterObj.topic.length)
-
     if (filterObj.topic.length) {
-      // need to make this modular so they can add in more search/filter parameters
-      // TODO this query is totes wrong btw
-console.log(filterObj.topic);
 
-//       knex('resources')
-//       .whereIn('topic', filterObj.topic)
-//       // .andWhere('creator', userId)
-//   .andWhere(function() {
-//   this.where('creator', userId).orWhere(subQuery)
-// })
-
-knex('resources')
-.where('creator', userId)
-.orWhereIn('id', subQueryLikes)
-.whereIn('topic', filterObj.topic)
-
-        .then((results) => {
-          res.json(results);
+      knex('resources')
+        .whereIn('topic', filterObj.topic)
+        .where(function() {
+          this.where('creator', userId)
+          .orWhereIn('id', subQueryLikes)
+      })
+      .then((results) => {
+        res.json(results);
       }).catch((error) => {
         console.log(error);
       });
