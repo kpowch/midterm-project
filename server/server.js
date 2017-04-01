@@ -90,6 +90,8 @@ app.get("/login", (req, res) => {
     errors: req.flash('errors'),
     info: req.flash('info')
   });
+  req.session = null;
+  return;
 });
 
 app.post("/login", (req, res) => {
@@ -153,13 +155,13 @@ app.post("/register", (req, res) => {
       password: passwordDigest
     });
   }).then(() => {
-    req.flash('info', 'Account successfully created');
+    req.flash('info', 'Account successfully created, please log in');
     knex('users').select('users.id')
     .where('users.email', req.body.email_register)
     .then((results) => {
       req.session.user_id = results[0];
     });
-    res.redirect('/');
+    res.redirect('/login');
   }).catch((err) => {
     req.flash('errors', err.message);
     res.redirect('/login');
@@ -172,27 +174,6 @@ app.post("/logout", (req, res) => {
   req.session = null;
   res.redirect('/');
 });
-
-app.post(("/users/:user_id/editprofile"), (req, res) => {
-    const newpassword = req.body.password;
-    console.log(newpassword);
-    bcrypt.hash(newpassword, 10, function(err, hash) {
-      knex('users')
-      .select('password')
-      .where('id', req.session.user_id)
-      .update({
-        password: hash
-      })
-      //TODO don't know what it doesn't work if this callback isn't here
-      .then((results) => {
-        res.redirect('/users/' + req.session.user_id + '/editprofile');
-        return;
-      }).catch((err) => {
-        console.log(err);
-      });
-    });
-  });
-
 
 //see if a topic is picked
 app.post("/topics", (req, res) => {
