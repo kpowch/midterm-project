@@ -74,4 +74,8 @@ $(document).ready(function() {
     });
   });
 
+  $('#topic-filter-button').on('click', function() {
+    $('#search-bar').slideToggle();
+  })
+
 });
