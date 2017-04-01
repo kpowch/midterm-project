@@ -1,12 +1,5 @@
 function createResourceElement(resourceData) {
-  const id = resourceData.id;
-  const title = resourceData.title;
-  const url = resourceData.url;
-  const description = resourceData.description;
-  const topic = resourceData.topic;
-  const creator = resourceData.creator;
-  const date_created = resourceData.date_created;
-  // const { id, title, url, description, topic, creator, date_created } = resourceData;
+  const { id, title, url, description, topic, creator, date_created } = resourceData;
 
   let $resource = $('<article>').addClass('resource box')
     .append($('<span>').text(id))
@@ -21,11 +14,13 @@ function createResourceElement(resourceData) {
 }
 
 function renderResources(resourceObjectofObjects){
-  // first delete all resources listed in the container
-  $('.resource-wrapper').empty();
+  $('.resource-wrapper').empty(); // deletes all resources on the page
+
+  // then creates the resource object on the page and prepends it to the list
+  // TODO will have to sort them by date/time
   for (var i in resourceObjectofObjects) {
     let $resource = createResourceElement(resourceObjectofObjects[i]);
-    $('.resource-wrapper').prepend($resource); // appends it to front
+    $('.resource-wrapper').prepend($resource);
   }
 }
 
@@ -37,23 +32,20 @@ $(document).ready(function() {
       method: 'GET',
       data: {topic: topicArray}
     }).done( function(results) {
-      // console.log(results);
       renderResources(results);
     }).fail(function(err) {
       console.log('Error:', err);
     });
   }
 
-  function handleClick (event) {
-    var topicArray = [];
+  function handleFilterButtonClick (event) {
+    let topicArray = [];
     $.each($('input[name="topic"]:checked'), function() {
       topicArray.push($(this).val());
     });
     if(topicArray.length === 0) {
       topicArray = [null];
     }
-    // console.log(topicArray);
-    // console.log('location', $(location).attr('pathname'));
 
     const currentWindow = $(location).attr('pathname');
     if (currentWindow === '/') {
@@ -65,14 +57,17 @@ $(document).ready(function() {
     }
   }
 
-  $('#search-bar').find('.filter-form .filter.button').on('click', handleClick);
+  // when someone clicks the 'filter' button on the search bar
+  $('#search-bar').find('.filter-form .filter.button').on('click', handleFilterButtonClick);
 
+  // when someone clicks the 'select all' button on the search bar
   $('#search-bar').find('.filter-form .select-all.button').on('click', function() {
     $.each($('input[name="topic"]'), function() {
       $(this).prop('checked', true)
     });
   });
 
+  // when someone clicks the 'deselect all' button on the search bar
   $('#search-bar').find('.filter-form .deselect-all.button').on('click', function() {
     $.each($('input[name="topic"]'), function() {
       $(this).prop('checked', false)
