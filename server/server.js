@@ -61,37 +61,39 @@ app.get("/", (req, res) => {
   // this is used for the initial page render
   // TODO add username for header
   let currentUser = '';
-
-  Promise.all([
-    knex('resources'),
-  ]).then(([rows, users]) => {
-    if(!req.session.user_id) {
-    res.render("../public/views/index", { user: undefined, resources: rows });
-    return;
-    }
-    else {
-      knex('users').select('username').where('users.id', req.session.user_id)
-        .asCallback((err, results) => {
-        if (err) console.error(err);
-        if (results[0].username.length > 0) {
+  if (!req.session.user_id) {
+    console.log(req.session.user_id);
+    console.log('no cookie');
+    knex('resources')
+    .then((rows) => {
+      res.render("../public/views/index", { user: undefined, resources: rows });
+      return;
+    });
+  } else {
+    console.log(req.session.user_id);
+    knex('users').select('username').where('users.id', req.session.user_id.id)
+    .asCallback((err, results) => {
+      if (err) throw err;
+      console.log(results[0]);
+      if (results[0].username.length > 0) {
         currentUser = results[0].username;
         let ID = req.session.user_id;
+        knex('resources')
+        .then((rows) => {
         res.render("../public/views/index", { user: {username: currentUser, userID: ID}, resources: rows });
         return;
-        }
-      });
-    }
-  });
-
+        });
+      }
+    });
+  }
 });
 
 app.get("/login", (req, res) => {
-  res.render("../public/views/login", {
+    res.render("../public/views/login", {
     errors: req.flash('errors'),
     info: req.flash('info')
   });
-  // req.session = null;
-  // return;
+  req.session = null;
 });
 
 app.post("/login", (req, res) => {
@@ -160,11 +162,14 @@ app.post("/register", (req, res) => {
     .where('users.email', req.body.email_register)
     .then((results) => {
       req.session.user_id = results[0];
+      console.log('register cookie', results[0]);
+      res.redirect('/');
+      return;
     });
-    res.redirect('/login');
   }).catch((err) => {
     req.flash('errors', err.message);
     res.redirect('/login');
+    return;
   });
 });
 
