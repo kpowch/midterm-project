@@ -63,22 +63,24 @@ $(document).ready(function() {
       method: 'POST',
       data: data
     }).done(function(results) {
+      console.log('ajax', results);
     }).fail(function(err) {
       console.log('Error:', err);
     });
   }
 
-
   $('#like').on('click', function() {
-   let currentWindow = $(location).attr('pathname');
-    let cookie = Cookies.get('user_id')
-    let data = {cookie: cookie}
-    if (!cookie) {
-      console.log('please log in to use this feature');
-    } else {
-      submitInteraction(data, `/api${currentWindow}/like`)
-    }
-
+    let currentWindow = $(location).attr('pathname');
+    let cookie = Cookies.get('user_id');
+    let data = {cookie: cookie};
+    console.log(currentWindow);
+    // if (!cookie) {
+      // console.log('please log in to use this feature');
+      // return;
+    // } else {
+      submitInteraction(data, `/api${currentWindow}/like`);
+      return;
+    // }
   });
 
   // when someone clicks the 'filter' button on the search bar
