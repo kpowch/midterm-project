@@ -66,6 +66,7 @@ module.exports = (knex) => {
     }
   });
 
+
  //for likes
   router.post('/resources/:resource_id/like', (req, res) => {
     let resource = req.params.resource_id;
@@ -89,6 +90,43 @@ module.exports = (knex) => {
       });
     }
   });
+
+
+  //for comments
+  router.post('/resources/:resource_id/comment', (req, res) => {
+
+    console.log('req.body.description', req.body.text);
+    let resource = req.params.resource_id;
+    console.log('resource', resource);
+    let user = req.session.user_id;
+    console.log('cookie', user);
+    let dateNow = new Date();
+    let theDate = dateNow.toLocaleDateString();
+
+    if (!user) {
+      res.send('No Cookie');
+      //return;
+    } else {
+
+      knex('comments')
+      .insert({user_id: user, resource_id: resource,
+      comment: req.body.text, date_created: theDate})
+      .then(() => {
+        knex('users')
+        .select('username')
+        .where('id', user)
+        .then((results) => {
+          res.send({username: results[0].username, date: theDate});
+        });
+      }).catch((error) => {
+        console.log(error);
+      });
+    }
+  });
+
+
+
+
   /*
   This is to filter by topic on the home page (all resources) when the user
   types something in the search bar.

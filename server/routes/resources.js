@@ -166,6 +166,7 @@ module.exports = (knex) => {
 
   });
 
+
   //posts new resource to /:resource_id. If url is used
   //then it redirects back to resources/new
   router.post("/create", (req, res) => {

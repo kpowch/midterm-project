@@ -66,6 +66,7 @@ $(document).ready(function() {
     }
   }
 
+
   function submitInteraction(url) {
     $.ajax({
         url: url,
@@ -91,6 +92,46 @@ $(document).ready(function() {
       }
     });
   }
+
+  function submitComment(url, commentBody) {
+    console.log(url);
+    // let errorMessage = $('#comment_form h4');
+
+    // if (input.length == 0){
+    //   errorMessage.html('Too short!');
+    // } else if (input.length > 255) {
+    //   errorMessage.html('Too long!');
+    // } else if (input == ' '){
+    //   errorMessage.html('No blank spaces allowed!');
+    // } else {
+    //   errorMessage.html('');
+    $.ajax({
+      url: url,
+      method: 'POST',
+      data: {
+        text: commentBody
+      }
+    }).done(function(results) {
+      console.log('ajax recieved:', results.username, results.date);
+      if (results === 'No Cookie') {
+        console.log('You need to log in to comment');
+      } else {
+        console.log('ajax', commentBody);
+        let newComment = $('<article>')
+        .append($('<p>').text(commentBody))
+        .append($('<h4>').text('Posted by: ' + results.username + ' at ' + results.date));
+        $('#comments_container').prepend(newComment);
+      }
+    });
+  }
+
+  $('#comment_form').children('input').on('click', function(event) {
+    let currentWindow = $(location).attr('pathname');
+    let contents = $('#comment_form textarea').val();
+    console.log('contents', contents);
+    submitComment(`/api${currentWindow}/comment`, contents);
+  });
+
   /*
   Sends ajax call depending on what page the user is on (All Resources or My Resources)
   and sends the search string they entered into the search bar.
