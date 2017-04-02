@@ -71,7 +71,7 @@ app.get("/", (req, res) => {
     });
   } else {
     console.log(req.session.user_id);
-    knex('users').select('username').where('users.id', req.session.user_id.id)
+    knex('users').select('username').where('users.id', req.session.user_id)
     .asCallback((err, results) => {
       if (err) throw err;
       console.log(results[0]);
@@ -161,7 +161,7 @@ app.post("/register", (req, res) => {
     knex('users').select('users.id')
     .where('users.email', req.body.email_register)
     .then((results) => {
-      req.session.user_id = results[0];
+      req.session.user_id = results[0].id;
       console.log('register cookie', results[0]);
       res.redirect('/');
       return;
