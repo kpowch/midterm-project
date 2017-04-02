@@ -25,14 +25,15 @@ Data required:
           </button>
           <span> Likes </span>
           <span id= "likesCount"><%= likesCount.likes %></span>
-          <span> </span>
         </span>
+        <span> Rate </span>
+        <span id="rating">
+          <span> 1 </span><span> 2 </span><span> 3 </span><span> 4 </span><span> 5 </span>
+        </span>
+        <span id="totalRating"><%= totalRating.rating %> </span>
         <span>
-          <button type="button" id="rate">Rate</button>
-          <%= totalRating.rating %> </span>
-          <span>
-            <a href="<%=resource.url%>" target="_blank">Visit</a>
-          </span>
+          <a href="<%=resource.url%>" target="_blank">Visit</a>
+        </span>
         <h4>Submitted by
           <a href="/users/<%= creator.id %>"><%= creator.username %></a>
           on <%= resource.date_created %>
