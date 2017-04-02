@@ -31,6 +31,8 @@ $(document).ready(function() {
   */
 
 
+
+
   function fetchFilteredResources (topicArray, url) {
     $.ajax({
       url: url,
@@ -66,68 +68,6 @@ $(document).ready(function() {
     }
   }
 
-
-  function submitInteraction(url) {
-    $.ajax({
-      url: url,
-      method: 'POST',
-    }).done(function(results) {
-      if (results === 'added') {
-        let likesCount =  $('#like').nextAll("#likesCount");
-        let currentCount = likesCount.text();
-        let NewCount = (new Number(currentCount) + 1);
-        $('#like').text('Unlike');
-        likesCount.text(NewCount.toString());
-      }
-      if (results === 'removed') {
-        let likesCount =  $('#like').nextAll("#likesCount");
-        let currentCount = likesCount.text();
-        let NewCount = (new Number(currentCount) - 1);
-        $('#like').text('Like');
-        likesCount.text(NewCount.toString());
-      }
-      if (results === 'No Cookie') {
-        //TODO update this to flash
-        console.log('You need to log in to use this feature');
-      }
-    });
-  }
-
-  function submitComment(url, commentBody) {
-
-    if (commentBody.length === 0) {
-      console.log('Too short!');
-    } else if (commentBody.length > 255) {
-      console.log('Too long!');
-    } else if (commentBody == ' ') {
-      console.log('No blank spaces allowed!');
-    } else {
-      $.ajax({
-        url: url,
-        method: 'POST',
-        data: {
-          text: commentBody
-        }
-      }).done(function(results) {
-        if (results === 'No Cookie') {
-          console.log('You need to log in to comment');
-        } else {
-          let newComment = $('<article>')
-          .append($('<p>').text(commentBody))
-          .append($('<h4>').text('Posted by: ' + results.username + ' at ' + results.date));
-          $('#comments_container').prepend(newComment);
-          $('#comment_form textarea').val('');
-        }
-      });
-    }
-  }
-
-  $('#comment_form').children('input').on('click', function(event) {
-    let currentWindow = $(location).attr('pathname');
-    let contents = $('#comment_form textarea').val();
-    submitComment(`/api${currentWindow}/comment`, contents);
-  });
-
   /*
   Sends ajax call depending on what page the user is on (All Resources or My Resources)
   and sends the search string they entered into the search bar.
@@ -144,10 +84,97 @@ $(document).ready(function() {
     });
   }
 
-  $('#like').on('click', function() {
-    let currentWindow = $(location).attr('pathname');
-      submitInteraction(`/api${currentWindow}/like`);
+
+  function handleRating (url, rating) {
+    console.log('sending ajax request ', rating);
+    $.ajax({
+        url: url,
+        method: 'POST',
+        data: {rating: rating}
+      }).done(function(results) {
+        console.log('ajax recieved:', results);
+        if (results === 'No Cookie'){
+          //TODO update this to flash
+          console.log('You need to log in to use this feature');
+      } else {
+        $('#totalRating').text(results);
+      }
+    });
+  }
+
+  $('#rating').children().on('click', function(event) {
+
+    console.log('select!');
+    var rating = $(this).text();
+    var currentWindow = $(location).attr('pathname');
+    handleRating(`/api${currentWindow}/rating`, rating);
   });
+
+  function handleLike(url) {
+    $.ajax({
+        url: url,
+        method: 'POST'
+      }).done(function(results) {
+        if (results === 'added') {
+          var likesCount =  $('#like').nextAll("#likesCount");
+          var currentCount = likesCount.text();
+          var NewCount = (new Number(currentCount) + 1);
+          $('#like').text('Unlike');
+          likesCount.text(NewCount.toString());
+        }
+        if (results === 'removed'){
+          var likesCount =  $('#like').nextAll("#likesCount");
+          var currentCount = likesCount.text();
+          var NewCount = (new Number(currentCount) - 1);
+          $('#like').text('Like');
+          likesCount.text(NewCount.toString());
+        }
+        if (results === 'No Cookie'){
+          //TODO update this to flash
+          console.log('You need to log in to use this feature');
+      }
+    });
+  }
+
+  $('#like').on('click', function() {
+    var currentWindow = $(location).attr('pathname');
+      handleLike(`/api${currentWindow}/like`);
+  });
+
+  function submitComment(url, commentBody) {
+   if (commentBody.length === 0) {
+     console.log('Too short!');
+   } else if (commentBody.length > 255) {
+     console.log('Too long!');
+   } else if (commentBody == ' ') {
+     console.log('No blank spaces allowed!');
+   } else {
+     $.ajax({
+       url: url,
+       method: 'POST',
+       data: {
+         text: commentBody
+       }
+     }).done(function(results) {
+       if (results === 'No Cookie') {
+         console.log('You need to log in to comment');
+       } else {
+         let newComment = $('<article>')
+         .append($('<p>').text(commentBody))
+         .append($('<h4>').text('Posted by: ' + results.username + ' at ' + results.date));
+         $('#comments_container').prepend(newComment);
+         $('#comment_form textarea').val('');
+       }
+     });
+   }
+ }
+
+[3:47]
+$('#comment_form').children('input').on('click', function(event) {
+   let currentWindow = $(location).attr('pathname');
+   let contents = $('#comment_form textarea').val();
+   submitComment(`/api${currentWindow}/comment`, contents);
+ });
 
   // when someone clicks the 'filter' button on the search bar
   /*
@@ -167,7 +194,7 @@ $(document).ready(function() {
      fetchSearchedResources(searchString, `/api${currentWindow}/resources/search`);
      return;
    }
- }
+  }
 
   // when someone clicks the 'filter' button on search header
   $('#search-bar').find('.filter-form .filter.button').on('click', handleFilterButtonClick);
