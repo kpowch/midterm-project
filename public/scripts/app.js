@@ -169,7 +169,7 @@ $(document).ready(function() {
    }
  }
 
-[3:47]
+
 $('#comment_form').children('input').on('click', function(event) {
    let currentWindow = $(location).attr('pathname');
    let contents = $('#comment_form textarea').val();
