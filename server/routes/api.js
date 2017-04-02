@@ -66,8 +66,58 @@ module.exports = (knex) => {
     }
   });
 
- //for likes
-  router.post('/resources/:resource_id/like', (req, res) => {
+//ratings
+function calculateRating(allRatings){
+  let rating = 0;
+  for (let i = 0; i < allRatings.length; i++) {
+    rating += allRatings[i].value;
+  }
+  rating = rating / allRatings.length;
+  rating = Math.max( Math.round(rating * 10) / 10, 2.8 ).toFixed(1);
+  return rating;
+}
+
+  router.post('/resources/:resource_id/rating', (req, res) => {
+    let resource = req.params.resource_id;
+    let user = req.session.user_id;
+    let rating = new Number(req.body.rating);
+    console.log('req.query', req.body);
+    if (!req.session.user_id) {
+      res.send('No Cookie')
+    } else {
+    console.log('user', user, 'resource', resource);
+    knex('ratings').count()
+      .where('user_id', user)
+      .andWhere('resource_id', resource)
+      .then((results) => {
+        console.log('res', results[0].count);
+        if (results[0].count === '0') {
+          knex('ratings')
+          .insert({user_id: user, resource_id: resource, value: rating})
+          .then(() => {knex('ratings')
+            .where('resource_id', resource)
+            .then((results) => { console.log('QUERY RESULTS:', results); res.send(calculateRating(results));
+            });
+          });
+        } else {
+          knex('ratings')
+          .where('user_id', user)
+          .andWhere('resource_id', resource)
+          .update({value: rating})
+          .then(() => {knex('ratings')
+            .where('resource_id', resource)
+            .then((results) => { console.log('QUERY RESULTS:', results); res.send(calculateRating(results));
+            });
+          });
+        }
+      }).catch((error) => {
+        console.log(error);
+      });
+    }
+  });
+
+ //likes
+   router.post('/resources/:resource_id/like', (req, res) => {
     let resource = req.params.resource_id;
     let user = req.session.user_id;
     if (!req.session.user_id) {
