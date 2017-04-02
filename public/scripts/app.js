@@ -29,6 +29,8 @@ $(document).ready(function() {
   Sends ajax call depending on what page the user is on (All Resources or My Resources)
   and sends the array of topics that are checked.
   */
+
+
   function fetchFilteredResources (topicArray, url) {
     $.ajax({
       url: url,
@@ -122,4 +124,9 @@ $(document).ready(function() {
   $('#topic-filter-button').on('click', function() {
     $('#search-bar').slideToggle();
   })
+
 });
+
+
+
+

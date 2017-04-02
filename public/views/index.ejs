@@ -21,21 +21,38 @@ Data required:
       <div class='resource-wrapper'>
           <% for (var resource in resources) { %>
             <div class='resource box'>
-              id: <%=resources[resource].id%><br />
-              title: <%=resources[resource].title%><br />
-              url: <%=resources[resource].url%><br />
-              description: <%=resources[resource].description%><br />
-              topic: <%=resources[resource].topic%><br />
-              creator: <%=resources[resource].creator%><br />
-              date_created: <%=resources[resource].date_created%><br />
-              <a class='button' href=<%=resources[resource].url%>>View</a>
+                title: <%=resources[resource].title%><br />
+                topic: <%=resources[resource].topic%><br />
+                creator: <%=resources[resource].creator%><br />
+                date created: <%=(resources[resource].date_created).toLocaleDateString()%><br />
+                <% if (resources[resource].topic == 'math') { %>
+                  <a href="/resources/<%=resources[resource].id%>">
+                    <i class="fa fa-superscript" aria-hidden="true" style="font-size:200px"></i>
+                  </a>
+                <% } else if (resources[resource].topic == 'science') { %>
+                  <a href="/resources/<%=resources[resource].id%>">
+                    <i class="fa fa-flask" aria-hidden="true" style="font-size:200px"></i>
+                  </a>
+                <% } else if (resources[resource].topic == 'history') { %>
+                  <a href="/resources/<%=resources[resource].id%>">
+                    <i class="fa fa-hourglass-end" aria-hidden="true" style="font-size:200px"></i>
+                  </a>
+                <% } else if (resources[resource].topic == 'geography') { %>
+                  <a href="/resources/<%=resources[resource].id%>">
+                    <i class="fa fa-globe" aria-hidden="true" style="font-size:200px"></i>
+                  </a>
+                <% } %>
+                <a class='button' href="<%=resources[resource].url%>" target="_blank">View</a>
             </div>
           <% } %>
       </div>
     </main>
+
 
   <footer>
     <% include partials/_footer %>
   </footer>
 </body>
 </html>
+
+
