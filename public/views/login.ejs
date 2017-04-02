@@ -8,7 +8,7 @@ Data required:
 <!DOCTYPE html>
 <html lang='en'>
 <head>
-  <title>Login/Sign Up</title>
+  <title>Login/Sign up</title>
   <% include partials/_includes %>
 </head>
 
@@ -27,71 +27,62 @@ Data required:
 
   <main class='main-content-wrapper'>
 
+    <div class='box profile login'>
+      <div class='media-content'>
+        <div class='content'>
+          <div class='field'>
+            <form method='POST' action='/login' >
+              <h1>Already a member? Log in!</h1>
+              <label class='label' for='email_login'>Enter Email:</label>
+              <input class='input' id='email_login' type='email' name='email_login' placeholder='Email...'>
 
+              <label class='label' for='password_login'>Enter Password:</label>
+              <input class='input' id='password_login' type='password' name='password_login' placeholder='Password...'>
 
-
-
-
-      <h1>Oh hello, Nerd</h1>
-      <div>
-        <form action='/login' method='POST'>
-          <h1>LOG IN</h1>
-          <label for='email_login'>Enter Email:</label>
-          <input id='email_login' type='email' name='email_login' placeholder='Email...' style='width: 300px'>
-          <label for='password_login'>Enter Password:</label>
-          <input id='password_login' type='password' name='password_login'>
-          <input type='submit' value='Submit'>
-        </form>
-        <form action='/register' method='POST'>
-          <h1>Sign Up</h1>
-          <label for='email_register'>Enter Email:</label>
-          <input id='email_register' type='email' name='email_register' placeholder='Email...' style='width: 300px'>
-          <label for='username_register'>Create Username:</label>
-          <input id='username_register' type='text' name='username_register' placeholder='Username...' style='width: 300px'>
-          <label for='password_register'>Enter Password:</label>
-          <input id='password_register' type='password' name='password_register'>
-          <input type='submit' value='Submit'>
-        </form>
+              <input class='button is-primary is-outlined' type='submit' value='Submit'>
+            </form>
+          </div>
+        </div>
       </div>
+    </div>
 
+    <div class='box profile sign-up'>
 
-
-    <div class='box edit-profile'>
       <article class='media'>
         <div class='media-left'>
           <figure class='image is-3x4'>
-            <img src='http://orig01.deviantart.net/06f7/f/2014/101/7/9/profile_picture_by_happy_fingers-d7e2t77.jpg' alt='Image'>
+            <img src='https://www.webpagefx.com/data/marketing-persona-generator/img/placeholder.png' alt='Image'>
           </figure>
+          <input class='button is-primary is-outlined' id='browse-for-photo' type='submit' value='Browse for Photo'>
         </div>
 
         <div class='media-content'>
           <div class='content'>
-            <h1> <%= user.username %> </h1>
-            <h4> <%= user.email %> </h4>
-
             <div class='field'>
-              <label class='label'>Reset Password: </label>
-              <form method='POST' action='/users/:user_id/editprofile'>
-                <input class='input' type='password' name='password' placeholder='insert new password'>
+              <form method='POST' action='/register' >
+                <h1>Want to join? Sign up here!</h1>
+                <label class='label' for='email_register'>Enter Email:</label>
+                <input class='input' id='email_register' type='email' name='email_register' placeholder='Email...'>
 
-              <label class='label'>Edit Profile Bio: </label>
-              <p class='control'>
-                <textarea class='textarea' placeholder="This is your profile bio for your profile page. One day you'll be able to change this and your profile picture."></textarea>
-              </p>
+                <label class='label' for='username_register'>Create Username:</label>
+                <input class='input' id='username_register' type='text' name='username_register' placeholder='Username...'>
 
-              <input class='button is-primary is-outlined' type='submit' value='Update'>
-            </form>
+                <label class='label' for='password_register'>Enter Password:</label>
+                <input class='input' id='password_register' type='password' name='password_register' placeholder='Password...'>
+
+                <label class='label'>Edit Profile Bio: </label>
+                <p class='control'>
+                  <textarea class='textarea' placeholder="This is your profile bio for your profile page. One day you'll be able to save this and your profile picture. Today is not that day..."></textarea>
+                </p>
+
+                <input class='button is-primary is-outlined' type='submit' value='Submit'>
+              </form>
             </div>
           </div>
         </div>
 
       </article>
     </div>
-
-
-
-
-
 
   </main>
 

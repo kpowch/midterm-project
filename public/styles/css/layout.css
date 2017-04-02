@@ -3,9 +3,10 @@ header {
   width: 100%;
   top: 0;
   left: 0;
-  z-index: 9000; }
+  z-index: 9000;
+  background-color: #F5F7FA; }
   header .header-wrapper {
-    max-width: 1200px;
+    max-width: 1205px;
     margin: 0 auto; }
     header .header-wrapper #nav-bar {
       background-color: #F5F7FA; }
@@ -28,9 +29,6 @@ header {
         margin-right: 20px; }
         header .header-wrapper #search-bar #filter-field label input[type=checkbox] {
           margin-right: 5px; }
-
-footer .footer {
-  background-color: #F5F7FA; }
 
 .main-content-wrapper {
   max-width: 1220px;
@@ -62,24 +60,26 @@ footer .footer {
       border: 0;
       box-shadow: none; }
 
-.edit-profile {
+.profile {
   width: 100%;
   margin: 0 10px; }
-  .edit-profile figure.image {
-    margin-right: 10px; }
-  .edit-profile .media-content {
-    height: 300px; }
-    .edit-profile .media-content h1 {
-      margin-bottom: 10px; }
-    .edit-profile .media-content .field form .input {
-      margin-bottom: 20px; }
-    .edit-profile .media-content .field form textarea.textarea {
-      resize: none;
-      min-height: auto;
-      height: 100%;
-      margin-bottom: 20px; }
-    .edit-profile .media-content .field form input.button {
-      float: right; }
+  .profile figure.image {
+    margin-right: 10px;
+    max-width: 300px; }
+  .profile #browse-for-photo {
+    margin-top: 20px; }
+  .profile .media-content h1 {
+    margin-bottom: 10px; }
+  .profile .media-content form input.input {
+    margin-bottom: 20px;
+    width: 100%; }
+  .profile .media-content form textarea.textarea {
+    resize: none;
+    min-height: auto;
+    height: 100%;
+    margin-bottom: 20px; }
+  .profile .media-content .button {
+    float: right; }
 
 /*! bulma.io v0.4.0 | MIT License | github.com/jgthms/bulma */
 @keyframes spinAround {
@@ -4012,13 +4012,11 @@ label.panel-block {
   background-color: whitesmoke;
   padding: 3rem 1.5rem 6rem; }
 
-body {
-  background-color: #EEE; }
-  body .nav-and-search-bar-break {
-    margin-top: 173px; }
-  body .nav-bar-break {
-    margin-top: 76px; }
-  body h1 {
-    color: #244751; }
+body .nav-and-search-bar-break {
+  margin-top: 173px; }
+body .nav-bar-break {
+  margin-top: 76px; }
+body h1 {
+  color: #244751; }
 
 /*# sourceMappingURL=layout.css.map */

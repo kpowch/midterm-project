@@ -1,25 +1,29 @@
-.edit-profile
+.profile
   width: 100%
   margin: 0 10px
 
   figure.image
     margin-right: 10px
+    max-width: 300px
+
+  #browse-for-photo
+    margin-top: 20px
 
   .media-content
-    height: 300px
+    // min-height: 300px
     h1
       margin-bottom: 10px
 
-    .field
-      form
-        .input
-          margin-bottom: 20px
+    form
+      input.input
+        margin-bottom: 20px
+        width: 100%
 
-        textarea.textarea
-          resize: none
-          min-height: auto
-          height: 100%
-          margin-bottom: 20px
+      textarea.textarea
+        resize: none
+        min-height: auto
+        height: 100%
+        margin-bottom: 20px
 
-        input.button
-          float: right
+    .button
+      float: right
