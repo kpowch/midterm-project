@@ -1,37 +1,69 @@
+<%#
+Login/registration page
+url: /login
+Routes:
+Data required:
+%>
+
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Home</title>
-    <% include partials/_includes %>
-  </head>
-  <body>
-    <header>
+<html lang='en'>
+<head>
+  <title>Login/Sign Up</title>
+  <% include partials/_includes %>
+</head>
+
+<body>
+  <header>
+    <div class='header-wrapper'>
+      <%# TODO ADD include partials/_nav%>
       <% include partials/_flash %>
-    </header>
+    </div>
+  </header>
 
-    <main class='main-content'>
-      <form action="/login" method="POST">
-        <h1>LOG IN</h1>
-        <label for="email_login">Enter Email:</label>
-        <input id="email_login" type="email" name="email_login" placeholder="Email..." style="width: 300px">
-        <label for="password_login">Enter Password:</label>
-        <input id="password_login" type="password" name="password_login">
-        <input type="submit" value="Submit">
-      </form>
-      <form action="/register" method="POST">
-        <h1>REGISTER</h1>
-        <label for="email_register">Enter Email:</label>
-        <input id="email_register" type="email" name="email_register" placeholder="Email..." style="width: 300px">
-        <label for="username_register">Create Username:</label>
-        <input id="username_register" type="text" name="username_register" placeholder="Username..." style="width: 300px">
-        <label for="password_register">Enter Password:</label>
-        <input id="password_register" type="password" name="password_register">
-        <input type="submit" value="Submit">
-      </form>
-    </main>
 
-    <footer>
-      <% include partials/_footer %>
-    </footer>
-  </body>
+  <div class='nav-bar-break'>
+    <br />
+  </div>
+
+  <main class='main-content-wrapper'>
+
+
+
+
+
+
+      <h1>Oh hello, Nerd</h1>
+      <div>
+        <form action="/login" method="POST">
+          <h1>LOG IN</h1>
+          <label for="email_login">Enter Email:</label>
+          <input id="email_login" type="email" name="email_login" placeholder="Email..." style="width: 300px">
+          <label for="password_login">Enter Password:</label>
+          <input id="password_login" type="password" name="password_login">
+          <input type="submit" value="Submit">
+        </form>
+        <form action="/register" method="POST">
+          <h1>Sign Up</h1>
+          <label for="email_register">Enter Email:</label>
+          <input id="email_register" type="email" name="email_register" placeholder="Email..." style="width: 300px">
+          <label for="username_register">Create Username:</label>
+          <input id="username_register" type="text" name="username_register" placeholder="Username..." style="width: 300px">
+          <label for="password_register">Enter Password:</label>
+          <input id="password_register" type="password" name="password_register">
+          <input type="submit" value="Submit">
+        </form>
+      </div>
+
+
+
+
+
+
+  </main>
+
+  <footer>
+    <% include partials/_footer %>
+  </footer>
+
+</body>
 </html>

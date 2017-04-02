@@ -16,34 +16,49 @@ header {
         padding: 2px 10px;
         border: 2px solid #FFF; }
     header .header-wrapper #search-bar {
-      margin-top: 20px; }
+      margin-bottom: 10px; }
       header .header-wrapper #search-bar #search-field .input[name=search] {
         width: 300px;
         -webkit-transition: width 0.4s ease-in-out;
         transition: width 0.4s ease-in-out; }
         header .header-wrapper #search-bar #search-field .input[name=search]:focus {
           width: 500px; }
-      header .header-wrapper #search-bar #filter-field .topic-inputs {
+      header .header-wrapper #search-bar #search-field span.icon {
+        margin-left: 5px; }
+      header .header-wrapper #search-bar #filter-field label {
         margin-right: 20px; }
+        header .header-wrapper #search-bar #filter-field label input[type=checkbox] {
+          margin-right: 5px; }
 
 .main-content-wrapper {
-  max-width: 1200px;
-  margin-top: 20px;
-  margin: 0 auto;
+  max-width: 1220px;
+  margin: 20px auto 0;
   display: flex;
   flex-flow: row wrap;
-  justify-content: center;
+  justify-content: space-between;
   align-items: flex-start; }
+  .main-content-wrapper .section.profile-heading {
+    width: 100%;
+    margin: 0 10px;
+    border-radius: 5px; }
   .main-content-wrapper .card {
     border-radius: 10px;
     flex: 0 0 30%;
     height: 400px;
     border: 1px solid black;
-    margin: 10px; }
+    margin: 0 10px 10px; }
     .main-content-wrapper .card h1 {
       height: 50px; }
     .main-content-wrapper .card:hover {
       border: 1px dashed black; }
+    .main-content-wrapper .card.placeholder {
+      margin-bottom: 0;
+      margin-top: 0;
+      height: 0;
+      overflow: 0;
+      padding: 0;
+      border: 0;
+      box-shadow: none; }
 
 /*! bulma.io v0.4.0 | MIT License | github.com/jgthms/bulma */
 @keyframes spinAround {
@@ -3978,8 +3993,10 @@ label.panel-block {
 
 body {
   background-color: #EEE; }
-  body .nav-and-search-bar {
-    margin-top: 188px; }
+  body .nav-and-search-bar-break {
+    margin-top: 173px; }
+  body .nav-bar-break {
+    margin-top: 76px; }
   body h1 {
     color: #244751; }
 

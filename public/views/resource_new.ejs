@@ -1,21 +1,39 @@
 <%#
-Edit profile page
-Route: /users/:user_id/editprofile
+Create new resource page
+url: /resources/new
+Routes:
 Data required:
 %>
 
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>New Resource</title>
-    <% include partials/_includes %>
-  </head>
-  <body>
-    <header>
-      <% include partials/_nav %>
-    </header>
+<html lang='en'>
+<head>
+  <title>New Resource</title>
+  <% include partials/_includes %>
+</head>
 
-    <main class='main-content'>
+<body>
+  <header>
+    <div class='header-wrapper'>
+      <% include partials/_nav %>
+    </div>
+  </header>
+
+
+  <div class='nav-bar-break'>
+    <br />
+  </div>
+
+  <main class='main-content-wrapper'>
+
+
+
+
+
+
+
+
+
       <h1>Create New Resource</h1>
       <form method="POST" action="/resources/create">
 
@@ -57,10 +75,20 @@ Data required:
       <input type="submit" value="Submit">
 
     </form>
+
+
+
+
+
+
+
+
+    
   </main>
 
   <footer>
     <% include partials/_footer %>
   </footer>
+
 </body>
 </html>

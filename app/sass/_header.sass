@@ -12,6 +12,7 @@ header
 
     #nav-bar
       background-color: inherit
+
       .logo
         font-family: 'Fredericka the Great', cursive
         font-size: 26px
@@ -20,7 +21,7 @@ header
 
     #search-bar
       // background-color: inherit
-      margin-top: 20px
+      margin-bottom: 10px
 
       #search-field
         // TODO fix the styling for search bar https://www.w3schools.com/howto/howto_css_animated_search.asp
@@ -30,7 +31,11 @@ header
           transition: width 0.4s ease-in-out
           &:focus
             width: 500px
+        span.icon
+          margin-left: 5px
 
       #filter-field
-        .topic-inputs
+        label
           margin-right: 20px
+          input[type=checkbox]
+            margin-right: 5px

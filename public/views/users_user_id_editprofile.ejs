@@ -1,19 +1,35 @@
 <%#
 Edit profile page
-Route: /users/:user_id/editprofile
+url: /users/:user_id/editprofile
+Routes:
 Data required:
 %>
 
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Edit Profile</title>
-    <% include partials/_includes %>
-  </head>
-  <body>
-    <header>
+<html lang='en'>
+<head>
+  <title>Edit Profile</title>
+  <% include partials/_includes %>
+</head>
+
+<body>
+  <header>
+    <div class='header-wrapper'>
       <% include partials/_nav %>
-    </header>
+      <% include partials/_flash %>
+    </div>
+  </header>
+
+
+  <div class='nav-bar-break'>
+    <br />
+  </div>
+
+  <main class='main-content-wrapper'>
+
+
+
+
 
     <div class="user_credentials">
     <p>
@@ -32,8 +48,15 @@ Data required:
     </form>
 
 
-    <footer>
-      <% include partials/_footer %>
-    </footer>
-  </body>
+
+
+
+
+  </main>
+
+  <footer>
+    <% include partials/_footer %>
+  </footer>
+
+</body>
 </html>

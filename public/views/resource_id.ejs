@@ -1,21 +1,37 @@
 <%#
-Edit profile page
-Route: /users/:user_id/editprofile
+Edit Individual resource page
+url: /resources/:resource_id
+Routes:
 Data required:
 %>
 
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Resource Info</title>
-    <% include partials/_includes %>
-  </head>
-  <body>
-    <header>
-      <% include partials/_nav %>
-    </header>
+<html lang='en'>
+<head>
+  <title>Resource Info</title>
+  <% include partials/_includes %>
+</head>
 
-    <main class='main-content'>
+<body>
+  <header>
+    <div class='header-wrapper'>
+      <% include partials/_nav %>
+    </div>
+  </header>
+
+
+  <div class='nav-bar-break'>
+    <br />
+  </div>
+
+  <main class='main-content-wrapper'>
+
+
+
+
+
+
+
       <section>
         <h1><%= resource.title %></h1>
         <div></div>
@@ -34,10 +50,19 @@ Data required:
         <h4>Posted by: <%= commentObj.commenter %> on <%= commentObj.date %></h4>
       <% } %>
       </section>
-    </main>
 
-    <footer>
-      <% include partials/_footer %>
-    </footer>
-  </body>
+
+
+
+
+
+
+
+  </main>
+
+  <footer>
+    <% include partials/_footer %>
+  </footer>
+
+</body>
 </html>

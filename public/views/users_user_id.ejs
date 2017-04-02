@@ -1,32 +1,36 @@
 <%#
-My Resources page
-Route: /users/:user_id
+User resources page - resources and likes that belong to a user
+url: /users/:user_id
+Routes:
 Data required:
 %>
 
 <!DOCTYPE html>
-<html>
+<html lang='en'>
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>User Profile</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.1.0/css/bulma.min.css">
-  <link rel="stylesheet" type="text/css" href="../css/profile.css">
+  <title>User Page</title>
   <% include partials/_includes %>
 </head>
+
 <body>
-   <header>
-    <% include partials/_nav %>
+  <header>
+    <div class='header-wrapper'>
+      <% include partials/_nav %>
+      <% include partials/_search_bar %>
+    </div>
   </header>
 
-  <div class="container profile main-content">
+
+  <div class='nav-and-search-bar-break'>
+    <br />
+  </div>
+
+  <div class='main-content-wrapper'>
     <div class="section profile-heading">
       <div class="columns">
         <div class="column is-2">
           <div class="image is-128x128 avatar">
-            <img src="https://placehold.it/256x256">
+            <img src="http://orig01.deviantart.net/06f7/f/2014/101/7/9/profile_picture_by_happy_fingers-d7e2t77.jpg">
           </div>
         </div>
         <div class="column is-4 name">
@@ -50,64 +54,28 @@ Data required:
         </div>
       </div>
     </div>
-    <div class="profile-options">
-      <div class="tabs is-fullwidth">
-        <ul>
-          <li class="link is-active"><a><span class="icon"><i class="fa fa-list"></i></span> <span>Resources</span></a></li>
-          <li class="link"><a><span class="icon"><i class="fa fa-heart"></i></span> <span>Likes</span></a></li>
-          <li class="link"><a><span class="icon"><i class="fa fa-th"></i></span> <span>Posts</span></a></li>
-          <li class="link"><a><span class="icon"><i class="fa fa-handshake-o"></i></span> <span>Follows</span></a></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="box">
-      <!-- Main container -->
-      <nav class="level">
-        <!-- Left side -->
-        <div class="level-left">
-          <div class="level-item">
-            <p class="subtitle is-5">
-              <strong>123</strong> posts
-            </p>
-          </div>
-          <div class="level-item">
-            <p class="control has-addons">
-              <input class="input" type="text" placeholder="Find a post">
-              <button class="button">
-                Search
-              </button>
-            </p>
-          </div>
-        </div>
-
-      </nav>
-    </div>
-
-    <div class="spacer"></div>
-
-    <div class="columns">
-      <% for (var resource in resources) { %>
-        <div class="card">
-          <div class="card-image">
-            <figure class="image is-4by3">
-              <img src="http://placehold.it/300x225" alt="">
-            </figure>
-          </div>
-          <div class="card-content">
-            <h1><%=resources[resource].title%></h1>
-            <div class="content">
-              <span class="tag is-dark"><%=resources[resource].topic%></span>
-              <strong class="timestamp"><%=resources[resource].date_created%></strong>
-            </div>
-          </div>
-
-        </div>
-        <br>
-      <% } %>
-    </div>
   </div>
-  
+
+  <main class='main-content-wrapper resources'>
+    <% for (var resource in resources) { %>
+      <article class="card box">
+        <div class="card-image">
+          <figure class="image is-4by3">
+            <img src="http://placehold.it/300x225" alt="">
+          </figure>
+        </div>
+
+        <div class="card-content">
+          <h1><%=resources[resource].title%></h1>
+          <div class="content">
+            <span class="tag is-dark"><%=resources[resource].topic%></span>
+            <strong class="timestamp"><%=resources[resource].date_created.toLocaleDateString()%></strong>
+          </div>
+        </div>
+      </article>
+    <% } %>
+  </main>
+
   <footer>
     <% include partials/_footer %>
   </footer>
