@@ -74,12 +74,10 @@ module.exports = (knex) => {
     if (!req.session.user_id) {
       res.send('No Cookie')
     } else {
-    console.log('user', user, 'resource', resource);
-    knex('likes').count()
+      knex('likes').count()
       .where('user_id', user)
       .andWhere('resource_id', resource)
       .then((results) => {
-      console.log('res', results[0].count );
       if (results[0].count === '0') {
         knex('likes').insert({user_id: user, resource_id: resource}).then(() => {res.send('added')});
         } else {
@@ -94,20 +92,14 @@ module.exports = (knex) => {
 
   //for comments
   router.post('/resources/:resource_id/comment', (req, res) => {
-
-    console.log('req.body.description', req.body.text);
     let resource = req.params.resource_id;
-    console.log('resource', resource);
     let user = req.session.user_id;
-    console.log('cookie', user);
     let dateNow = new Date();
-    let theDate = dateNow.toLocaleDateString();
+    let theDate = dateNow.toLocaleString();
 
     if (!user) {
       res.send('No Cookie');
-      //return;
     } else {
-
       knex('comments')
       .insert({user_id: user, resource_id: resource,
       comment: req.body.text, date_created: theDate})
@@ -123,8 +115,6 @@ module.exports = (knex) => {
       });
     }
   });
-
-
 
 
   /*

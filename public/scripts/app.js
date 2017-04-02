@@ -69,66 +69,62 @@ $(document).ready(function() {
 
   function submitInteraction(url) {
     $.ajax({
-        url: url,
-        method: 'POST',
-      }).done(function(results) {
-        if (results === 'added') {
-          let likesCount =  $('#like').nextAll("#likesCount");
-          let currentCount = likesCount.text();
-          let NewCount = (new Number(currentCount) + 1);
-          $('#like').text('Unlike');
-          likesCount.text(NewCount.toString());
-        }
-        if (results === 'removed'){
-          let likesCount =  $('#like').nextAll("#likesCount");
-          let currentCount = likesCount.text();
-          let NewCount = (new Number(currentCount) - 1);
-          $('#like').text('Like');
-          likesCount.text(NewCount.toString());
-        }
-        if (results === 'No Cookie'){
-          //TODO update this to flash
-          console.log('You need to log in to use this feature');
+      url: url,
+      method: 'POST',
+    }).done(function(results) {
+      if (results === 'added') {
+        let likesCount =  $('#like').nextAll("#likesCount");
+        let currentCount = likesCount.text();
+        let NewCount = (new Number(currentCount) + 1);
+        $('#like').text('Unlike');
+        likesCount.text(NewCount.toString());
+      }
+      if (results === 'removed') {
+        let likesCount =  $('#like').nextAll("#likesCount");
+        let currentCount = likesCount.text();
+        let NewCount = (new Number(currentCount) - 1);
+        $('#like').text('Like');
+        likesCount.text(NewCount.toString());
+      }
+      if (results === 'No Cookie') {
+        //TODO update this to flash
+        console.log('You need to log in to use this feature');
       }
     });
   }
 
   function submitComment(url, commentBody) {
-    console.log(url);
-    // let errorMessage = $('#comment_form h4');
 
-    // if (input.length == 0){
-    //   errorMessage.html('Too short!');
-    // } else if (input.length > 255) {
-    //   errorMessage.html('Too long!');
-    // } else if (input == ' '){
-    //   errorMessage.html('No blank spaces allowed!');
-    // } else {
-    //   errorMessage.html('');
-    $.ajax({
-      url: url,
-      method: 'POST',
-      data: {
-        text: commentBody
-      }
-    }).done(function(results) {
-      console.log('ajax recieved:', results.username, results.date);
-      if (results === 'No Cookie') {
-        console.log('You need to log in to comment');
-      } else {
-        console.log('ajax', commentBody);
-        let newComment = $('<article>')
-        .append($('<p>').text(commentBody))
-        .append($('<h4>').text('Posted by: ' + results.username + ' at ' + results.date));
-        $('#comments_container').prepend(newComment);
-      }
-    });
+    if (commentBody.length === 0) {
+      console.log('Too short!');
+    } else if (commentBody.length > 255) {
+      console.log('Too long!');
+    } else if (commentBody == ' ') {
+      console.log('No blank spaces allowed!');
+    } else {
+      $.ajax({
+        url: url,
+        method: 'POST',
+        data: {
+          text: commentBody
+        }
+      }).done(function(results) {
+        if (results === 'No Cookie') {
+          console.log('You need to log in to comment');
+        } else {
+          let newComment = $('<article>')
+          .append($('<p>').text(commentBody))
+          .append($('<h4>').text('Posted by: ' + results.username + ' at ' + results.date));
+          $('#comments_container').prepend(newComment);
+          $('#comment_form textarea').val('');
+        }
+      });
+    }
   }
 
   $('#comment_form').children('input').on('click', function(event) {
     let currentWindow = $(location).attr('pathname');
     let contents = $('#comment_form textarea').val();
-    console.log('contents', contents);
     submitComment(`/api${currentWindow}/comment`, contents);
   });
 
