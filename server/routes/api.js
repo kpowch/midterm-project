@@ -66,6 +66,34 @@ module.exports = (knex) => {
     }
   });
 
+
+//comments
+  router.post('/resources/:resource_id/comment', (req, res) => {
+   let resource = req.params.resource_id;
+   let user = req.session.user_id;
+   let dateNow = new Date();
+   let theDate = dateNow.toLocaleString();
+
+   if (!user) {
+     res.send('No Cookie');
+   } else {
+     knex('comments')
+     .insert({user_id: user, resource_id: resource,
+     comment: req.body.text, date_created: theDate})
+     .then(() => {
+       knex('users')
+       .select('username')
+       .where('id', user)
+       .then((results) => {
+         res.send({username: results[0].username, date: theDate});
+       });
+     }).catch((error) => {
+       console.log(error);
+     });
+   }
+ });
+
+
 //ratings
 function calculateRating(allRatings){
   let rating = 0;

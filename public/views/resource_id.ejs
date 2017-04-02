@@ -40,15 +40,17 @@ Data required:
         </h4>
         <p><%= resource.description %></p>
         <h5>Topic: <%= resource.topic %></h5>
-          <form method="POST" action="/resources/:resource_id">
-            <textarea name="description" placeholder="Comment"></textarea>
-            <input type="submit" value="Submit">
-          </form>
+        <form id="comment_form">
+          <textarea name="description" placeholder="Comment"></textarea>
+          <input type="button" value="Submit">
+        </form>
       </section>
-      <section class="comments-container">
+      <section id="comments_container">
       <% for (let commentObj of allComments) { %>
-        <p><%= commentObj.comment %> </p>
-        <h4>Posted by: <%= commentObj.commenter %> on <%= commentObj.date %></h4>
+        <article>
+          <p><%= commentObj.comment %> </p>
+          <h4>Posted by: <%= commentObj.commenter %> on <%= commentObj.date %></h4>
+        </article>
       <% } %>
       </section>
     </main>

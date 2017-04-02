@@ -141,6 +141,41 @@ $(document).ready(function() {
       handleLike(`/api${currentWindow}/like`);
   });
 
+  function submitComment(url, commentBody) {
+   if (commentBody.length === 0) {
+     console.log('Too short!');
+   } else if (commentBody.length > 255) {
+     console.log('Too long!');
+   } else if (commentBody == ' ') {
+     console.log('No blank spaces allowed!');
+   } else {
+     $.ajax({
+       url: url,
+       method: 'POST',
+       data: {
+         text: commentBody
+       }
+     }).done(function(results) {
+       if (results === 'No Cookie') {
+         console.log('You need to log in to comment');
+       } else {
+         let newComment = $('<article>')
+         .append($('<p>').text(commentBody))
+         .append($('<h4>').text('Posted by: ' + results.username + ' at ' + results.date));
+         $('#comments_container').prepend(newComment);
+         $('#comment_form textarea').val('');
+       }
+     });
+   }
+ }
+
+[3:47]
+$('#comment_form').children('input').on('click', function(event) {
+   let currentWindow = $(location).attr('pathname');
+   let contents = $('#comment_form textarea').val();
+   submitComment(`/api${currentWindow}/comment`, contents);
+ });
+
   // when someone clicks the 'filter' button on the search bar
   /*
   Gets whatever the user typed in the search bar (string), determines which page

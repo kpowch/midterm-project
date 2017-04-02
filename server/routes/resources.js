@@ -120,11 +120,13 @@ module.exports = (knex) => {
     .join('users', 'user_id', '=', 'users.id')
     .where('resource_id', key)
     .asCallback((err, results) => {
+      let dateTime = '';
       if (err) return console.error(err);
       for (let i = 0; i < results.length; i++){
+        dateTime = (results[i].date_created).toLocaleString();
         let comment = {
           comment: results[i].comment,
-          date: results[i].date_created,
+          date: dateTime,
           commenter: results[i].username
         }
         commentsArr.push(comment);
@@ -137,6 +139,9 @@ module.exports = (knex) => {
       if (err) return console.error(err);
       resource = results;
     }).then(function() {
+      commentsArr.sort(function(a,b){
+        return new Date(b.date) - new Date(a.date);
+      });
 
       let templateVars = {
         resource: resource[0],
@@ -163,8 +168,8 @@ module.exports = (knex) => {
     }).catch(function(error){
         console.log(error);
     })
-
   });
+
 
   //posts new resource to /:resource_id. If url is used
   //then it redirects back to resources/new
