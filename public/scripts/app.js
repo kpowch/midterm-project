@@ -67,28 +67,30 @@ $(document).ready(function() {
   }
 
   function submitInteraction(url) {
-  $.ajax({
-      url: url,
-      method: 'POST',
-    }).done(function(results) {
-      if (results === 'added') {
-      let likesCount =  $('#like').nextAll("#likesCount");
-      let currentCount = likesCount.text();
-      let NewCount = (new Number(currentCount) + 1);
-      $('#like').text('Unlike');
-      likesCount.text(NewCount.toString());
-    }
-    if (results === 'removed'){
-      let likesCount =  $('#like').nextAll("#likesCount");
-      let currentCount = likesCount.text();
-      let NewCount = (new Number(currentCount) - 1);
-      $('#like').text('Like');
-      likesCount.text(NewCount.toString());
-    }
-    if (results === 'No Cookie'){
-      //TODO update this to flash
-      console.log('You need to log in to use this feature');
-    }
+    $.ajax({
+        url: url,
+        method: 'POST',
+      }).done(function(results) {
+        if (results === 'added') {
+          let likesCount =  $('#like').nextAll("#likesCount");
+          let currentCount = likesCount.text();
+          let NewCount = (new Number(currentCount) + 1);
+          $('#like').text('Unlike');
+          likesCount.text(NewCount.toString());
+        }
+        if (results === 'removed'){
+          let likesCount =  $('#like').nextAll("#likesCount");
+          let currentCount = likesCount.text();
+          let NewCount = (new Number(currentCount) - 1);
+          $('#like').text('Like');
+          likesCount.text(NewCount.toString());
+        }
+        if (results === 'No Cookie'){
+          //TODO update this to flash
+          console.log('You need to log in to use this feature');
+      }
+    });
+  }
   /*
   Sends ajax call depending on what page the user is on (All Resources or My Resources)
   and sends the search string they entered into the search bar.
