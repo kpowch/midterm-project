@@ -19,8 +19,24 @@ Data required:
       <section>
         <h1><%= resource.title %></h1>
         <div></div>
-        <span><button type="button">Like</button><span> <%= likesCount.likes %> </span></span><span>Rate: <%= totalRating.rating %> </span><span><a href="<%=resource.url%>" target="_blank">Visit</a></span>
-        <h4>Submitted by <a href="/users/<%= creator.id %>"><%= creator.username %></a> on <%= resource.date_created %></h4>
+        <span>
+          <button type="button" id="like"><% if (hasLiked.hasLiked) { %>Unlike
+          <% } else { %>  Like  <% } %>
+          </button>
+          <span> Likes </span>
+          <span id= "likesCount"><%= likesCount.likes %></span>
+          <span> </span>
+        </span>
+        <span>
+          <button type="button" id="rate">Rate</button>
+          <%= totalRating.rating %> </span>
+          <span>
+            <a href="<%=resource.url%>" target="_blank">Visit</a>
+          </span>
+        <h4>Submitted by
+          <a href="/users/<%= creator.id %>"><%= creator.username %></a>
+          on <%= resource.date_created %>
+        </h4>
         <p><%= resource.description %></p>
         <h5>Topic: <%= resource.topic %></h5>
           <form method="POST" action="/resources/:resource_id">

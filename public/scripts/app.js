@@ -36,7 +36,7 @@ $(document).ready(function() {
       url: url,
       method: 'GET',
       data: {topic: topicArray}
-    }).done( function(results) {
+    }).done(function(results) {
       renderResources(results);
     }).fail(function(err) {
       console.log('Error:', err);
@@ -66,6 +66,29 @@ $(document).ready(function() {
     }
   }
 
+  function submitInteraction(url) {
+  $.ajax({
+      url: url,
+      method: 'POST',
+    }).done(function(results) {
+      if (results === 'added') {
+      let likesCount =  $('#like').nextAll("#likesCount");
+      let currentCount = likesCount.text();
+      let NewCount = (new Number(currentCount) + 1);
+      $('#like').text('Unlike');
+      likesCount.text(NewCount.toString());
+    }
+    if (results === 'removed'){
+      let likesCount =  $('#like').nextAll("#likesCount");
+      let currentCount = likesCount.text();
+      let NewCount = (new Number(currentCount) - 1);
+      $('#like').text('Like');
+      likesCount.text(NewCount.toString());
+    }
+    if (results === 'No Cookie'){
+      //TODO update this to flash
+      console.log('You need to log in to use this feature');
+    }
   /*
   Sends ajax call depending on what page the user is on (All Resources or My Resources)
   and sends the search string they entered into the search bar.
@@ -82,6 +105,12 @@ $(document).ready(function() {
     });
   }
 
+  $('#like').on('click', function() {
+    let currentWindow = $(location).attr('pathname');
+      submitInteraction(`/api${currentWindow}/like`);
+  });
+
+  // when someone clicks the 'filter' button on the search bar
   /*
   Gets whatever the user typed in the search bar (string), determines which page
   it's on (All Resources or User Resources) and then calls fetchSearchedResources.

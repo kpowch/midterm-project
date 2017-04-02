@@ -66,6 +66,29 @@ module.exports = (knex) => {
     }
   });
 
+ //for likes
+  router.post('/resources/:resource_id/like', (req, res) => {
+    let resource = req.params.resource_id;
+    let user = req.session.user_id;
+    if (!req.session.user_id) {
+      res.send('No Cookie')
+    } else {
+    console.log('user', user, 'resource', resource);
+    knex('likes').count()
+      .where('user_id', user)
+      .andWhere('resource_id', resource)
+      .then((results) => {
+      console.log('res', results[0].count );
+      if (results[0].count === '0') {
+        knex('likes').insert({user_id: user, resource_id: resource}).then(() => {res.send('added')});
+        } else {
+        knex('likes').where('user_id', user).andWhere('resource_id', resource).del().then(() => {res.send('removed')});
+      }
+      }).catch((error) => {
+        console.log(error);
+      });
+    }
+  });
   /*
   This is to filter by topic on the home page (all resources) when the user
   types something in the search bar.
@@ -91,6 +114,5 @@ module.exports = (knex) => {
       console.log(error);
     });
   })
-
   return router;
 }

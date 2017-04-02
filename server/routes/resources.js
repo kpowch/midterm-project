@@ -55,6 +55,7 @@ module.exports = (knex) => {
     let rating = 0;
     let commentsArr = [];
     let currentUser = '';
+    let hasLiked = false;
 
     //checks for a logged in user, if no cookie-session, currentUser an empty string
     //repetitive code! need to refactor
@@ -87,6 +88,19 @@ module.exports = (knex) => {
       if (err) return console.error(err);
       likes = results[0].count;
     });
+
+    knex('likes').count()
+    .where('user_id', req.session.user_id)
+    .andWhere('resource_id', req.params.resource_id)
+    .then((results) => {
+      if (results[0].count == 1) {
+        hasLiked = true;
+      } else {
+        hasLiked = false;
+      }
+    }).catch(function(error){
+        console.log(error);
+    })
 
     //links resource ratings
     knex('resources').join('ratings', 'resource_id', '=', 'resources.id')
@@ -136,6 +150,9 @@ module.exports = (knex) => {
         },
         likesCount: {
           likes: likes
+        },
+        hasLiked: {
+          hasLiked: hasLiked
         },
         totalRating: {
           rating: rating
