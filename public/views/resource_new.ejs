@@ -19,71 +19,55 @@ Data required:
     </div>
   </header>
 
-
   <div class='nav-bar-break'>
     <br />
   </div>
 
   <main class='main-content-wrapper'>
 
+    <div class='box profile new-resource'>
+      <article class='media'>
+        <div class='media-left'>
+          <figure class='image is-3x4'>
+            <img src='https://pbs.twimg.com/profile_images/801235337938894848/xj154Cpo.jpg' alt='Image'>
+          </figure>
+        </div>
 
+        <div class='media-content'>
+          <div class='content'>
+            <div class='field'>
+              <form method='POST' action='/resources/create' >
+                <h1>Create a new resource</h1>
+                <label class='label' for='title'>Title:</label>
+                <input class='input' type='text' name='title' placeholder='Title...'>
 
+                <label class='label' for='url'>URL:</label>
+                <input class='input' type='text' name='url' placeholder='URL...'>
 
+                <label class='label' for='description'>Description:</label>
+                <p class='control'>
+                  <textarea class='textarea' name='decription' placeholder='Description of resource...'></textarea>
+                </p>
 
+                <label class='label'>Topic:</label>
+                <div class='select'>
+                  <select name='topic'>
+                    <option>Math</option>
+                    <option>Geography</option>
+                    <option>Science</option>
+                    <option>History</option>
+                  </select>
+                </div>
 
-
-
-
-      <h1>Create New Resource</h1>
-      <form method="POST" action="/resources/create">
-
-          <div class="field">
-        <label class="label">Title</label>
-        <p class="control has-icon has-icon-right">
-          <input name="title" type="text" placeholder="Title..." style="width:50%">
-        </p>
-      </div>
-
-      <div class="field">
-        <label class="label">URL</label>
-        <p class="control has-icon has-icon-right">
-          <input name="url" type="text" placeholder="URL..." style="width:50%">
-        </p>
-      </div>
-
-      <div class="field">
-        <label class="label">Description</label>
-        <p class="control">
-          <textarea name="description" class="textarea" placeholder="Description..."></textarea>
-        </p>
-      </div>
-
-      <div class="field">
-        <label class="label">Topic</label>
-        <p class="control">
-          <span class="select">
-            <select name="topic">
-              <option>Math</option>
-              <option>Geography</option>
-              <option>Science</option>
-              <option>History</option>
-            </select>
-          </span>
-        </p>
-      </div>
-
-      <input type="submit" value="Submit">
-
-    </form>
-
-
-
-
-
-
-
-
-    
+                <div>
+                  <input class='button is-primary is-outlined' type='submit' value='Submit'>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
   </main>
 
   <footer>

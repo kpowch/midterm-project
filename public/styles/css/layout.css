@@ -24,7 +24,8 @@ header {
         header .header-wrapper #search-bar #search-field .input[name=search]:focus {
           width: 500px; }
       header .header-wrapper #search-bar #search-field span.icon {
-        margin-left: 5px; }
+        margin-left: 5px;
+        margin-top: 12px; }
       header .header-wrapper #search-bar #filter-field label {
         margin-right: 20px; }
         header .header-wrapper #search-bar #filter-field label input[type=checkbox] {
@@ -78,6 +79,13 @@ header {
     min-height: auto;
     height: 100%;
     margin-bottom: 20px; }
+  .profile .media-content form div.select {
+    width: 100%;
+    height: 40px;
+    margin-bottom: 20px; }
+    .profile .media-content form div.select select[name=topic] {
+      width: 100%;
+      height: 40px; }
   .profile .media-content .button {
     float: right; }
 
