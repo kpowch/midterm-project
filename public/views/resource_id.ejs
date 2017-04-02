@@ -20,7 +20,9 @@ Data required:
         <h1><%= resource.title %></h1>
         <div></div>
         <span>
-          <button type="button" id="like">Like</button>
+          <button type="button" id="like"><% if (hasLiked.hasLiked) { %>Unlike
+          <% } else { %>  Like  <% } %>
+          </button>
           <span> Likes </span>
           <span id= "likesCount"><%= likesCount.likes %></span>
           <span> </span>
