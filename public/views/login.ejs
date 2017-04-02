@@ -34,25 +34,59 @@ Data required:
 
       <h1>Oh hello, Nerd</h1>
       <div>
-        <form action="/login" method="POST">
+        <form action='/login' method='POST'>
           <h1>LOG IN</h1>
-          <label for="email_login">Enter Email:</label>
-          <input id="email_login" type="email" name="email_login" placeholder="Email..." style="width: 300px">
-          <label for="password_login">Enter Password:</label>
-          <input id="password_login" type="password" name="password_login">
-          <input type="submit" value="Submit">
+          <label for='email_login'>Enter Email:</label>
+          <input id='email_login' type='email' name='email_login' placeholder='Email...' style='width: 300px'>
+          <label for='password_login'>Enter Password:</label>
+          <input id='password_login' type='password' name='password_login'>
+          <input type='submit' value='Submit'>
         </form>
-        <form action="/register" method="POST">
+        <form action='/register' method='POST'>
           <h1>Sign Up</h1>
-          <label for="email_register">Enter Email:</label>
-          <input id="email_register" type="email" name="email_register" placeholder="Email..." style="width: 300px">
-          <label for="username_register">Create Username:</label>
-          <input id="username_register" type="text" name="username_register" placeholder="Username..." style="width: 300px">
-          <label for="password_register">Enter Password:</label>
-          <input id="password_register" type="password" name="password_register">
-          <input type="submit" value="Submit">
+          <label for='email_register'>Enter Email:</label>
+          <input id='email_register' type='email' name='email_register' placeholder='Email...' style='width: 300px'>
+          <label for='username_register'>Create Username:</label>
+          <input id='username_register' type='text' name='username_register' placeholder='Username...' style='width: 300px'>
+          <label for='password_register'>Enter Password:</label>
+          <input id='password_register' type='password' name='password_register'>
+          <input type='submit' value='Submit'>
         </form>
       </div>
+
+
+
+    <div class='box edit-profile'>
+      <article class='media'>
+        <div class='media-left'>
+          <figure class='image is-3x4'>
+            <img src='http://orig01.deviantart.net/06f7/f/2014/101/7/9/profile_picture_by_happy_fingers-d7e2t77.jpg' alt='Image'>
+          </figure>
+        </div>
+
+        <div class='media-content'>
+          <div class='content'>
+            <h1> <%= user.username %> </h1>
+            <h4> <%= user.email %> </h4>
+
+            <div class='field'>
+              <label class='label'>Reset Password: </label>
+              <form method='POST' action='/users/:user_id/editprofile'>
+                <input class='input' type='password' name='password' placeholder='insert new password'>
+
+              <label class='label'>Edit Profile Bio: </label>
+              <p class='control'>
+                <textarea class='textarea' placeholder="This is your profile bio for your profile page. One day you'll be able to change this and your profile picture."></textarea>
+              </p>
+
+              <input class='button is-primary is-outlined' type='submit' value='Update'>
+            </form>
+            </div>
+          </div>
+        </div>
+
+      </article>
+    </div>
 
 
 
