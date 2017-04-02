@@ -1,0 +1,46 @@
+header
+  position: fixed
+  width: 100%
+  top: 0
+  left: 0
+  z-index: 9000
+  background-color: #F5F7FA
+  // background-image: url('https://prd-static-default.sf-cdn.com/renderer/imagerenderer/svgconversion?svgPath=http://swiftbuckets.sf-cdn.com/v1/cmg/cell543/cdm/a9cd5f22cfcf491eb0aa5114ff72d4d0/3&imageHeight=570&imageFormat=JPG&publishedTime=1488021974')
+
+  .header-wrapper
+    max-width: 1205px
+    margin: 0 auto
+
+    #nav-bar
+      background-color: #F5F7FA
+
+      .logo
+        font-family: 'Fredericka the Great', cursive
+        font-size: 26px
+        padding: 2px 10px
+        border: 2px solid #FFF
+
+    #search-bar
+      // background-color: inherit
+      margin-bottom: 10px
+
+      #search-field
+        // TODO fix the styling for search bar https://www.w3schools.com/howto/howto_css_animated_search.asp
+        .input[name=search]
+          width: 300px
+          -webkit-transition: width 0.4s ease-in-out
+          transition: width 0.4s ease-in-out
+          &:focus
+            width: 500px
+        span.icon
+          margin-left: 5px
+          margin-top: 12px
+
+      #filter-field
+        label
+          margin-right: 20px
+          input[type=checkbox]
+            margin-right: 5px
+
+footer .footer
+  // background-image: url('https://prd-static-default.sf-cdn.com/renderer/imagerenderer/svgconversion?svgPath=http://swiftbuckets.sf-cdn.com/v1/cmg/cell543/cdm/a9cd5f22cfcf491eb0aa5114ff72d4d0/3&imageHeight=570&imageFormat=JPG&publishedTime=1488021974')

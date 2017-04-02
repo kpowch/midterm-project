@@ -25,7 +25,7 @@ const flash       = require("connect-flash");
 app.use(flash());
 
 // Middleware to check if logged in
-// const ensureLoggedIn  = require('./routes/middleware').ensureLoggedIn;
+const middleware = require("./routes/middleware")(knex);
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
 const resourceRoutes = require("./routes/resources");
@@ -50,9 +50,9 @@ app.use("../public/styles/", sass({
 app.use(express.static("public"));
 
 // Mount all resource routes
-app.use("/users", usersRoutes(knex));
+app.use("/users", middleware.extractUserData, usersRoutes(knex));
 //TODO if we want to forbid certain routes for resoruces (not all) , then put only on the forbidden ones
-app.use("/resources", resourceRoutes(knex));
+app.use("/resources", middleware.extractUserData, resourceRoutes(knex));
 app.use('/api', apiRoutes(knex));
 
 // Home page

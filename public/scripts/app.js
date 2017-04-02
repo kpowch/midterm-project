@@ -1,27 +1,37 @@
 function createResourceElement(resourceData) {
   var { id, title, url, description, topic, creator, date_created } = resourceData;
 
-  var $resource = $('<article>').addClass('resource box')
-    .append($('<span>').text(id))
-    .append($('<h1>').text(title))
-    .append($('<div>').text(url))
-    .append($('<p>').text(description))
-    .append($('<h4>').text(topic))
-    .append($('<span>').text(date_created))
-    .append($('<span>').text(creator));
+  var $resource = $('<article>').addClass('card box')
+    .append($('<div>').addClass('card-image')
+      .append($('<figure>').addClass('image is-4by3')
+        .append($('<img>').attr('src', "http://placehold.it/300x225"))))
+    .append($('<div>').addClass('card-content')
+      .append($('<h1>').text(title))
+      .append($('<div>').addClass('content')
+        .append($('<span>').addClass('tag is-dark').text(topic))
+        .append($('<strong>').addClass('timestamp').text(date_created)
+        )
+      )
+    )
 
   return $resource;
 }
 
-function renderResources(resourceObjectofObjects){
-  $('.resource-wrapper').empty(); // deletes all resources on the page
+function renderResources(resourceObjectofObjects) {
+  $('.main-content-wrapper.resources').empty(); // deletes all resources on the page
 
   // then creates the resource object on the page and prepends it to the list
   // TODO will have to sort them by date/time
   for (var i in resourceObjectofObjects) {
     var $resource = createResourceElement(resourceObjectofObjects[i]);
-    $('.resource-wrapper').prepend($resource);
+    $('.main-content-wrapper.resources').append($resource);
   }
+  $('.main-content-wrapper.resources').append(
+    $('<article>').addClass('card box placeholder')
+  );
+  $('.main-content-wrapper.resources').append(
+    $('<article>').addClass('card box placeholder')
+  );
 }
 
 $(document).ready(function() {
@@ -184,6 +194,10 @@ $('#comment_form').children('input').on('click', function(event) {
   function handleSearchBarKeystroke (event) {
    // If we don't want to search with every keyup, change to 'keypress' and
    // call next function when event.which === 13 (enter key)
+   $.each($('input[name="topic"]'), function() {
+     $(this).prop('checked', true)
+   });
+
    var searchString = $(this).find('input').val();
 
    var currentWindow = $(location).attr('pathname');
@@ -196,20 +210,21 @@ $('#comment_form').children('input').on('click', function(event) {
    }
   }
 
+  // TODO when filtering, clear search field
   // when someone clicks the 'filter' button on search header
-  $('#search-bar').find('.filter-form .filter.button').on('click', handleFilterButtonClick);
+  $('#search-bar').find('#filter-field .button.filter').on('click', handleFilterButtonClick);
   // when someone types in search field on search header
-  $('#search-button').on('keyup', handleSearchBarKeystroke);
+  $('#search-bar #search-field').on('keyup', handleSearchBarKeystroke);
 
   // when someone clicks the 'select all' button on the filter header
-  $('#search-bar').find('.filter-form .select-all.button').on('click', function() {
+  $('#search-bar').find('#filter-field .button.select-all').on('click', function() {
     $.each($('input[name="topic"]'), function() {
       $(this).prop('checked', true)
     });
   });
 
   // when someone clicks the 'deselect all' button on the filter header
-  $('#search-bar').find('.filter-form .deselect-all.button').on('click', function() {
+  $('#search-bar').find('#filter-field .button.deselect-all').on('click', function() {
     $.each($('input[name="topic"]'), function() {
       $(this).prop('checked', false)
     });

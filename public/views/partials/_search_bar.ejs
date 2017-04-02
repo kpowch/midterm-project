@@ -1,18 +1,28 @@
-<nav class='nav' id='search-bar'>
+<!-- Search bar partial -->
+<nav class='nav box' id='search-bar'>
 
-  <div class='columns'>
-    <div class='column'>
+  <div class='nav-left ' id='search-field'>
+    <p class='nav-item control has-icon'>
+      <input class='input' type='text' name='search' placeholder='Find a post'>
+      <span class='icon'>
+        <i class='fa fa-search'></i>
+      </span>
+    </p>
+  </div>
 
-    <form class='filter-form'>
+  <div class='nav-right'>
+    <div class='nav-item' id='filter-field'>
+      <div class='topic-inputs'>
         <label><input checked type='checkbox' name='topic' value='math'>Math</label>
         <label><input checked type='checkbox' name='topic' value='geography'>Geography</label>
         <label><input checked type='checkbox' name='topic' value='science'>Science</label>
         <label><input checked type='checkbox' name='topic' value='history'>History</label>
-        <button class='button filter' type='button'>Filter</button>
-        <button class='button select-all' type='button'>Select All</button>
-        <button class='button deselect-all' type='button'>Deselect All</button>
-    </form>
+      </div>
 
+      <button class='button filter' type='button'>Filter</button>
+      <button class='button select-all' type='button'>Select All</button>
+      <button class='button deselect-all' type='button'>Deselect All</button>
     </div>
   </div>
+
 </nav>

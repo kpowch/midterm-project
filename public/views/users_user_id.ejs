@@ -1,60 +1,84 @@
 <%#
-My Resources page
-Route: /users/:user_id
+User resources page - resources and likes that belong to a user
+url: /users/:user_id
+Routes:
 Data required:
 %>
 
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>User Resources</title>
-    <% include partials/_includes %>
-  </head>
-  <body>
-    <header>
+<html lang='en'>
+<head>
+  <title>User Page</title>
+  <% include partials/_includes %>
+</head>
+
+<body>
+  <header>
+    <div class='header-wrapper'>
       <% include partials/_nav %>
-      <% include partials/_filterheader %>
       <% include partials/_search_bar %>
-    </header>
+    </div>
+  </header>
 
-    <main class='main-content'>
-      <h1>My Resources</h1>
 
-      <!-- <section id='resources-container'>
-      </section> -->
+  <div class='nav-and-search-bar-break'>
+    <br />
+  </div>
 
-      <div class=resource-wrapper>
-          <% for (var resource in resources) { %>
-            <div class='resource box'>
-              title: <%=resources[resource].title%><br />
-              topic: <%=resources[resource].topic%><br />
-              creator: <%=resources[resource].creator%><br />
-              date_created: <%=resources[resource].date_created.toLocaleDateString()%><br />
-              <% if (resources[resource].topic == 'math') { %>
-                <a href="/resources/<%=resources[resource].id%>">
-                   <i class="fa fa-superscript" aria-hidden="true" style="font-size:200px"></i>
-                </a>
-              <% } else if (resources[resource].topic == 'science') { %>
-                <a href="/resources/<%=resources[resource].id%>">
-                  <i class="fa fa-flask" aria-hidden="true" style="font-size:200px"></i>
-                </a>
-              <% } else if (resources[resource].topic == 'history') { %>
-                <a href="/resources/<%=resources[resource].id%>">
-                  <i class="fa fa-hourglass-end" aria-hidden="true" style="font-size:200px"></i>
-                </a>
-              <% } else if (resources[resource].topic == 'geography') { %>
-                <a href="/resources/<%=resources[resource].id%>">
-                  <i class="fa fa-globe" aria-hidden="true" style="font-size:200px"></i>
-                </a>
-              <% } %>
-              <a class='button' href=<%=resources[resource].url%>>View</a>
-            </div>
-          <% } %>
+  <div class='main-content-wrapper'>
+    <div class="section profile-heading">
+      <div class="columns">
+        <div class="column is-2">
+          <div class="image is-128x128 avatar">
+            <img src="http://orig01.deviantart.net/06f7/f/2014/101/7/9/profile_picture_by_happy_fingers-d7e2t77.jpg">
+          </div>
+        </div>
+        <div class="column is-4 name">
+          <p>
+            <span class="title is-bold">John Smith</span>
+            <span class="button is-primary is-outlined follow">Follow</span>
+          </p>
+          <p class="tagline">The users profile bio would go here, of course. It could be two lines</p>
+        </div>
+        <div class="column is-2 followers has-text-centered">
+          <p class="stat-val">129k</p>
+          <p class="stat-key">followers</p>
+        </div>
+        <div class="column is-2 following has-text-centered">
+          <p class="stat-val">2k</p>
+          <p class="stat-key">following</p>
+        </div>
+        <div class="column is-2 likes has-text-centered">
+          <p class="stat-val">29</p>
+          <p class="stat-key">likes</p>
+        </div>
       </div>
-    </main>
+    </div>
+  </div>
+
+  <main class='main-content-wrapper resources'>
+    <% for (var resource in resources) { %>
+      <article class="card box">
+        <div class="card-image">
+          <figure class="image is-4by3">
+            <img src="http://placehold.it/300x225" alt="">
+          </figure>
+        </div>
+
+        <div class="card-content">
+          <h1><%=resources[resource].title%></h1>
+          <div class="content">
+            <span class="tag is-dark"><%=resources[resource].topic%></span>
+            <strong class="timestamp"><%=resources[resource].date_created.toLocaleDateString()%></strong>
+          </div>
+        </div>
+      </article>
+    <% } %>
+  </main>
 
   <footer>
     <% include partials/_footer %>
   </footer>
+
 </body>
 </html>

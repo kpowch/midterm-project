@@ -1,39 +1,69 @@
 <%#
 Edit profile page
-Route: /users/:user_id/editprofile
+url: /users/:user_id/editprofile
+Routes:
 Data required:
 %>
 
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Edit Profile</title>
-    <% include partials/_includes %>
-  </head>
-  <body>
-    <header>
+<html lang='en'>
+<head>
+  <title>Edit Profile</title>
+  <% include partials/_includes %>
+</head>
+
+<body>
+  <header>
+    <div class='header-wrapper'>
       <% include partials/_nav %>
-    </header>
-
-    <div class="user_credentials">
-    <p>
-      Username: <%= user.username %>
-    </p>
-    <p>
-      Email: <%= user.email %>
-    </p>
-    <p>
-      Password: **********
-    </p>
+      <%# TODO add? include partials/_flash %>
     </div>
-    <form method='POST' action='/users/:user_id/editprofile' style='display:inline-block'>
-      <input type='password' name='password' placeholder='insert new password'>
-      <input type='submit' value='Update'>
-    </form>
+  </header>
 
 
-    <footer>
-      <% include partials/_footer %>
-    </footer>
-  </body>
+  <div class='nav-bar-break'>
+    <br />
+  </div>
+
+  <main class='main-content-wrapper'>
+
+    <div class='box profile'>
+      <article class='media'>
+        <div class='media-left'>
+          <figure class='image is-3x4'>
+            <img src='http://orig01.deviantart.net/06f7/f/2014/101/7/9/profile_picture_by_happy_fingers-d7e2t77.jpg' alt='Image'>
+          </figure>
+        </div>
+
+        <div class='media-content'>
+          <div class='content'>
+            <h1> <%= user.username %> </h1>
+            <h4> <%= user.email %> </h4>
+
+            <div class='field'>
+              <form method='POST' action='/users/:user_id/editprofile'>
+                <label class='label'>Reset Password:</label>
+                <input class='input' type='password' name='password' placeholder='New password...'>
+
+                <label class='label'>Edit Profile Bio: </label>
+                <p class='control'>
+                  <textarea class='textarea' placeholder="This is your profile bio for your profile page. One day you'll be able to change this and your profile picture. But not yet :)"></textarea>
+                </p>
+
+                <input class='button is-primary is-outlined' type='submit' value='Update'>
+              </form>
+            </div>
+          </div>
+        </div>
+
+      </article>
+    </div>
+
+  </main>
+
+  <footer>
+    <% include partials/_footer %>
+  </footer>
+
+</body>
 </html>
