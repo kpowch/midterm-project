@@ -17,15 +17,21 @@ function createResourceElement(resourceData) {
   return $resource;
 }
 
-function renderResources(resourceObjectofObjects){
-  $('.main-content-wrapper').empty(); // deletes all resources on the page
+function renderResources(resourceObjectofObjects) {
+  $('.main-content-wrapper.resources').empty(); // deletes all resources on the page
 
   // then creates the resource object on the page and prepends it to the list
   // TODO will have to sort them by date/time
   for (var i in resourceObjectofObjects) {
     var $resource = createResourceElement(resourceObjectofObjects[i]);
-    $('.main-content-wrapper').prepend($resource);
+    $('.main-content-wrapper.resources').append($resource);
   }
+  $('.main-content-wrapper.resources').append(
+    $('<article>').addClass('card box placeholder')
+  );
+  $('.main-content-wrapper.resources').append(
+    $('<article>').addClass('card box placeholder')
+  );
 }
 
 $(document).ready(function() {
@@ -34,7 +40,6 @@ $(document).ready(function() {
   and sends the array of topics that are checked.
   */
   function fetchFilteredResources (topicArray, url) {
-    console.log('fetching filtered resources')
     $.ajax({
       url: url,
       method: 'GET',
@@ -51,7 +56,6 @@ $(document).ready(function() {
   which page it's on (All Resources or User Resources) and then calls fetchFilteredResources.
   */
   function handleFilterButtonClick (event) {
-    console.log('filter clicked')
     var topicArray = [];
     $.each($('input[name="topic"]:checked'), function() {
       topicArray.push($(this).val());
@@ -59,7 +63,6 @@ $(document).ready(function() {
     if(topicArray.length === 0) {
       topicArray = [null];
     }
-    console.log(topicArray)
 
     var currentWindow = $(location).attr('pathname');
     if (currentWindow === '/') {
@@ -76,7 +79,6 @@ $(document).ready(function() {
   and sends the search string they entered into the search bar.
   */
   function fetchSearchedResources (searchString, url) {
-    console.log('fetching search resources')
     $.ajax({
       url: url,
       method: 'GET',
@@ -93,9 +95,12 @@ $(document).ready(function() {
   it's on (All Resources or User Resources) and then calls fetchSearchedResources.
   */
   function handleSearchBarKeystroke (event) {
-    console.log('search bar')
    // If we don't want to search with every keyup, change to 'keypress' and
    // call next function when event.which === 13 (enter key)
+   $.each($('input[name="topic"]'), function() {
+     $(this).prop('checked', true)
+   });
+
    var searchString = $(this).find('input').val();
 
    var currentWindow = $(location).attr('pathname');
@@ -108,6 +113,7 @@ $(document).ready(function() {
    }
  }
 
+  // TODO when filtering, clear search field
   // when someone clicks the 'filter' button on search header
   $('#search-bar').find('#filter-field .button.filter').on('click', handleFilterButtonClick);
   // when someone types in search field on search header
