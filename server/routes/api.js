@@ -68,16 +68,30 @@ module.exports = (knex) => {
       });
     }
   });
-  //for likes
+
+
+
+ //for likes
   router.post('/resources/:resource_id/like', (req, res) => {
-  let resource = req.params.resource_id;
-  let user = req.session.user_id;
+    let resource = req.params.resource_id;
+    let user = req.session.user_id;
+    console.log('user', user, 'resource', resource);
+    knex('likes').count()
+      .where('user_id', user)
+      .andWhere('resource_id', resource)
+      .then((results) => {
 
-
-
-
-
-
+      console.log('res', results[0].count );
+      if (results[0].count === '0') {
+        knex('likes').insert({user_id: user, resource_id: resource}).then(() => {return "added"});
+        } else {
+        knex('likes').where('user_id', user).andWhere('resource_id', resource).del().then(() => {return "removed"});
+      }
+      }).then((results) => {
+        console.log('added or removed', results);
+      }).catch((error) => {
+        console.log(error);
+      });
 
     res.send('hello')
   });

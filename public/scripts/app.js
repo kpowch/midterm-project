@@ -57,7 +57,7 @@ $(document).ready(function() {
     }
   }
 
-  function submitInteraction(data, url) {
+  function submitInteraction(url) {
   $.ajax({
       url: url,
       method: 'POST',
@@ -74,7 +74,7 @@ $(document).ready(function() {
       // console.log('please log in to use this feature');
       // return;
     // } else {
-      submitInteraction(data, `/api${currentWindow}/like`);
+      submitInteraction(`/api${currentWindow}/like`);
       return;
     // }
   });
