@@ -55,6 +55,7 @@ module.exports = (knex) => {
     let rating = 0;
     let commentsArr = [];
     let currentUser = '';
+    let hasLiked = false;
 
     //checks for a logged in user, if no cookie-session, currentUser an empty string
     //repetitive code! need to refactor
@@ -88,6 +89,19 @@ module.exports = (knex) => {
       likes = results[0].count;
     });
 
+    knex('likes').count()
+    .where('user_id', req.session.user_id)
+    .andWhere('resource_id', req.params.resource_id)
+    .then((results) => {
+      if (results[0].count == 1) {
+        hasLiked = true;
+      } else {
+        hasLiked = false;
+      }
+    }).catch(function(error){
+        console.log(error);
+    })
+
     //links resource ratings
     knex('resources').join('ratings', 'resource_id', '=', 'resources.id')
     .select('value').where('resource_id', key)
@@ -106,11 +120,13 @@ module.exports = (knex) => {
     .join('users', 'user_id', '=', 'users.id')
     .where('resource_id', key)
     .asCallback((err, results) => {
+      let dateTime = '';
       if (err) return console.error(err);
       for (let i = 0; i < results.length; i++){
+        dateTime = (results[i].date_created).toLocaleString();
         let comment = {
           comment: results[i].comment,
-          date: results[i].date_created,
+          date: dateTime,
           commenter: results[i].username
         }
         commentsArr.push(comment);
@@ -123,6 +139,9 @@ module.exports = (knex) => {
       if (err) return console.error(err);
       resource = results;
     }).then(function() {
+      commentsArr.sort(function(a,b){
+        return new Date(b.date) - new Date(a.date);
+      });
 
       let templateVars = {
         resource: resource[0],
@@ -137,6 +156,9 @@ module.exports = (knex) => {
         likesCount: {
           likes: likes
         },
+        hasLiked: {
+          hasLiked: hasLiked
+        },
         totalRating: {
           rating: rating
         },
@@ -146,8 +168,8 @@ module.exports = (knex) => {
     }).catch(function(error){
         console.log(error);
     })
-
   });
+
 
   //posts new resource to /:resource_id. If url is used
   //then it redirects back to resources/new
