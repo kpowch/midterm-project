@@ -3,36 +3,47 @@ header {
   width: 100%;
   top: 0;
   left: 0;
-  z-index: 9000; }
-  header #nav-header .logo {
-    font-family: "Fredericka the Great", cursive;
-    font-size: 26px;
-    padding: 2px 10px;
-    border: 2px solid #FFF; }
-  header #filter-header .input[type=text] {
-    width: 130px;
-    -webkit-transition: width 0.4s ease-in-out;
-    transition: width 0.4s ease-in-out; }
-    header #filter-header .input[type=text]:focus {
-      width: 100%; }
-  header #search-bar {
-    width: 100%;
-    height: 50px;
-    display: none; }
+  z-index: 9000;
+  background-color: #EEE; }
+  header .header-wrapper {
+    max-width: 1200px;
+    margin: 0 auto; }
+    header .header-wrapper #nav-bar {
+      background-color: inherit; }
+      header .header-wrapper #nav-bar .logo {
+        font-family: "Fredericka the Great", cursive;
+        font-size: 26px;
+        padding: 2px 10px;
+        border: 2px solid #FFF; }
+    header .header-wrapper #search-bar {
+      margin-top: 20px; }
+      header .header-wrapper #search-bar #search-field .input[name=search] {
+        width: 300px;
+        -webkit-transition: width 0.4s ease-in-out;
+        transition: width 0.4s ease-in-out; }
+        header .header-wrapper #search-bar #search-field .input[name=search]:focus {
+          width: 500px; }
+      header .header-wrapper #search-bar #filter-field .topic-inputs {
+        margin-right: 20px; }
 
-.resource-wrapper {
+.main-content-wrapper {
+  max-width: 1200px;
+  margin-top: 20px;
+  margin: 0 auto;
   display: flex;
   flex-flow: row wrap;
-  justify-content: space-between;
+  justify-content: center;
   align-items: flex-start; }
-  .resource-wrapper .resource {
-    flex: 1 1 30%;
+  .main-content-wrapper .card {
+    border-radius: 10px;
+    flex: 0 0 30%;
     height: 400px;
-    border: 3px solid black;
-    margin: 10px;
-    word-wrap: break-word; }
-    .resource-wrapper .resource:hover {
-      border: 3px dashed black; }
+    border: 1px solid black;
+    margin: 10px; }
+    .main-content-wrapper .card h1 {
+      height: 50px; }
+    .main-content-wrapper .card:hover {
+      border: 1px dashed black; }
 
 /*! bulma.io v0.4.0 | MIT License | github.com/jgthms/bulma */
 @keyframes spinAround {
@@ -3967,9 +3978,9 @@ label.panel-block {
 
 body {
   background-color: #EEE; }
+  body .nav-and-search-bar {
+    margin-top: 188px; }
   body h1 {
     color: #244751; }
-  body .main-content {
-    margin-top: 100px; }
 
 /*# sourceMappingURL=layout.css.map */

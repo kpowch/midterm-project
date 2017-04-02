@@ -1,9 +1,11 @@
 <!-- Header partial -->
-<nav class='nav' id='nav-header'>
+<nav class='nav bar' id='nav-bar'>
+
   <div class='nav-left'>
-    <a class='nav-item'>
+    <a class='nav-item is-tab'>
       <span class='logo'>Chalkboard</span>
     </a>
+
     <% if (user) { %>
       <p class='nav-item'>
         Welcome <%=user.username%>!
@@ -11,56 +13,40 @@
     <% } %>
   </div>
 
-  <div class='nav-center'>
-  </div>
-
-  <!-- This 'nav-toggle' hamburger menu is only visible on mobile -->
-  <!-- You need JavaScript to toggle the 'is-active' class on 'nav-menu' -->
-  <span class='nav-toggle'>
-    <span></span>
-    <span></span>
-    <span></span>
-  </span>
-
-  <!-- This 'nav-menu' is hidden on mobile -->
-  <!-- Add the modifier 'is-active' to display it on mobile -->
-  <div class='nav-right nav-menu'>
+  <div class='nav-right'>
     <% if (user) { %>
-      <a class='nav-item' href='/'>
+      <a class="nav-item is-tab" href='/'>
         Home
       </a>
 
-      <!-- TODO add user id -->
-      <a class='nav-item' href='/users/<%= user.userID %>'>
+      <a class="nav-item is-tab" href='/users/<%= user.userID %>'>
         My Resources
       </a>
 
-      <a class='nav-item' href='/resources/new'>
+      <a class="nav-item is-tab" href='/resources/new'>
         <i class='fa fa-plus nav-item'></i>
       </a>
 
-      <!-- TODO add user id -->
-      <a class='nav-item' href='/users/<%= user.userID %>/editprofile'>
-        <i class='fa fa-user nav-item' aria-hidden='true'></i>
+      <a class="nav-item is-tab" href='/users/<%= user.userID %>/editprofile'>
+        <i class='fa fa-user nav-item'></i>
       </a>
 
-      <span class='nav-item'>
-          <form method='POST' action='/logout'>
-            <input class='button is-primary' type='submit' value='Logout'>
-          </form>
-      </span>
-    <% } else { %>
-      <span class='nav-item'>
-        <a class='button is-primary' href="/login">
-          <span>Login</span>
-        </a>
-      </span>
+      <a class="nav-item is-tab" href='/users/<%= user.userID %>/editprofile'>
+        <form class="nav-item is-tab" method='POST' action='/logout'>
+          <input class='button is-primary' type='submit' value='Logout'>
+        </form>
+      </a>
 
-      <span class='nav-item'>
-        <a class='button is-primary' href="/login">
-          <span>Register</span>
+    <% } else { %>
+      <span class="nav-item">
+        <a class="button" href="/login">
+          Log in
+        </a>
+        <a class="button is-info" href="/login">
+          Sign up
         </a>
       </span>
     <% } %>
   </div>
+
 </nav>
