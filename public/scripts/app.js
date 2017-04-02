@@ -62,7 +62,24 @@ $(document).ready(function() {
       url: url,
       method: 'POST',
     }).done(function(results) {
-      console.log('ajax', results);
+      if (results === 'added') {
+      let likesCount =  $('#like').nextAll("#likesCount");
+      let currentCount = likesCount.text();
+      let NewCount = (new Number(currentCount) + 1);
+      $('#like').text('Unlike');
+      likesCount.text(NewCount.toString());
+    }
+    if (results === 'removed'){
+      let likesCount =  $('#like').nextAll("#likesCount");
+      let currentCount = likesCount.text();
+      let NewCount = (new Number(currentCount) - 1);
+      $('#like').text('Like');
+      likesCount.text(NewCount.toString());
+    }
+    if (results === 'No Cookie'){
+      //TODO update this to flash
+      console.log('You need to log in to use this feature');
+    }
     }).fail(function(err) {
       console.log('Error:', err);
     });
@@ -70,13 +87,7 @@ $(document).ready(function() {
 
   $('#like').on('click', function() {
     let currentWindow = $(location).attr('pathname');
-    // if (!cookie) {
-      // console.log('please log in to use this feature');
-      // return;
-    // } else {
       submitInteraction(`/api${currentWindow}/like`);
-      return;
-    // }
   });
 
   // when someone clicks the 'filter' button on the search bar
