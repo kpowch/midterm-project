@@ -66,6 +66,7 @@ module.exports = (knex) => {
     }
   });
 
+
 //comments
   router.post('/resources/:resource_id/comment', (req, res) => {
    let resource = req.params.resource_id;
@@ -91,6 +92,7 @@ module.exports = (knex) => {
      });
    }
  });
+
 
 //ratings
 function calculateRating(allRatings){
