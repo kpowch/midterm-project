@@ -55,41 +55,45 @@ app.use("/users", usersRoutes(knex));
 app.use("/resources", resourceRoutes(knex));
 app.use('/api', apiRoutes(knex));
 
-
-// function ensureLoggedIn(req, res, next) {
-//     // TODO: implement me
-//     // eg: req.userId = 1;
-//     knex('users').select('username').where('users.id', req.session.user_id)
-//     .then((results) => {
-//       return username;
-//     })
-//     console.log('Im here, ', req.session.user_id);
-//     next();
-//     // if not logged in, redirect to error page? alert they need to log in? redirect to login?
-//     // potential, save their url and once they're logged in, redirect to that url
-
-//   }
-
-
-
 // Home page
 // from db, need username, all resources
 app.get("/", (req, res) => {
   // this is used for the initial page render
   // TODO add username for header
-  Promise.all([
-    knex('resources'),
-  ]).then(([results, users]) => {
-    res.render("../public/views/index", { user: {username: 'TO CHANGE THROUGH COOKIE'}, resources: results });
-  });
-
+  let currentUser = '';
+  if (!req.session.user_id) {
+    console.log(req.session.user_id);
+    console.log('no cookie');
+    knex('resources')
+    .then((rows) => {
+      res.render("../public/views/index", { user: undefined, resources: rows });
+      return;
+    });
+  } else {
+    console.log(req.session.user_id);
+    knex('users').select('username').where('users.id', req.session.user_id)
+    .asCallback((err, results) => {
+      if (err) throw err;
+      console.log(results[0]);
+      if (results[0].username.length > 0) {
+        currentUser = results[0].username;
+        let ID = req.session.user_id;
+        knex('resources')
+        .then((rows) => {
+        res.render("../public/views/index", { user: {username: currentUser, userID: ID}, resources: rows });
+        return;
+        });
+      }
+    });
+  }
 });
 
 app.get("/login", (req, res) => {
-  res.render("../public/views/login", {
+    res.render("../public/views/login", {
     errors: req.flash('errors'),
     info: req.flash('info')
   });
+  req.session = null;
 });
 
 app.post("/login", (req, res) => {
@@ -105,8 +109,8 @@ app.post("/login", (req, res) => {
         message: 'Bad credentials'
       });
     }
-  const comparePasswords = bcrypt.compare(req.body.password_login, user.password);
-  return comparePasswords.then((passwordsMatch) => {
+    const comparePasswords = bcrypt.compare(req.body.password_login, user.password);
+    return comparePasswords.then((passwordsMatch) => {
     if (!passwordsMatch) {
       return Promise.reject({
         type: 409,
@@ -153,25 +157,28 @@ app.post("/register", (req, res) => {
       password: passwordDigest
     });
   }).then(() => {
-    req.flash('info', 'Account successfully created');
+    req.flash('info', 'Account successfully created, please log in');
     knex('users').select('users.id')
     .where('users.email', req.body.email_register)
     .then((results) => {
-      req.session.user_id = results[0];
+      req.session.user_id = results[0].id;
+      console.log('register cookie', results[0]);
+      res.redirect('/');
+      return;
     });
-    res.redirect('/');
   }).catch((err) => {
     req.flash('errors', err.message);
     res.redirect('/login');
+    return;
   });
 });
 
 //deletes session cookie, logs out, and redirects to home page
-app.get("/logout", (req, res) => {
-  req.session = undefined;
+app.post("/logout", (req, res) => {
+  console.log(req.session);
+  req.session = null;
   res.redirect('/');
 });
-
 
 //see if a topic is picked
 app.post("/topics", (req, res) => {

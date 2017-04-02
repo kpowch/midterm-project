@@ -1,7 +1,7 @@
 function createResourceElement(resourceData) {
-  const { id, title, url, description, topic, creator, date_created } = resourceData;
+  var { id, title, url, description, topic, creator, date_created } = resourceData;
 
-  let $resource = $('<article>').addClass('resource box')
+  var $resource = $('<article>').addClass('resource box')
     .append($('<span>').text(id))
     .append($('<h1>').text(title))
     .append($('<div>').text(url))
@@ -19,12 +19,17 @@ function renderResources(resourceObjectofObjects){
   // then creates the resource object on the page and prepends it to the list
   // TODO will have to sort them by date/time
   for (var i in resourceObjectofObjects) {
-    let $resource = createResourceElement(resourceObjectofObjects[i]);
+    var $resource = createResourceElement(resourceObjectofObjects[i]);
     $('.resource-wrapper').prepend($resource);
   }
 }
 
 $(document).ready(function() {
+  /*
+  Sends ajax call depending on what page the user is on (All Resources or My Resources)
+  and sends the array of topics that are checked.
+  */
+
 
   function fetchFilteredResources (topicArray, url) {
     $.ajax({
@@ -38,8 +43,12 @@ $(document).ready(function() {
     });
   }
 
+  /*
+  Gets an array of all the topics on the filter header that are checked, determines
+  which page it's on (All Resources or User Resources) and then calls fetchFilteredResources.
+  */
   function handleFilterButtonClick (event) {
-    let topicArray = [];
+    var topicArray = [];
     $.each($('input[name="topic"]:checked'), function() {
       topicArray.push($(this).val());
     });
@@ -47,12 +56,12 @@ $(document).ready(function() {
       topicArray = [null];
     }
 
-    const currentWindow = $(location).attr('pathname');
+    var currentWindow = $(location).attr('pathname');
     if (currentWindow === '/') {
-      fetchFilteredResources(topicArray, '/api/resources');
+      fetchFilteredResources(topicArray, '/api/resources/filter');
       return;
     } else {
-      fetchFilteredResources(topicArray, `/api${currentWindow}/resources`);
+      fetchFilteredResources(topicArray, `/api${currentWindow}/resources/filter`);
       return;
     }
   }
@@ -80,6 +89,17 @@ $(document).ready(function() {
       //TODO update this to flash
       console.log('You need to log in to use this feature');
     }
+  /*
+  Sends ajax call depending on what page the user is on (All Resources or My Resources)
+  and sends the search string they entered into the search bar.
+  */
+  function fetchSearchedResources (searchString, url) {
+    $.ajax({
+      url: url,
+      method: 'GET',
+      data: {search: searchString}
+    }).done( function(results) {
+      renderResources(results);
     }).fail(function(err) {
       console.log('Error:', err);
     });
@@ -91,24 +111,51 @@ $(document).ready(function() {
   });
 
   // when someone clicks the 'filter' button on the search bar
-  $('#search-bar').find('.filter-form .filter.button').on('click', handleFilterButtonClick);
+  /*
+  Gets whatever the user typed in the search bar (string), determines which page
+  it's on (All Resources or User Resources) and then calls fetchSearchedResources.
+  */
+  function handleSearchBarKeystroke (event) {
+   // If we don't want to search with every keyup, change to 'keypress' and
+   // call next function when event.which === 13 (enter key)
+   var searchString = $(this).find('input').val();
 
-  // when someone clicks the 'select all' button on the search bar
+   var currentWindow = $(location).attr('pathname');
+   if (currentWindow === '/') {
+     fetchSearchedResources(searchString, '/api/resources/search');
+     return;
+   } else {
+     fetchSearchedResources(searchString, `/api${currentWindow}/resources/search`);
+     return;
+   }
+ }
+
+  // when someone clicks the 'filter' button on search header
+  $('#search-bar').find('.filter-form .filter.button').on('click', handleFilterButtonClick);
+  // when someone types in search field on search header
+  $('#search-button').on('keyup', handleSearchBarKeystroke);
+
+  // when someone clicks the 'select all' button on the filter header
   $('#search-bar').find('.filter-form .select-all.button').on('click', function() {
     $.each($('input[name="topic"]'), function() {
       $(this).prop('checked', true)
     });
   });
 
-  // when someone clicks the 'deselect all' button on the search bar
+  // when someone clicks the 'deselect all' button on the filter header
   $('#search-bar').find('.filter-form .deselect-all.button').on('click', function() {
     $.each($('input[name="topic"]'), function() {
       $(this).prop('checked', false)
     });
   });
 
+  // shows/hides the filter header when someone clicks the 'filter by topic' button
   $('#topic-filter-button').on('click', function() {
     $('#search-bar').slideToggle();
   })
 
 });
+
+
+
+
