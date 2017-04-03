@@ -13,6 +13,58 @@
     margin: 0 10px
     border-radius: 5px
 
+    .image img
+      margin-left: 10px
+    h2
+      margin-bottom: 10px
+      font-size: 16px
+
+
+    .comments-wrapper
+      margin: 0 auto
+      width: 500px
+
+      #comment_form
+        content: ""
+        display: table
+        clear: both
+        width: 100%
+
+        textarea.textarea
+          width: 100%
+          resize: none
+          height: 50px
+          min-height: auto
+          margin-bottom: 10px
+
+        .button
+          float: right
+          line-height: 1
+          margin-bottom: 20px
+
+      .comment-content
+        border: 1px solid #ddd
+        border-radius: 3px
+        margin-bottom: 10px
+        height: 82px
+        padding: 10px
+
+        &:hover
+          background-color: #F5F7FA
+
+        .comment-words
+          height: 50px
+          font-weight: bold
+
+        .commenter
+          float: right
+          font-size: 12px
+
+        .comment-time
+          float: left
+          font-size: 12px
+
+
   .card
     border-radius: 10px
     flex: 0 0 30%

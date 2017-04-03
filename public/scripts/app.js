@@ -166,15 +166,13 @@ $(document).ready(function() {
          text: commentBody
        }
      }).done(function(results) {
-       if (results === 'No Cookie') {
-         console.log('You need to log in to comment');
-       } else {
-         let newComment = $('<article>')
-         .append($('<p>').text(commentBody))
-         .append($('<h4>').text('Posted by: ' + results.username + ' at ' + results.date));
-         $('#comments_container').prepend(newComment);
-         $('#comment_form textarea').val('');
-       }
+       console.log(results);
+       var newComment = $('<article class="comment-content">')
+       .append($('<p class="comment-words">').text(commentBody))
+       .append($('<h4 class="commenter">').text(results.username))
+       .append($('<h4 class="comment-time">').text(results.date));
+       $('#comments-container').prepend(newComment);
+       $('#comment_form textarea').val('');
      });
    }
  }
@@ -236,7 +234,3 @@ $('#comment_form').children('input').on('click', function(event) {
   })
 
 });
-
-
-
-
