@@ -1,7 +1,11 @@
+/*
+* Front end jQuery stuff
+*/
 
 function createResourceElement(resourceData) {
   var { id, title, url, description, topic, creator, date_created } = resourceData;
 
+  // to pass image url to placeholder easier
   var topicIcons = {
         science: `<a href="/resources/${id}"><i class="fa fa-flask" aria-hidden="true"></i></a>`,
         history: `<a href="/resources/${id}"><i class="fa fa-hourglass-end" aria-hidden="true"></i></a>`,
@@ -16,9 +20,9 @@ function createResourceElement(resourceData) {
     .append($('<div>').addClass('card-content')
       .append($('<h1>').text(title))
       .append($('<div>').addClass('content')
-        .append($('<span>').addClass('tag is-dark').text(topic))
+        .append($('<a class="button is-primary is-outlined">').text('Source').attr('href', url))
         .append($('<strong>').addClass('timestamp').text(moment(date_created).fromNow())
-        .append($('<a>').text('VISIT').attr('href', url))
+        .append($('<span>').addClass('tag is-dark').text(topic))
         )
       )
     )
@@ -27,13 +31,12 @@ function createResourceElement(resourceData) {
 }
 
 function renderResources(resourceObjectofObjects) {
-  $('.main-content-wrapper.resources').empty(); // deletes all resources on the page
+  $('.main-content-wrapper.resources').empty();
 
-  // then creates the resource object on the page and prepends it to the list
   // TODO will have to sort them by date/time
   for (var i in resourceObjectofObjects) {
     var $resource = createResourceElement(resourceObjectofObjects[i]);
-    $('.main-content-wrapper.resources').append($resource);
+    $('.main-content-wrapper.resources').prepend($resource);
   }
   $('.main-content-wrapper.resources').append(
     $('<article>').addClass('card box placeholder')
@@ -48,11 +51,6 @@ $(document).ready(function() {
   Sends ajax call depending on what page the user is on (All Resources or My Resources)
   and sends the array of topics that are checked.
   */
-
-
-
-
-
   function fetchFilteredResources (topicArray, url) {
     $.ajax({
       url: url,
@@ -104,19 +102,17 @@ $(document).ready(function() {
     });
   }
 
-console.log(($('#totalRating').text()));
+  //TODO is this working?
   if (isNaN($('#totalRating').text())) {
     $('#totalRating').addClass('NaN');
   }
 
   function handleRating (url, rating) {
-    console.log('sending ajax request ', rating);
     $.ajax({
         url: url,
         method: 'POST',
         data: {rating: rating}
       }).done(function(results) {
-        console.log('ajax recieved:', results);
         if (results === 'No Cookie'){
           //TODO update this to flash
           console.log('You need to log in to use this feature');
@@ -128,9 +124,7 @@ console.log(($('#totalRating').text()));
   }
 
   $('#rating').children().on('click', function(event) {
-
-    console.log('select!');
-    var rating = $(this).text();
+    var rating = $(this).data('rating');
     var currentWindow = $(location).attr('pathname');
     handleRating(`/api${currentWindow}/rating`, rating);
   });
@@ -141,14 +135,14 @@ console.log(($('#totalRating').text()));
         method: 'POST'
       }).done(function(results) {
         if (results === 'added') {
-          var likesCount =  $('#like').nextAll("#likesCount");
+          var likesCount =  $('#like').nextAll('#likesCount');
           var currentCount = likesCount.text();
           var NewCount = (new Number(currentCount) + 1);
           $('#like').text('Unlike');
           likesCount.text(NewCount.toString());
         }
         if (results === 'removed'){
-          var likesCount =  $('#like').nextAll("#likesCount");
+          var likesCount =  $('#like').nextAll('#likesCount');
           var currentCount = likesCount.text();
           var NewCount = (new Number(currentCount) - 1);
           $('#like').text('Like');
@@ -181,7 +175,6 @@ console.log(($('#totalRating').text()));
          text: commentBody
        }
      }).done(function(results) {
-       console.log(results);
        var newComment = $('<article class="comment-content">')
        .append($('<p class="comment-words">').text(commentBody))
        .append($('<h4 class="commenter">').text(results.username))
@@ -192,14 +185,12 @@ console.log(($('#totalRating').text()));
    }
  }
 
-
 $('#comment_form').children('input').on('click', function(event) {
-   let currentWindow = $(location).attr('pathname');
-   let contents = $('#comment_form textarea').val();
+   var currentWindow = $(location).attr('pathname');
+   var contents = $('#comment_form textarea').val();
    submitComment(`/api${currentWindow}/comment`, contents);
  });
 
-  // when someone clicks the 'filter' button on the search bar
   /*
   Gets whatever the user typed in the search bar (string), determines which page
   it's on (All Resources or User Resources) and then calls fetchSearchedResources.

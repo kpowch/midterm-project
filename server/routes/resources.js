@@ -15,43 +15,26 @@ module.exports = (knex) => {
     }});
   });
 
-
   //retrieves resource id and displays the info of the resource
   router.get('/:resource_id', (req, res) => {
-    let key = req.params.resource_id;
+    const key = req.params.resource_id;
     let resource = {};
     let creatorName = '';
     let creatorId = 0;
     let likes = 0;
     let rating = 0;
     let commentsArr = [];
-    // let currentUser = '';
     let hasLiked = false;
 
-    //checks for a logged in user, if no cookie-session, currentUser an empty string
-    //repetitive code! need to refactor
-    // if (req.session.user_id === undefined) {
-    //   currentUser;
-    // } else {
-      // knex('users')
-      //   .select('username')
-      //   .where('users.id', req.session.user_id)
-      //   .asCallback((err, results) => {
-      //     if (err) console.error(err);
-      //     if(results[0].username.length > 0){
-      //       currentUser = results[0].username;
-      //       return;
-      //     }
-      //   });
-    // }
-
     //links user with resource
-    knex('users').join('resources', 'users.id', '=', 'creator')
-    .select('username', 'creator').where('resources.id', req.params.resource_id)
-    .asCallback((err, results) => {
-      if (err) return console.error(err);
-      creatorName = results[0].username;
-      creatorId = results[0].creator;
+    knex('users')
+      .join('resources', 'users.id', '=', 'creator')
+      .select('username', 'creator')
+      .where('resources.id', req.params.resource_id)
+      .asCallback((err, results) => {
+        if (err) return console.error(err);
+        creatorName = results[0].username;
+        creatorId = results[0].creator;
     });
 
     //links resource likes
@@ -158,6 +141,7 @@ module.exports = (knex) => {
 
     findReqUrl.then((results) => {
       if (results.length) {
+        // TODO make this into a flash message
         console.log('Resource already used');
         res.redirect('/resources/new');
         return;
