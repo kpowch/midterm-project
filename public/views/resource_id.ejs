@@ -26,8 +26,39 @@ Data required:
 
   <main class='main-content-wrapper'>
 
-
-
+    <div class="section profile-heading">
+      <div class="columns">
+        <div class="column is-2">
+          <div class="image is-128x128 avatar">
+            <img src="http://orig01.deviantart.net/06f7/f/2014/101/7/9/profile_picture_by_happy_fingers-d7e2t77.jpg">
+          </div>
+        </div>
+        <div class="column is-4 name">
+          <p>
+            <span class="title is-bold"><%= resource.title %></span>
+            <span class="button is-primary is-outlined follow">Like</span>
+          </p>
+          <p>
+            <h1><%= creator.username %></h1>
+            <p class="tagline"><%= creator.username %></p>
+            <span class="button is-primary is-outlined follow">Like</span>
+          </p>
+          <p class="tagline"><%= resource.description %></p>
+        </div>
+        <div class="column is-2 followers has-text-centered">
+          <p class="stat-val"><%= likesCount.likes %></p>
+          <p class="stat-key">likes</p>
+        </div>
+        <div class="column is-2 following has-text-centered">
+          <p class="stat-val">2k</p>
+          <p class="stat-key">following</p>
+        </div>
+        <div class="column is-2 likes has-text-centered">
+          <p class="stat-val">29</p>
+          <p class="stat-key">likes</p>
+        </div>
+      </div>
+    </div>
 
 
 
