@@ -11,7 +11,7 @@ module.exports = (knex) => {
     next();
   }
 
-  // TODO this is how we extract logged in user and pass it to routes. in route, call req.username
+  // this is how to extract logged in user and pass it to routes. in route, call req.username
   const extractUserData = function (req, res, next) {
     console.log('extracting user data')
     if(!req.session.user_id) {

@@ -69,9 +69,9 @@ Data required:
           <div class="card-content">
           <h1><%=resources[resource].title%></h1>
             <div class="content">
+              <a class='button is-primary is-outlined' href="<%=resources[resource].url%>">Source</a>
+              <strong class="timestamp"><%=moment(resources[resource].date_created).fromNow()%></strong>
               <span class="tag is-dark"><%=resources[resource].topic%></span>
-                <strong class="timestamp"><%=moment(resources[resource].date_created).fromNow()%></strong>
-                <a href="<%=resources[resource].url%>">VISIT</a>
             </div>
           </div>
         </article>
