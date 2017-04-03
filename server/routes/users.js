@@ -7,8 +7,18 @@ const moment = require('moment');
 
 module.exports = (knex) => {
 
-  router.get("/:user_id", (req, res) => {
-    console.log('getting userid page');
+  // TODO move to middleware file
+  function getUsername(req, res, next) {
+    knex('users')
+      .select('username')
+      .where('id', req.params.user_id)
+      .then((results) => {
+        req.pageUsername = results[0].username
+        return next();
+      })
+    }
+
+  router.get("/:user_id", getUsername, (req, res) => {
     const userId = req.params.user_id;
     let subQueryLikes = knex('likes').select('resource_id').where('user_id', userId);
 
@@ -23,6 +33,7 @@ module.exports = (knex) => {
           .orWhereIn('id', subQueryLikes)
           .then((results) => {
             res.render("../public/views/users_user_id", {
+              pageUsername: req.pageUsername,
               user: {
                 username: req.username,
                 userid: req.session.user_id
