@@ -43,6 +43,7 @@ $(document).ready(function() {
 
 
 
+
   function fetchFilteredResources (topicArray, url) {
     $.ajax({
       url: url,
@@ -94,6 +95,10 @@ $(document).ready(function() {
     });
   }
 
+console.log(($('#totalRating').text()));
+  if (isNaN($('#totalRating').text())) {
+    $('#totalRating').addClass('NaN');
+  }
 
   function handleRating (url, rating) {
     console.log('sending ajax request ', rating);
@@ -108,6 +113,7 @@ $(document).ready(function() {
           console.log('You need to log in to use this feature');
       } else {
         $('#totalRating').text(results);
+        $('#totalRating').removeClass('NaN');
       }
     });
   }

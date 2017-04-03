@@ -101,7 +101,7 @@ function calculateRating(allRatings){
     rating += allRatings[i].value;
   }
   rating = rating / allRatings.length;
-  rating = Math.max( Math.round(rating * 10) / 10, 2.8 ).toFixed(1);
+  rating = Math.max( Math.round(rating * 10) / 10, 1 ).toFixed(1);
   return rating;
 }
 
