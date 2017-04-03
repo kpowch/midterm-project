@@ -45,7 +45,7 @@ header {
   .main-content-wrapper .card {
     border-radius: 10px;
     flex: 0 0 30%;
-    height: 400px;
+    height: 300px;
     border: 1px solid black;
     margin: 0 10px 10px; }
     .main-content-wrapper .card h1 {
@@ -60,6 +60,9 @@ header {
       padding: 0;
       border: 0;
       box-shadow: none; }
+    .main-content-wrapper .card .is-2by2 i {
+      font-size: 150px;
+      position: relative; }
 
 .profile {
   width: 100%;
