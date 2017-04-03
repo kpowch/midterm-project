@@ -1,10 +1,18 @@
+
 function createResourceElement(resourceData) {
   var { id, title, url, description, topic, creator, date_created } = resourceData;
+  var topicIcons = {
+        science: `<a href="/resources/${id}"><i class="fa fa-flask" aria-hidden="true"></i></a>`,
+        history: `<a href="/resources/${id}"><i class="fa fa-hourglass-end" aria-hidden="true"></i></a>`,
+        math: `<a href="/resources/${id}"><i class="fa fa-superscript" aria-hidden="true"></i></a>`,
+        geography: `<a href="/resources/${id}"><i class="fa fa-globe" aria-hidden="true"></i></a>`
+      };
+
 
   var $resource = $('<article>').addClass('card box')
     .append($('<div>').addClass('card-image')
       .append($('<figure>').addClass('image is-4by3')
-        .append($('<img>').attr('src', "http://placehold.it/300x225"))))
+        .append($(topicIcons[topic]))))
     .append($('<div>').addClass('card-content')
       .append($('<h1>').text(title))
       .append($('<div>').addClass('content')
@@ -154,16 +162,16 @@ console.log(($('#totalRating').text()));
 
   $('#like').on('click', function() {
     var currentWindow = $(location).attr('pathname');
-    handleLike(`/api${currentWindow}/like`);
+      handleLike(`/api${currentWindow}/like`);
   });
 
   function submitComment(url, commentBody) {
    if (commentBody.length === 0) {
-      $('#warning').html('Too short!').slideDown(300).delay(1600).fadeOut(400);
+     console.log('Too short!');
    } else if (commentBody.length > 255) {
-      $('#warning').html('Too long!').slideDown(300).delay(1600).fadeOut(400);
+     console.log('Too long!');
    } else if (commentBody == ' ') {
-      $('#warning').html('No blank spaces!').slideDown(300).delay(1600).fadeOut(400);
+     console.log('No blank spaces allowed!');
    } else {
      $.ajax({
        url: url,
@@ -173,14 +181,13 @@ console.log(($('#totalRating').text()));
        }
      }).done(function(results) {
        if (results === 'No Cookie') {
-         $('#warning').html('You need to log in to use this comment').slideDown(300).delay(1600).fadeOut(400);
+         console.log('You need to log in to comment');
        } else {
          let newComment = $('<article>')
          .append($('<p>').text(commentBody))
          .append($('<h4>').text('Posted by: ' + results.username + ' at ' + results.date));
          $('#comments_container').prepend(newComment);
          $('#comment_form textarea').val('');
-         $('#warning').html('');
        }
      });
    }
@@ -243,7 +250,6 @@ $('#comment_form').children('input').on('click', function(event) {
   })
 
 });
-
 
 
 

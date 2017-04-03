@@ -22,7 +22,13 @@ module.exports = (knex) => {
             user: {
               username: req.username,
               userid: req.id
-              }
+            },
+            icons: {
+              science: 'fa fa-flask',
+              history: 'fa fa-hourglass-end',
+              math: 'fa fa-superscript',
+              geography: 'fa fa-globe'
+            }
           });
           return;
         });
@@ -56,7 +62,7 @@ module.exports = (knex) => {
       errors: req.flash('errors'),
       info: req.flash('info'),
       user: {
-        username: req.username,       
+        username: req.username,
         userid: req.id
       }
     });

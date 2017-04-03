@@ -1,4 +1,4 @@
-<%#
+ <%#
 Home page - all resources
 url: /
 Routes:
@@ -27,24 +27,26 @@ Data required:
 
   <main class='main-content-wrapper resources'>
     <% for (var resource in resources) { %>
-      <article class="card box">
-        <div class="card-image">
-          <figure class="image is-4by3">
-            <img src="http://placehold.it/300x225" alt="">
-          </figure>
-        </div>
-
-        <div class="card-content">
-          <h1><%=resources[resource].title%></h1>
-          <div class="content">
-            <span class="tag is-dark"><%=resources[resource].topic%></span>
-            <strong class="timestamp"><%=resources[resource].date_created.toLocaleDateString()%></strong>
+        <article class="card box">
+          <div class="card-image">
+            <figure class="image is-4by3">
+                  <%var topicKey = resources[resource].topic;%>
+              <% console.log(topicKey);%>
+              <a href="/resources/<%=resources[resource].id%>">
+                    <i class="<%=icons[topicKey]%>" aria-hidden="true"></i>
+                  </a>
+            </figure>
           </div>
-        </div>
-      </article>
-    <% } %>
+          <div class="card-content">
+          <h1><%=resources[resource].title%></h1>
+            <div class="content">
+              <span class="tag is-dark"><%=resources[resource].topic%></span>
+                <strong class="timestamp"><%=resources[resource].date_created.toLocaleDateString()%></strong>
+            </div>
+          </div>
+        </article>
+   <% } %>
   </main>
-
 
   <footer>
     <% include partials/_footer %>
@@ -52,5 +54,4 @@ Data required:
 
 </body>
 </html>
-
 
