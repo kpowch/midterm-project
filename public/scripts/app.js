@@ -9,7 +9,6 @@ function createResourceElement(resourceData) {
         geography: `<a href="/resources/${id}"><i class="fa fa-globe" aria-hidden="true"></i></a>`
       };
 
-
   var $resource = $('<article>').addClass('card box')
     .append($('<div>').addClass('card-image')
       .append($('<figure>').addClass('image is-2by2')
@@ -18,7 +17,7 @@ function createResourceElement(resourceData) {
       .append($('<h1>').text(title))
       .append($('<div>').addClass('content')
         .append($('<span>').addClass('tag is-dark').text(topic))
-        .append($('<strong>').addClass('timestamp').text(date_created)
+        .append($('<strong>').addClass('timestamp').text(moment(date_created).fromNow())
         .append($('<a>').text('VISIT').attr('href', url))
         )
       )

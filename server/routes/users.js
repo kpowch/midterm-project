@@ -3,6 +3,7 @@
 const bcrypt  = require("bcrypt");
 const express = require('express');
 const router  = express.Router();
+const moment = require('moment');
 
 module.exports = (knex) => {
 
@@ -10,7 +11,7 @@ module.exports = (knex) => {
   // need username for header
   // TODO search by user cookie (hard coded right now)
   router.get("/:user_id", (req, res) => {
-    console.log('getting userid page')
+    console.log('getting userid page');
     const userId = req.params.user_id;
     let subQueryLikes = knex('likes').select('resource_id').where('user_id', userId);
     // let currentUser = '';
@@ -47,7 +48,8 @@ module.exports = (knex) => {
                   history: 'fa fa-hourglass-end',
                   math: 'fa fa-superscript',
                   geography: 'fa fa-globe'
-                }
+                },
+                moment: moment
               });
             }).catch((error) => {
               console.log(error);

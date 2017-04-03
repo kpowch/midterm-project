@@ -3,6 +3,7 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
+const moment = require('moment')
 
 module.exports = (knex) => {
   // Home page
@@ -17,7 +18,9 @@ module.exports = (knex) => {
     //   console.log('no cookie');
       knex('resources')
         .then((rows) => {
+          console.log(rows);
           res.render('../public/views/index', {
+
             resources: rows,
             user: {
               username: req.username,
@@ -28,7 +31,8 @@ module.exports = (knex) => {
               history: 'fa fa-hourglass-end',
               math: 'fa fa-superscript',
               geography: 'fa fa-globe'
-            }
+            },
+            moment: moment
           });
           return;
         });
