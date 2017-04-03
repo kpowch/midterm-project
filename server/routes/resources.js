@@ -112,7 +112,7 @@ module.exports = (knex) => {
         rating += ratings[i].value;
       }
       rating = rating / ratings.length;
-      rating = Math.max( Math.round(rating * 10) / 10, 2.8 ).toFixed(1);
+      rating = Math.max( Math.round(rating * 10) / 10, 1 ).toFixed(1);
     });
 
     //links resource comments with the user who commented and date created
