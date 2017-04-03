@@ -148,16 +148,16 @@ $(document).ready(function() {
 
   $('#like').on('click', function() {
     var currentWindow = $(location).attr('pathname');
-      handleLike(`/api${currentWindow}/like`);
+    handleLike(`/api${currentWindow}/like`);
   });
 
   function submitComment(url, commentBody) {
    if (commentBody.length === 0) {
-     console.log('Too short!');
+      $('#warning').html('Too short!').slideDown(300).delay(1600).fadeOut(400);
    } else if (commentBody.length > 255) {
-     console.log('Too long!');
+      $('#warning').html('Too long!').slideDown(300).delay(1600).fadeOut(400);
    } else if (commentBody == ' ') {
-     console.log('No blank spaces allowed!');
+      $('#warning').html('No blank spaces!').slideDown(300).delay(1600).fadeOut(400);
    } else {
      $.ajax({
        url: url,
@@ -167,13 +167,14 @@ $(document).ready(function() {
        }
      }).done(function(results) {
        if (results === 'No Cookie') {
-         console.log('You need to log in to comment');
+         $('#warning').html('You need to log in to use this comment').slideDown(300).delay(1600).fadeOut(400);
        } else {
          let newComment = $('<article>')
          .append($('<p>').text(commentBody))
          .append($('<h4>').text('Posted by: ' + results.username + ' at ' + results.date));
          $('#comments_container').prepend(newComment);
          $('#comment_form textarea').val('');
+         $('#warning').html('');
        }
      });
    }
