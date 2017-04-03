@@ -21,94 +21,66 @@ Data required:
 
 
   <div class='nav-bar-break'>
-    <br />
   </div>
 
   <main class='main-content-wrapper'>
 
-    <div class="section profile-heading">
-      <div class="columns">
-        <div class="column is-2">
-          <div class="image is-128x128 avatar">
-            <img src="http://orig01.deviantart.net/06f7/f/2014/101/7/9/profile_picture_by_happy_fingers-d7e2t77.jpg">
+    <div class='section profile-heading'>
+      <div class='columns'>
+        <div class='column is-2'>
+          <div class='image is-128x128 avatar'>
+            <img src='http://orig01.deviantart.net/06f7/f/2014/101/7/9/profile_picture_by_happy_fingers-d7e2t77.jpg'>
           </div>
         </div>
-        <div class="column is-4 name">
-          <p>
-            <span class="title is-bold"><%= resource.title %></span>
-            <span class="button is-primary is-outlined follow">Like</span>
+
+        <div class='column is-4 name'>
+          <span class='tag is-dark'><%=resource.topic%></span>
+          <span class='title is-bold'><%= resource.title %></span>
+          <h2>Submitted by <a href='/users/<%=resource.creator%>'><%= creator.username %></a> on <%= resource.date_created.toLocaleDateString() %></h2>
+          <p class='tagline'><%= resource.description %></p>
+        </div>
+
+        <div class='column is-2 followers has-text-centered'>
+
+          <button class='button is-primary is-outlined like' type='button' id='like'>
+            <% if (hasLiked.hasLiked) { %>Unlike
+            <% } else { %>  Like  <% } %>
+          </button>
+          <span>Total</span>
+          <span id= 'likesCount'><%= likesCount.likes %></span>
+          <span> Likes </span>
+        </div>
+
+        <div class='column is-2 followers has-text-centered'>
+          <span> Rating: </span><span class='stat-val' id='totalRating'><%= totalRating.rating %> </span>
+          <p id='rating'>
+            <span> 1 </span><span> 2 </span><span> 3 </span><span> 4 </span><span> 5 </span>
           </p>
-          <p>
-            <h1><%= creator.username %></h1>
-            <p class="tagline"><%= creator.username %></p>
-            <span class="button is-primary is-outlined follow">Like</span>
-          </p>
-          <p class="tagline"><%= resource.description %></p>
         </div>
-        <div class="column is-2 followers has-text-centered">
-          <p class="stat-val"><%= likesCount.likes %></p>
-          <p class="stat-key">likes</p>
-        </div>
-        <div class="column is-2 following has-text-centered">
-          <p class="stat-val">2k</p>
-          <p class="stat-key">following</p>
-        </div>
-        <div class="column is-2 likes has-text-centered">
-          <p class="stat-val">29</p>
-          <p class="stat-key">likes</p>
+
+        <div class='column is-2 followers has-text-centered'>
+          <span class='button is-outlined is-primary'>
+            <a href='<%=resource.url%>' target='_blank'>Visit Source</a>
+          </span>
         </div>
       </div>
-    </div>
 
-
-
-
-      <section>
-        <h1><%= resource.title %></h1>
-        <div></div>
-        <span>
-          <button type="button" id="like"><% if (hasLiked.hasLiked) { %>Unlike
-          <% } else { %>  Like  <% } %>
-          </button>
-          <span> Likes </span>
-          <span id= "likesCount"><%= likesCount.likes %></span>
-        </span>
-        <span> Rate </span>
-        <span id="rating">
-          <span> 1 </span><span> 2 </span><span> 3 </span><span> 4 </span><span> 5 </span>
-        </span>
-        <span id="totalRating"><%= totalRating.rating %> </span>
-        <span>
-          <a href="<%=resource.url%>" target="_blank">Visit</a>
-        </span>
-        <h4>Submitted by
-          <a href="/users/<%= creator.id %>"><%= creator.username %></a>
-          on <%= resource.date_created %>
-        </h4>
-        <p><%= resource.description %></p>
-        <h5>Topic: <%= resource.topic %></h5>
-        <h5 id="warning"></h5>
-        <form id="comment_form">
-          <textarea name="description" placeholder="Comment"></textarea>
-          <input type="button" value="Submit">
+      <div class='comments-wrapper'>
+        <form id='comment_form'>
+          <textarea class='textarea' name='description' placeholder='Comment...'></textarea>
+          <input class='button is-primary is-outlined' type='button' value='Submit'>
         </form>
-      </section>
-      <section id="comments_container">
-      <% for (let commentObj of allComments) { %>
-        <article>
-          <p><%= commentObj.comment %> </p>
-          <h4>Posted by: <%= commentObj.commenter %> on <%= commentObj.date %></h4>
-        </article>
-      <% } %>
-      </section>
 
-
-
-
-
-
-
-
+        <div id='comments-container'>
+          <% for (let commentObj of allComments) { %>
+            <article class='comment-content'>
+              <p class='comment-words'><%= commentObj.comment %> </p>
+              <h4 class='commenter'><%= commentObj.commenter %></h4>
+              <h4 class='comment-time'> <%= commentObj.date %></h4>
+            </article>
+          <% } %>
+        </div>
+    </div>
   </main>
 
   <footer>

@@ -42,6 +42,46 @@ header {
     width: 100%;
     margin: 0 10px;
     border-radius: 5px; }
+    .main-content-wrapper .section.profile-heading .image img {
+      margin-left: 10px; }
+    .main-content-wrapper .section.profile-heading h2 {
+      margin-bottom: 10px;
+      font-size: 16px; }
+    .main-content-wrapper .section.profile-heading .comments-wrapper {
+      margin: 0 auto;
+      width: 500px; }
+      .main-content-wrapper .section.profile-heading .comments-wrapper #comment_form {
+        content: "";
+        display: table;
+        clear: both;
+        width: 100%; }
+        .main-content-wrapper .section.profile-heading .comments-wrapper #comment_form textarea.textarea {
+          width: 100%;
+          resize: none;
+          height: 50px;
+          min-height: auto;
+          margin-bottom: 10px; }
+        .main-content-wrapper .section.profile-heading .comments-wrapper #comment_form .button {
+          float: right;
+          line-height: 1;
+          margin-bottom: 20px; }
+      .main-content-wrapper .section.profile-heading .comments-wrapper .comment-content {
+        border: 1px solid #ddd;
+        border-radius: 3px;
+        margin-bottom: 10px;
+        height: 82px;
+        padding: 10px; }
+        .main-content-wrapper .section.profile-heading .comments-wrapper .comment-content:hover {
+          background-color: #F5F7FA; }
+        .main-content-wrapper .section.profile-heading .comments-wrapper .comment-content .comment-words {
+          height: 50px;
+          font-weight: bold; }
+        .main-content-wrapper .section.profile-heading .comments-wrapper .comment-content .commenter {
+          float: right;
+          font-size: 12px; }
+        .main-content-wrapper .section.profile-heading .comments-wrapper .comment-content .comment-time {
+          float: left;
+          font-size: 12px; }
   .main-content-wrapper .card {
     border-radius: 10px;
     flex: 0 0 30%;
