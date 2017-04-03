@@ -1,80 +1,53 @@
-"use strict";
+'use strict';
 
 const express = require('express');
 const router  = express.Router();
-
-
 const dateNow = new Date();
 const theDate = dateNow.toLocaleString();
 
 module.exports = (knex) => {
 
   //retrieves create new resource page
-  router.get("/new", (req, res) => {
-
-    let currentUser = '';
-
-    //checks for a logged in user, if no cookie-session, currentUser an empty string
-    if(req.session.user_id === undefined) {
-      let templateVars = {
-          user: {
-            username: currentUser
-          }
-        }
-        res.render("../public/views/resource_new", templateVars);
-        return;
-      } else {
-        knex('users').select('username').where('users.id', req.session.user_id)
-        .asCallback((err, results) => {
-        if (err) console.error(err);
-
-        if (results[0].username.length > 0) {
-        currentUser = results[0].username;
-        let templateVars = {
-          user: {
-            username: currentUser,
-            userID: req.session.user_id
-          }
-        }
-        res.render("../public/views/resource_new", templateVars);
-        return;
-        }
-      });
-    }
+  router.get('/new', (req, res) => {
+    res.render('../public/views/resource_new', {user: {
+      username: req.username,
+      userid: req.id
+    }});
   });
 
 
   //retrieves resource id and displays the info of the resource
-  router.get("/:resource_id", (req, res) => {
-
+  router.get('/:resource_id', (req, res) => {
     let key = req.params.resource_id;
     let resource = {};
-    let creatorName = "";
+    let creatorName = '';
     let creatorId = 0;
     let likes = 0;
     let rating = 0;
     let commentsArr = [];
-    let currentUser = '';
+    // let currentUser = '';
     let hasLiked = false;
 
     //checks for a logged in user, if no cookie-session, currentUser an empty string
     //repetitive code! need to refactor
-    if (req.session.user_id === undefined) {
-      currentUser;
-    } else {
-      knex('users').select('username').where('users.id', req.session.user_id)
-      .asCallback((err, results) => {
-        if (err) console.error(err);
-        if(results[0].username.length > 0){
-          currentUser = results[0].username;
-          return;
-        }
-      });
-    }
+    // if (req.session.user_id === undefined) {
+    //   currentUser;
+    // } else {
+      // knex('users')
+      //   .select('username')
+      //   .where('users.id', req.session.user_id)
+      //   .asCallback((err, results) => {
+      //     if (err) console.error(err);
+      //     if(results[0].username.length > 0){
+      //       currentUser = results[0].username;
+      //       return;
+      //     }
+      //   });
+    // }
 
     //links user with resource
     knex('users').join('resources', 'users.id', '=', 'creator')
-    .select('username', 'creator').where('resources.id', key)
+    .select('username', 'creator').where('resources.id', req.params.resource_id)
     .asCallback((err, results) => {
       if (err) return console.error(err);
       creatorName = results[0].username;
@@ -83,7 +56,7 @@ module.exports = (knex) => {
 
     //links resource likes
     knex('resources').join('likes', 'resource_id', '=', 'resources.id')
-    .count().where('resource_id', key)
+    .count().where('resource_id', req.params.resource_id)
     .asCallback((err, results) => {
       if (err) return console.error(err);
       likes = results[0].count;
@@ -104,7 +77,7 @@ module.exports = (knex) => {
 
     //links resource ratings
     knex('resources').join('ratings', 'resource_id', '=', 'resources.id')
-    .select('value').where('resource_id', key)
+    .select('value').where('resource_id', req.params.resource_id)
     .asCallback((err, results) => {
       if (err) return console.error(err);
       let ratings = results;
@@ -118,7 +91,7 @@ module.exports = (knex) => {
     //links resource comments with the user who commented and date created
     knex('resources').join('comments', 'resource_id', '=', 'resources.id')
     .join('users', 'user_id', '=', 'users.id')
-    .where('resource_id', key)
+    .where('resource_id', req.params.resource_id)
     .asCallback((err, results) => {
       let dateTime = '';
       if (err) return console.error(err);
@@ -134,7 +107,7 @@ module.exports = (knex) => {
     })
 
     //retrieves resource from database
-    knex.select().from('resources').where('id', key)
+    knex.select().from('resources').where('id', req.params.resource_id)
     .asCallback((err, results) => {
       if (err) return console.error(err);
       resource = results;
@@ -150,8 +123,8 @@ module.exports = (knex) => {
           username: creatorName
         },
         user: {
-          username: currentUser,
-          userID: req.session.user_id
+          username: req.username,
+          userid: req.session.user_id
         },
         likesCount: {
           likes: likes
@@ -164,7 +137,7 @@ module.exports = (knex) => {
         },
         allComments: commentsArr
       }
-      res.render("../public/views/resource_id", templateVars);
+      res.render('../public/views/resource_id', templateVars);
     }).catch(function(error){
         console.log(error);
     })
@@ -173,12 +146,15 @@ module.exports = (knex) => {
 
   //posts new resource to /:resource_id. If url is used
   //then it redirects back to resources/new
-  router.post("/create", (req, res) => {
-
+  router.post('/create', (req, res) => {
+    if (!req.body.title || !req.body.description || !req.body.url) {
+      req.flash('errors', 'Title, URL, description, and topic required');
+      return;
+    }
     const findReqUrl = knex('resources')
-    .select('url')
-    .where({url: req.body.url})
-    .limit(1);
+      .select('url')
+      .where({url: req.body.url})
+      .limit(1);
 
     findReqUrl.then((results) => {
       if (results.length) {
@@ -186,14 +162,14 @@ module.exports = (knex) => {
         res.redirect('/resources/new');
         return;
       } else {
-        knex.insert
-        ([{title: req.body.title,
+        knex.insert([{
+          title: req.body.title,
           url: req.body.url,
           description: req.body.description,
           topic: req.body.topic.toLowerCase(),
           creator: req.session.user_id,
-          date_created: theDate}])
-        .returning('id')
+          date_created: theDate
+        }]).returning('id')
         .into('resources')
         .then((id) => {
         res.redirect('/resources/' + id);

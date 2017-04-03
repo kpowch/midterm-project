@@ -41,7 +41,7 @@ Data required:
             <h4> <%= user.email %> </h4>
 
             <div class='field'>
-              <form method='POST' action='/users/:user_id/editprofile'>
+              <form method='POST' action='/users/<%=user.userid%>/editprofile'>
                 <label class='label'>Reset Password:</label>
                 <input class='input' type='password' name='password' placeholder='New password...'>
 
