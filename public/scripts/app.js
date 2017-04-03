@@ -1,18 +1,17 @@
 function createResourceElement(resourceData) {
   var { id, title, url, description, topic, creator, date_created } = resourceData;
-  var images = {
+  var topicIcons = {
         science: `<a href="/resources/${id}"><i class="fa fa-flask" aria-hidden="true"></i></a>`,
         history: `<a href="/resources/${id}"><i class="fa fa-hourglass-end" aria-hidden="true"></i></a>`,
         math: `<a href="/resources/${id}"><i class="fa fa-superscript" aria-hidden="true"></i></a>`,
         geography: `<a href="/resources/${id}"><i class="fa fa-globe" aria-hidden="true"></i></a>`
       };
 
-      console.log(images[topic]);
 
   var $resource = $('<article>').addClass('card box')
     .append($('<div>').addClass('card-image')
       .append($('<figure>').addClass('image is-4by3')
-        .append($(images[topic]))))
+        .append($(topicIcons[topic]))))
     .append($('<div>').addClass('card-content')
       .append($('<h1>').text(title))
       .append($('<div>').addClass('content')

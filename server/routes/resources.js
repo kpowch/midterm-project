@@ -56,6 +56,12 @@ module.exports = (knex) => {
     let commentsArr = [];
     let currentUser = '';
     let hasLiked = false;
+    let topicIcons = {
+      science: 'fa fa-flask',
+      history: 'fa fa-hourglass-end',
+      math: 'fa fa-superscript',
+      geography: 'fa fa-globe'
+    };
 
     //checks for a logged in user, if no cookie-session, currentUser an empty string
     //repetitive code! need to refactor
@@ -162,8 +168,10 @@ module.exports = (knex) => {
         totalRating: {
           rating: rating
         },
-        allComments: commentsArr
+        allComments: commentsArr,
+        icons: topicIcons
       }
+      console.log(templateVars);
       res.render("../public/views/resource_id", templateVars);
     }).catch(function(error){
         console.log(error);
