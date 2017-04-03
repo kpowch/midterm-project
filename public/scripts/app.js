@@ -1,15 +1,24 @@
+
 function createResourceElement(resourceData) {
   var { id, title, url, description, topic, creator, date_created } = resourceData;
 
+  var topicIcons = {
+        science: `<a href="/resources/${id}"><i class="fa fa-flask" aria-hidden="true"></i></a>`,
+        history: `<a href="/resources/${id}"><i class="fa fa-hourglass-end" aria-hidden="true"></i></a>`,
+        math: `<a href="/resources/${id}"><i class="fa fa-superscript" aria-hidden="true"></i></a>`,
+        geography: `<a href="/resources/${id}"><i class="fa fa-globe" aria-hidden="true"></i></a>`
+      };
+
   var $resource = $('<article>').addClass('card box')
     .append($('<div>').addClass('card-image')
-      .append($('<figure>').addClass('image is-4by3')
-        .append($('<img>').attr('src', "http://placehold.it/300x225"))))
+      .append($('<figure>').addClass('image is-2by2')
+        .append($(topicIcons[topic]))))
     .append($('<div>').addClass('card-content')
       .append($('<h1>').text(title))
       .append($('<div>').addClass('content')
         .append($('<span>').addClass('tag is-dark').text(topic))
-        .append($('<strong>').addClass('timestamp').text(date_created)
+        .append($('<strong>').addClass('timestamp').text(moment(date_created).fromNow())
+        .append($('<a>').text('VISIT').attr('href', url))
         )
       )
     )
@@ -39,6 +48,7 @@ $(document).ready(function() {
   Sends ajax call depending on what page the user is on (All Resources or My Resources)
   and sends the array of topics that are checked.
   */
+
 
 
 
@@ -94,6 +104,10 @@ $(document).ready(function() {
     });
   }
 
+console.log(($('#totalRating').text()));
+  if (isNaN($('#totalRating').text())) {
+    $('#totalRating').addClass('NaN');
+  }
 
   function handleRating (url, rating) {
     console.log('sending ajax request ', rating);
@@ -108,6 +122,7 @@ $(document).ready(function() {
           console.log('You need to log in to use this feature');
       } else {
         $('#totalRating').text(results);
+        $('#totalRating').removeClass('NaN');
       }
     });
   }
@@ -153,11 +168,11 @@ $(document).ready(function() {
 
   function submitComment(url, commentBody) {
    if (commentBody.length === 0) {
-     console.log('Too short!');
+     $('#warning').html('Too short!').slideDown(300).delay(1600).fadeOut(400);
    } else if (commentBody.length > 255) {
-     console.log('Too long!');
+     $('#warning').html('Too long!').slideDown(300).delay(1600).fadeOut(400);
    } else if (commentBody == ' ') {
-     console.log('No blank spaces allowed!');
+     $('#warning').html('No blank spaces allowed!').slideDown(300).delay(1600).fadeOut(400);
    } else {
      $.ajax({
        url: url,
