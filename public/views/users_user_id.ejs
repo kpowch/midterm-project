@@ -71,7 +71,7 @@ Data required:
           <h1><%=resources[resource].title%></h1>
             <div class="content">
               <span class="tag is-dark"><%=resources[resource].topic%></span>
-                <strong class="timestamp"><%=resources[resource].date_created.toLocaleDateString()%></strong>
+                <strong class="timestamp"><%=moment(resources[resource].date_created).fromNow()%></strong>
                 <a href="<%=resources[resource].url%>">VISIT</a>
             </div>
           </div>
