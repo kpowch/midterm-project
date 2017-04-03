@@ -41,7 +41,13 @@ module.exports = (knex) => {
                   username: req.username,
                   userid: req.session.user_id
                 },
-                resources: results
+                resources: results,
+                icons: {
+                  science: 'fa fa-flask',
+                  history: 'fa fa-hourglass-end',
+                  math: 'fa fa-superscript',
+                  geography: 'fa fa-globe'
+                }
               });
             }).catch((error) => {
               console.log(error);
@@ -69,7 +75,7 @@ module.exports = (knex) => {
             username: results[0].username,
             email: results[0].email,
             password: results[0].password
-          }
+          },
         }
         res.render('../public/views/users_user_id_editprofile', templateVars);
         return;
