@@ -147,6 +147,10 @@ module.exports = (knex) => {
   //posts new resource to /:resource_id. If url is used
   //then it redirects back to resources/new
   router.post('/create', (req, res) => {
+    if (!req.body.title || !req.body.description || !req.body.url) {
+      req.flash('errors', 'Title, URL, description, and topic required');
+      return;
+    }
     const findReqUrl = knex('resources')
       .select('url')
       .where({url: req.body.url})
