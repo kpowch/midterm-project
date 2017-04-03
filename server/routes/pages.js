@@ -11,11 +11,6 @@ module.exports = (knex) => {
     console.log('get /')
     console.log(req.username)
     // this is used for the initial page render
-    // TODO add username for header
-    // let currentUser = '';
-    // if (!req.session.user_id) {
-    //   console.log(req.session.user_id);
-    //   console.log('no cookie');
       knex('resources')
         .then((rows) => {
           console.log(rows);
@@ -36,24 +31,6 @@ module.exports = (knex) => {
           });
           return;
         });
-    // } else {
-      // console.log(req.session.user_id);
-      // knex('users')
-      // .select('username').where('users.id', req.session.user_id)
-      // .asCallback((err, results) => {
-      //   if (err) throw err;
-      //   console.log(results[0]);
-      //   if (results[0].username.length > 0) {
-      //     currentUser = results[0].username;
-      //     let ID = req.session.user_id;
-      //     knex('resources')
-      //     .then((rows) => {
-      //     res.render('../public/views/index', { user: {username: currentUser, userID: ID}, resources: rows });
-      //     return;
-      //     });
-      //   }
-      // });
-    // }
   });
 
   router.get('/login', (req, res) => {
@@ -70,7 +47,6 @@ module.exports = (knex) => {
         userid: req.id
       }
     });
-    // req.session = null;
   });
 
   router.post('/login', (req, res) => {
@@ -145,7 +121,6 @@ module.exports = (knex) => {
         .where('users.email', req.body.email_register)
         .then((results) => {
           req.session.user_id = results[0].id;
-          // console.log('register cookie', results[0]);
           res.redirect('/');
           return;
         });
