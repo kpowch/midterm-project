@@ -167,11 +167,11 @@ console.log(($('#totalRating').text()));
 
   function submitComment(url, commentBody) {
    if (commentBody.length === 0) {
-     console.log('Too short!');
+     $('#warning').html('Too short!').slideDown(300).delay(1600).fadeOut(400);
    } else if (commentBody.length > 255) {
-     console.log('Too long!');
+     $('#warning').html('Too long!').slideDown(300).delay(1600).fadeOut(400);
    } else if (commentBody == ' ') {
-     console.log('No blank spaces allowed!');
+     $('#warning').html('No blank spaces allowed!').slideDown(300).delay(1600).fadeOut(400);
    } else {
      $.ajax({
        url: url,
