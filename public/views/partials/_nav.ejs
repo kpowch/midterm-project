@@ -6,20 +6,20 @@
       <span class='logo'>Chalkboard</span>
     </div>
 
-    <% if (user) { %>
+    <% if (user.username) { %>
       <p class='nav-item'>
-        Welcome <%=user.username%>!
+        Welcome <%= user.username %>!
       </p>
     <% } %>
   </div>
 
   <div class='nav-right'>
-    <% if (user) { %>
+    <% if (user.username) { %>
       <a class="nav-item is-tab" href='/'>
         Home
       </a>
 
-      <a class="nav-item is-tab" href='/users/<%= user.userID %>'>
+      <a class="nav-item is-tab" href='/users/<%= user.userid %>'>
         My Resources
       </a>
 
@@ -27,15 +27,13 @@
         <i class='fa fa-plus nav-item'></i>
       </a>
 
-      <a class="nav-item is-tab" href='/users/<%= user.userID %>/editprofile'>
+      <a class="nav-item is-tab" href='/users/<%= user.userid %>/editprofile'>
         <i class='fa fa-user nav-item'></i>
       </a>
 
-      <a class="nav-item is-tab" href='/users/<%= user.userID %>/editprofile'>
         <form class="nav-item is-tab" method='POST' action='/logout'>
           <input class='button is-primary' type='submit' value='Logout'>
         </form>
-      </a>
 
     <% } else { %>
       <span class="nav-item">

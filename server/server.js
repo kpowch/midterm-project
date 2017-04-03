@@ -49,10 +49,10 @@ app.use('../public/styles/', sass({
 app.use(express.static('public'));
 
 // Mount all resource routes
-app.use('/users', middleware.extractUserData, usersRoutes(knex));
-app.use('/resources', middleware.extractUserData, resourceRoutes(knex));
-app.use('/api', apiRoutes(knex));
-app.use('/', pagesRoutes(knex));
+app.use('/users', middleware.ensureLoggedIn, middleware.extractUserData, usersRoutes(knex));
+app.use('/resources', middleware.ensureLoggedIn, middleware.extractUserData, resourceRoutes(knex));
+app.use('/api', middleware.ensureLoggedIn, middleware.extractUserData, apiRoutes(knex));
+app.use('/', middleware.extractUserData, pagesRoutes(knex));
 
 app.listen(PORT, () => {
   console.log('Example app listening on port ' + PORT);
