@@ -88,6 +88,12 @@ header {
     height: 300px;
     border: 1px solid black;
     margin: 0 10px 10px; }
+    .main-content-wrapper .card figure.image {
+      text-align: center; }
+    .main-content-wrapper .card span.tag {
+      float: right; }
+    .main-content-wrapper .card .timestamp {
+      margin-left: 20px; }
     .main-content-wrapper .card h1 {
       height: 50px; }
     .main-content-wrapper .card:hover {
