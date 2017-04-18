@@ -1,5 +1,5 @@
 # Chalkboard
-Chalkboard is a place to categorize, share, and reference back to your learning resources like tutorials, blogs, and videos - essentially, a `Pinterest for Learners`. Post your own resources, or _like_ other's. This app makes it easier to keep everything in one central, publically available place, at your fingertips.
+Chalkboard is a place to categorize, share, search for, and reference back to your learning resources like tutorials, blogs, and videos - essentially, a `Pinterest for Learners`. Post your own resources, or _like_ other's. Search for resources via the search bar (by title and description) or by filtering by topic. This app makes it easier to keep everything in one central, publically available place, at your fingertips.
 
 ## Getting Started
 These instructors will get you a copy of the project up and running on your local machine for development and testing purposes.
@@ -79,9 +79,9 @@ Based on the requirements and initial plan, the following RESTful routes were de
 
 On navbar (fixed), have 
 * logo
-* `topics` and `types` to filter by one category to start (later multiple categories?)
-* `search` (by title to start) 
-* `login`/`register` or `logout`/`edit profile`/`add url`(with title and description) (if logged in)
+* `topics` to filter by category
+* `search` by title and description
+* if logged in, `logout`/`edit profile`/`add url`; otherwise `login`/`register` 
 
 
 `GET /`
@@ -144,40 +144,25 @@ On navbar (fixed), have
 * (potential extend: update username, email, picture, fav. categories, etc.)
 
 #### User Stories
-User stories and scenarios were also created to determine the routes and functionality of the app. These user stores are in the form of *"As a ____, I want to ____ because ____."* and *"Given ____ when ____ then____."*
+User stories and scenarios were also created to determine the routes and functionality of the app. These user stores are in the form of "As a _ _ _ _, I want to _ _ _ _ because _ _ _ _." and "Given _ _ _ _ when _ _ _ _ then_ _ _ _."
 
-<dl>
-<dt> As a user I want to make a resource because I want to share it and save it for later.
-<dd> Given a field where I can add a resource, when I fill it out with all the required data, then it should show on the all resource page and on my resources page. 
-</dl>
+*As a user I want to make a resource because I want to share it and save it for later.*
+Given a field where I can add a resource, when I fill it out with all the required data, then it should show on the all resource page and on my resources page. 
 
-<dl>
-<dt> As a user, I want to view all resources because I want to see what's new to learn.
-<dd> Given when I log in/go to home page, when I first see the page with no filtering then I should see the most recent resources regardless of category. 
-</dl>
+*As a user, I want to view all resources because I want to see what's new to learn.*
+Given when I log in/go to home page, when I first see the page with no filtering then I should see the most recent resources regardless of category. 
 
-<dl>
-<dt> As a user, I want to filter all resources because I want to see what's new to learn under a topic I'm interested in.
-<dd> Given a filter bar, when I click on a filter button and associated topic, then resources with that filtered topic should show. 
-</dl>
+*As a user, I want to filter all resources because I want to see what's new to learn under a topic I'm interested in.*
+Given a filter bar, when I click on a filter button and associated topic, then resources with that filtered topic should show. 
 
-<dl>
-<dt>As a user, I want to be able to link my posts under a category because I want it to be easy for myself and others to find resources relating to a specific topic.
-<dd> Given a linked resource page, when categorized then it should group with resources under the same category.
-</dl>
+*As a user, I want to be able to link my posts under a category because I want it to be easy for myself and others to find resources relating to a specific topic.*
+Given a linked resource page, when categorized then it should group with resources under the same category.
 
-<dl>
-<dt> As a user, I want to be able to like, rate, and comment on a resource so I can remember how I feel about it and help others find quality resources.
-<dd> Given the option to like/rate/comment when I do that then I should see some kind of feedback that that has been stored (e.g. icons change color, show in my resources). 
-</dl>
+*As a user, I want to be able to like, rate, and comment on a resource so I can remember how I feel about it and help others find quality resources.*
+Given the option to like/rate/comment when I do that then I should see some kind of feedback that that has been stored (e.g. icons change color, show in my resources). 
 
-<dl>
-<dt>As a user, I want to view my resources and my liked resources because I want to refer to them in the future.
-<dd> Given my page of resources, when I load the page, then I should see all the resources that I have liked or created.
-</dl>
+*As a user, I want to view my resources and my liked resources because I want to refer to them in the future.*
+Given my page of resources, when I load the page, then I should see all the resources that I have liked or created.
 
-<dl>
-<dt>As a user, I want to be able to login/register to this site because I want to save resources for myself and others.
-<dd> Given and login/register page, when I create/login to my account, then it should show a validation that I'm logged in (i.e. show username in nav bar and a logout and edit profile button instead of login/register button) and I should be redirected to the main page. Also my resources and likes should be tied to my account.
-</dl>
-
+*As a user, I want to be able to login/register to this site because I want to save resources for myself and others.
+Given and login/register page, when I create/login to my account, then it should show a validation that I'm logged in (i.e. show username in nav bar and a logout and edit profile button instead of login/register button) and I should be redirected to the main page. Also my resources and likes should be tied to my account.
