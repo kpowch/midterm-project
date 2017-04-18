@@ -164,5 +164,5 @@ Given the option to like/rate/comment when I do that then I should see some kind
 *As a user, I want to view my resources and my liked resources because I want to refer to them in the future.*
 Given my page of resources, when I load the page, then I should see all the resources that I have liked or created.
 
-*As a user, I want to be able to login/register to this site because I want to save resources for myself and others.
+*As a user, I want to be able to login/register to this site because I want to save resources for myself and others.*
 Given and login/register page, when I create/login to my account, then it should show a validation that I'm logged in (i.e. show username in nav bar and a logout and edit profile button instead of login/register button) and I should be redirected to the main page. Also my resources and likes should be tied to my account.
