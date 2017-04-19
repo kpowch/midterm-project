@@ -3,8 +3,12 @@
 
 const express = require('express');
 const router = express.Router();
+const mv = require('../routes/middleware');
 
 module.exports = (knex) => {
+  // allows middleware to be added to specific routes
+  const middleware = mv(knex);
+
   /*
   This is to filter by topic on the home page (all resources) when the user
   selects from the list of topics. The topics come as an array.
@@ -94,7 +98,7 @@ module.exports = (knex) => {
   /*
   This is to add comments to the individual resource page
   */
-  router.post('/resources/:resource_id/comment', (req, res) => {
+  router.post('/resources/:resource_id/comment', middleware.ensureLoggedIn, (req, res) => {
    const resource = req.params.resource_id;
    const dateNow = new Date();
    const theDate = dateNow.toLocaleString();
@@ -133,7 +137,7 @@ module.exports = (knex) => {
   /*
   This is to process ratings
   */
-  router.post('/resources/:resource_id/rating', (req, res) => {
+  router.post('/resources/:resource_id/rating', middleware.ensureLoggedIn, (req, res) => {
     const resource = req.params.resource_id;
     const user = req.session.user_id;
     const rating = new Number(req.body.rating);
@@ -179,7 +183,7 @@ module.exports = (knex) => {
     /*
     This is to process likes
     */
-   router.post('/resources/:resource_id/like', (req, res) => {
+   router.post('/resources/:resource_id/like', middleware.ensureLoggedIn, (req, res) => {
     const resource = req.params.resource_id;
     const user = req.session.user_id;
 
