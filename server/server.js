@@ -50,7 +50,7 @@ app.use(express.static('public'));
 
 // Mount all resource routes
 app.use('/users', middleware.ensureLoggedIn, middleware.extractUserData, usersRoutes(knex));
-app.use('/resources', middleware.ensureLoggedIn, middleware.extractUserData, resourceRoutes(knex));
+app.use('/resources', middleware.extractUserData, resourceRoutes(knex));
 app.use('/api', middleware.ensureLoggedIn, middleware.extractUserData, apiRoutes(knex));
 app.use('/', middleware.extractUserData, pagesRoutes(knex));
 

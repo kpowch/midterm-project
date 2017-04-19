@@ -4,11 +4,14 @@ const express = require('express');
 const router  = express.Router();
 const dateNow = new Date();
 const theDate = dateNow.toLocaleString();
+const mw = require('./routes/middleware');
 
 module.exports = (knex) => {
+  // adds middleware to this page
+  const middleware = mw(knex);
 
   //retrieves create new resource page
-  router.get('/new', (req, res) => {
+  router.get('/new', middlware.ensureLoggedIn, (req, res) => {
     res.render('../public/views/resource_new', {user: {
       username: req.username,
       userid: req.id
@@ -129,7 +132,7 @@ module.exports = (knex) => {
 
   //posts new resource to /:resource_id. If url is used
   //then it redirects back to resources/new
-  router.post('/create', (req, res) => {
+  router.post('/create', middlware.ensureLoggedIn, (req, res) => {
     if (!req.body.title || !req.body.description || !req.body.url) {
       req.flash('errors', 'Title, URL, description, and topic required');
       return;
