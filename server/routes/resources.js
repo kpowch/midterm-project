@@ -11,7 +11,7 @@ module.exports = (knex) => {
   const middleware = mw(knex);
 
   //retrieves create new resource page
-  router.get('/new', middlware.ensureLoggedIn, (req, res) => {
+  router.get('/new', middleware.ensureLoggedIn, (req, res) => {
     res.render('../public/views/resource_new', {user: {
       username: req.username,
       userid: req.id
@@ -132,7 +132,7 @@ module.exports = (knex) => {
 
   //posts new resource to /:resource_id. If url is used
   //then it redirects back to resources/new
-  router.post('/create', middlware.ensureLoggedIn, (req, res) => {
+  router.post('/create', middleware.ensureLoggedIn, (req, res) => {
     if (!req.body.title || !req.body.description || !req.body.url) {
       req.flash('errors', 'Title, URL, description, and topic required');
       return;
