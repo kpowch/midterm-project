@@ -1,6 +1,9 @@
 # Chalkboard
 Chalkboard is a place to categorize, share, search for, and reference back to your learning resources like tutorials, blogs, and videos - essentially, a `Pinterest for Learners`. Post your own resources, or _like_ other's. Search for resources via the search bar (by title and description) or by filtering by topic. This app makes it easier to keep everything in one central, publically available place, at your fingertips.
 
+Visit our deployed [heroku app!](https://chalkboard-resource-board.herokuapp.com/) (https://chalkboard-resource-board.herokuapp.com/).
+**Note it works best if you're logged in. If you don't want to create an account (even under a fake email), use: username: `user@email.com` password: `password`**
+
 ## Getting Started
 These instructors will get you a copy of the project up and running on your local machine for development and testing purposes.
 
@@ -9,7 +12,7 @@ Dependencies for this project include:
 * Node 5.10.x or above
 * NPM 3.8.x or above
 
-### Installing 
+### Installing
 1. Create the `.env` by using `.env.example` as a reference: `cp .env.example .env`
 2. Update the `.env` file with your correct local information
 3. Install dependencies: `npm i`
@@ -20,10 +23,10 @@ Dependencies for this project include:
 8. Check the seeds file to see what gets seeded in the DB
 
 ### Running the App
-To start the app, run the server: `npm run local` and then visit `http://localhost:8080/`. Hope it works! 
+To start the app, run the server: `npm run local` and then visit `http://localhost:8080/`. Hope it works!
 
 ## Project Details
-The following sections describe the project details - goals, stack, requirements, user stories, etc. This knowledge is not necessary to run the app. 
+The following sections describe the project details - goals, stack, requirements, user stories, etc. This knowledge is not necessary to run the app.
 
 ### Goal
 * Build a web app from start to finish using the tech and approaches learned to date
@@ -77,11 +80,11 @@ Based on the requirements and initial plan, the following RESTful routes were de
 * `/resources/:resource_id` individual item page (with comments, likes, ratings)
 * `/users/:user_id/editprofile` update profile
 
-On navbar (fixed), have 
+On navbar (fixed), have
 * logo
 * `topics` to filter by category
 * `search` by title and description
-* if logged in, `logout`/`edit profile`/`add url`; otherwise `login`/`register` 
+* if logged in, `logout`/`edit profile`/`add url`; otherwise `login`/`register`
 
 
 `GET /`
@@ -140,26 +143,26 @@ On navbar (fixed), have
 * renders `user/:user_id/editprofile` page which shows use data (username, email and buttons to update, and option to change password)
 
 `PUT /users/:user_id/editprofile`
-* updates password as they want 
+* updates password as they want
 * (potential extend: update username, email, picture, fav. categories, etc.)
 
 #### User Stories
 User stories and scenarios were also created to determine the routes and functionality of the app. These user stores are in the form of "As a _ _ _ _, I want to _ _ _ _ because _ _ _ _." and "Given _ _ _ _ when _ _ _ _ then_ _ _ _."
 
 *As a user I want to make a resource because I want to share it and save it for later.*
-Given a field where I can add a resource, when I fill it out with all the required data, then it should show on the all resource page and on my resources page. 
+Given a field where I can add a resource, when I fill it out with all the required data, then it should show on the all resource page and on my resources page.
 
 *As a user, I want to view all resources because I want to see what's new to learn.*
-Given when I log in/go to home page, when I first see the page with no filtering then I should see the most recent resources regardless of category. 
+Given when I log in/go to home page, when I first see the page with no filtering then I should see the most recent resources regardless of category.
 
 *As a user, I want to filter all resources because I want to see what's new to learn under a topic I'm interested in.*
-Given a filter bar, when I click on a filter button and associated topic, then resources with that filtered topic should show. 
+Given a filter bar, when I click on a filter button and associated topic, then resources with that filtered topic should show.
 
 *As a user, I want to be able to link my posts under a category because I want it to be easy for myself and others to find resources relating to a specific topic.*
 Given a linked resource page, when categorized then it should group with resources under the same category.
 
 *As a user, I want to be able to like, rate, and comment on a resource so I can remember how I feel about it and help others find quality resources.*
-Given the option to like/rate/comment when I do that then I should see some kind of feedback that that has been stored (e.g. icons change color, show in my resources). 
+Given the option to like/rate/comment when I do that then I should see some kind of feedback that that has been stored (e.g. icons change color, show in my resources).
 
 *As a user, I want to view my resources and my liked resources because I want to refer to them in the future.*
 Given my page of resources, when I load the page, then I should see all the resources that I have liked or created.
