@@ -4,7 +4,7 @@ const express = require('express');
 const router  = express.Router();
 const dateNow = new Date();
 const theDate = dateNow.toLocaleString();
-const mw = require('./routes/middleware');
+const mw = require('../routes/middleware');
 
 module.exports = (knex) => {
   // adds middleware to this page
